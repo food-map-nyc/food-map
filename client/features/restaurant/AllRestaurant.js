@@ -12,25 +12,104 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+
 const AllRestaurant = () => {
-  const restaurants = useSelector((state) => state.restaurant.restaurants);
+  const allRestaurants = useSelector((state) => state.restaurant.restaurants);
+  let selectedRestaurants = allRestaurants
+    .filter((object) => !!object.dba) // restaurant has a name
+    .filter((object) => !!object.cuisine_description) // restaurant has a cuisine
+    .filter((object) => object.critical_flag !== "Critical"); // restaurant does not have bad health grade
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  const [cuisine, setCuisine] = useState("");
+  const [borough, setBorough] = useState("");
+
+  const allCuisines = allRestaurants.map(restaurant => restaurant.cuisine_description).reduce((cuisineArray, currentCuisine) => {
+    if(currentCuisine && !cuisineArray.includes(currentCuisine)){
+      cuisineArray.push(currentCuisine)
+      }
+    return cuisineArray
+  }, []).sort()
+
+  const handleCuisine = (event) => {
+    setCuisine(event.target.value);
+  };
+
+  const handleBorough = (event) => {
+    setBorough(event.target.value);
+  };
+
+  selectedRestaurants = selectedRestaurants.filter((restaurant) => {
+    if (cuisine) {
+      return restaurant.cuisine_description === cuisine
+    } else {
+      return restaurant
+    }
+  });
+
+  selectedRestaurants = selectedRestaurants.filter((restaurant) => {
+    if (borough) {
+      return restaurant.boro === borough
+    } else {
+      return restaurant
+    }
+  });
+
   useEffect(() => {
     dispatch(fetchAllRestaurant());
   }, []);
 
   return (
     <div>
+      <div>
+       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+        <InputLabel id="demo-select-small">Cuisine</InputLabel>
+        <Select
+          labelId="demo-select-small"
+          id="demo-select-small"
+          value={cuisine}
+          label="Cuisine"
+          onChange={handleCuisine}
+        >
+          <MenuItem value="">
+            <em>All</em>
+          </MenuItem>
+          {allCuisines?.map((cuisine, idx) => 
+            <MenuItem value={cuisine} key={idx}>{cuisine}</MenuItem>
+          )}
+        </Select>
+      </FormControl>
+       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+        <InputLabel id="demo-select-small">Borough</InputLabel>
+        <Select
+          labelId="demo-select-small"
+          id="demo-select-small"
+          value={borough}
+          label="Borough"
+          onChange={handleBorough}
+        >
+          <MenuItem value="">
+            <em>All</em>
+          </MenuItem>
+            <MenuItem value="Brooklyn">Brooklyn</MenuItem>
+            <MenuItem value="Bronx">Bronx</MenuItem>
+            <MenuItem value="Manhattan">Manhattan</MenuItem>
+            <MenuItem value="Queens">Queens</MenuItem>
+            <MenuItem value="Staten Island">Staten Island</MenuItem>
+        </Select>
+      </FormControl>
+      </div>
       <div className="restaurant">
-        {restaurants
-          .filter((object) => !!object.dba)
-          .filter((object) => !!object.cuisine_description)
-          .filter((object) => object.critical_flag !== "Critical")
+        {selectedRestaurants
           .slice((page - 1) * 18, page * 18)
           .map((restaurant, idx) => (
             <div key={idx} className="row">
