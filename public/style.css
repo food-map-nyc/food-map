@@ -19,3 +19,18 @@ body {
     margin: 1em;
     display: inline-block;
   }
+
+  img {
+    width: 50%;
+    height: 50%;
+  }
+  .restaurant {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .row {
+    display: flex;
+    margin: 10px;
+    width: 30%;
+    border: solid;
+  }

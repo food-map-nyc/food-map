@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom';
 import AuthForm from '../features/auth/AuthForm';
 import Home from '../features/home/Home';
 import { me } from './store';
+import AllRestaurant from '../features/restaurant/AllRestaurant';
+import SingleRestaurant from '../features/restaurant/SingleRestaurant';
 
 /**
  * COMPONENT
@@ -23,6 +25,8 @@ const AppRoutes = () => {
         <Routes>
           <Route path="/*" element={<Home />} />
           <Route to="/home" element={<Home />} />
+          <Route path="/restaurants" element={<AllRestaurant />} />
+          <Route path={`/restaurants/:objectid`} element={<SingleRestaurant />} />
         </Routes>
       ) : (
         <Routes>
@@ -38,6 +42,8 @@ const AppRoutes = () => {
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
+          <Route path="/restaurants" element={<AllRestaurant />} />
+          <Route path={`/restaurants/:objectid`} element={<SingleRestaurant />} />
         </Routes>
       )}
     </div>
