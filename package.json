@@ -1,5 +1,5 @@
 {
-    "name": "foodmap",
+    "name": "food-map",
     "version": "2.0.0",
     "description": "Satisfy those cravings!",
     "main": "index.js",
