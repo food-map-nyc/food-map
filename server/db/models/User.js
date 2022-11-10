@@ -13,7 +13,31 @@ const User = db.define('user', {
   },
   password: {
     type: Sequelize.STRING,
-  }
+  },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    validate: {
+      isEmail: true,
+    }
+  },
+  phone: {
+  type: Sequelize.STRING,
+  default: null
+  },
+  imageUrl: {
+    type: Sequelize.STRING,
+    defaultValue:"https://www.odysseyhouse.com.au/wordpress/wp-content/uploads/2019/08/Profile-Photo-Place-Holder.png"
+
+  },
+    isAdmin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
+    },
+  isOwner: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },   
 })
 
 module.exports = User
