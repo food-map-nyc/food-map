@@ -102,7 +102,7 @@ const AllRestaurant = () => {
           </MenuItem>
             <MenuItem value="Brooklyn">Brooklyn</MenuItem>
             <MenuItem value="Bronx">Bronx</MenuItem>
-            <MenuItem value="Manhatten">Manhanttan</MenuItem>
+            <MenuItem value="Manhattan">Manhattan</MenuItem>
             <MenuItem value="Queens">Queens</MenuItem>
             <MenuItem value="Staten Island">Staten Island</MenuItem>
         </Select>
