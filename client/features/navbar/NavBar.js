@@ -15,9 +15,8 @@ const Navbar = () => {
   return (
     <div>
       <Link to="/restaurants">
-        <h1>FS-App-Template</h1>
-      </Link>
       <h1>Welcome to FoodMap</h1>
+      </Link>
       <nav>
         {isLoggedIn ? (
           <div>

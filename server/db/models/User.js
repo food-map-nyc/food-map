@@ -23,7 +23,6 @@ const User = db.define('user', {
   },
   phone: {
   type: Sequelize.STRING,
-  default: null
   },
   imageUrl: {
     type: Sequelize.STRING,
