@@ -108,7 +108,7 @@ const AllRestaurant = () => {
         </Select>
       </FormControl>
       </div>
-      <div className="restaurant">
+      <div className="container">
         {selectedRestaurants
           .slice((page - 1) * 18, page * 18)
           .map((restaurant, idx) => (
