@@ -5,9 +5,8 @@ import UserProfile from '../user/UserProfile';
 /**
  * COMPONENT
  */
-const Home = (props) => {
+const Home = () => {
   const username = useSelector((state) => state.auth.me.username);
-  const id = useSelector((state) => state.auth.me.id);
 
   return (
     <div>

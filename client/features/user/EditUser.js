@@ -4,7 +4,8 @@ import { editSingleUser } from "./singleUserSlice";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
-const EditUser = () => {
+
+const EditUser = ({user}) => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const {id} = useParams()
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(editSingleUser(id , username));
+    dispatch(editSingleUser(id));
     navigate("/");
   };
 
@@ -29,7 +30,7 @@ const {id} = useParams()
           <div>
           <div>
             <label htmlFor="Username"></label>
-            <InputProps
+            <input
               onChange={(e) => setUsername(e.target.value)}
               value={username}
               name="username"
@@ -56,7 +57,7 @@ const {id} = useParams()
               />
           </div>
           <div>
-            <Button type="submit" disabled variant = "contained" color = "primary">Submit</Button>
+            <Button type="submit" color = "primary">Submit</Button>
           </div>
         </form>
       </div>

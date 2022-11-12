@@ -35,7 +35,7 @@ const {id,email,phone,createdAt, username, imageUrl} = user
     <div>Avid Foodie since {createdAt.slice(0, 10)}
     </div>
     </Card>
-    <EditUser/>
+    <EditUser user = {user}/>
         <div/>
         </>
       )}
