@@ -37,6 +37,14 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },   
+  prefered: {
+    type: Sequelize.STRING,
+    defaultValue: "american"
+  }, 
+  zipcode: {
+    type:Sequelize.STRING,
+    defaultValue: "11001"
+  }
 })
 
 module.exports = User

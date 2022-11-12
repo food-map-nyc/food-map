@@ -6,6 +6,8 @@ import Home from '../features/home/Home';
 import { me } from './store';
 import AllRestaurant from '../features/restaurant/AllRestaurant';
 import SingleRestaurant from '../features/restaurant/SingleRestaurant';
+import AllUsers from '../features/user/AllUsers';
+import SingleUser from '../features/user/SingleUser';
 
 /**
  * COMPONENT
@@ -13,6 +15,7 @@ import SingleRestaurant from '../features/restaurant/SingleRestaurant';
 
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const user = useSelector(state => state.auth.me)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,6 +30,8 @@ const AppRoutes = () => {
           <Route to="/home" element={<Home />} />
           <Route path="/restaurants" element={<AllRestaurant />} />
           <Route path={`/restaurants/:objectid`} element={<SingleRestaurant />} />
+          {user.isAdmin ? <Route path={'/users'} element = {<AllUsers/>} /> : null}
+          {user.isAdmin ? <Route path={`/users/:userid`} element = {<SingleUser/>} /> : null}
         </Routes>
       ) : (
         <Routes>

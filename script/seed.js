@@ -18,7 +18,9 @@ async function seed() {
       password: "123",
       phone: '9999393842',
       isAdmin: false,
-      isOwner:false
+      isOwner:false, 
+      prefered: "chinese",
+      zipcode: "11230"
     }),
     User.create({
       username: "murphy",
@@ -26,7 +28,9 @@ async function seed() {
       password: "123",
       phone: '9999393843',
       isAdmin: false,
-      isOwner:false
+      isOwner:false,
+      prefered: "fusion",
+      zipcode: "11101"
     }),
     User.create({
       username: "paul",
@@ -34,7 +38,9 @@ async function seed() {
       password: "123",
       phone: '9999393442',
       isAdmin: true,
-      isOwner:true
+      isOwner:true,
+      prefered: "caribbean",
+      zipcode: "11238"
     }),
     User.create({
       username: "Alan",
@@ -58,7 +64,9 @@ async function seed() {
       email:"bob@mail.com",
       phone: '9999393842',
       isAdmin:false,
-      isOwner:true
+      isOwner:true,
+      prefered: "french",
+      zipcode: "12100"
     }),
   ]);
 

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 
-const EditUser = ({user}) => {
+const EditUser = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -17,6 +17,8 @@ const {id,email,phone,createdAt, username, imageUrl} = user
     dispatch(fetchSingleUser(user.id));
   }, []);
 
+  
+
   return (
     <div className="pb-96">
       {!id ? (
@@ -35,7 +37,7 @@ const {id,email,phone,createdAt, username, imageUrl} = user
     <div>Avid Foodie since {createdAt.slice(0, 10)}
     </div>
     </Card>
-    <EditUser user = {user}/>
+    <EditUser id = {id} user = {user}/>
         <div/>
         </>
       )}
