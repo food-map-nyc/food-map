@@ -33,6 +33,7 @@ const Navbar = () => {
                 <GroupsIcon sx={{ fontSize: 40 }} />
               </Link>
             ) : null}
+            <Link to="/suggestion">Give me a Suggestion</Link>
             <button type="button" onClick={logoutAndRedirectHome}>
               Logout
             </button>

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { editSingleUser } from "./singleUserSlice";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { Button, Card } from "@mui/material";
+import { Button, Card, Typography } from "@mui/material";
 import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
@@ -11,6 +11,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Title } from "@mui/icons-material";
 const EditUser = (user) => {
 
   const dispatch = useDispatch();
@@ -26,13 +27,14 @@ const {id} = useParams()
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(editSingleUser(user.id));
+    dispatch(editSingleUser(user.id), username, email,phone,imageUrl,cuisine,zipcode);
     navigate("/");
   };
 
   return (
-    // <form onSubmit={handleSubmit}>
     <Card>
+<h2> Edit your profile</h2>
+<form onSubmit={handleSubmit}>
     <Box sx={{ '& > :not(style)': { m: 1 } }}>
        <FormControl onSubmit={handleSubmit}variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
@@ -137,7 +139,7 @@ const {id} = useParams()
         />
       </FormControl>
       <div>
-            <Button type="submit" color = "primary">Submit</Button>
+            <Button  onSubmit={handleSubmit} type="submit" color = "primary">Submit</Button>
           </div>
         {/* <form onSubmit={handleSubmit}>
           <h2> Edit your profile information below: </h2>
@@ -176,7 +178,7 @@ const {id} = useParams()
         </form>
       </div> */}
       </Box>
-     
+      </form>
       </Card>
       // </form>
 
