@@ -20,10 +20,6 @@ const Suggestion = () => {
     const {prefered,username,zipcode} = useSelector((state)=> state.auth.me);
     const allRestaurants = useSelector((state) => state.restaurant.restaurants);
 
-    const [page, setPage] = useState(1);
-    const handleChange = (event, value) => {
-      setPage(value);
-    };
 
     const selectedRestaurants = allRestaurants
       .filter((object) => !!object.dba) // restaurant has a name

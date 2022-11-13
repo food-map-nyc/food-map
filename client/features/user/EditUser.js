@@ -27,7 +27,7 @@ const {id} = useParams()
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(editSingleUser(user.id), username, email,phone,imageUrl,cuisine,zipcode);
+    dispatch(editSingleUser(user.id, {username, email,phone,imageUrl,cuisine,zipcode}));
     navigate("/");
   };
 
@@ -36,7 +36,7 @@ const {id} = useParams()
 <h2> Edit your profile</h2>
 <form onSubmit={handleSubmit}>
     <Box sx={{ '& > :not(style)': { m: 1 } }}>
-       <FormControl onSubmit={handleSubmit}variant="standard">
+       <FormControl variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
          New Username
         </InputLabel>
@@ -53,7 +53,7 @@ const {id} = useParams()
           }
         />
       </FormControl>
-      <FormControl  onSubmit={handleSubmit}variant="standard">
+      <FormControl variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
          New email address 
         </InputLabel>
@@ -70,7 +70,7 @@ const {id} = useParams()
           }
         />
       </FormControl>
-         <FormControl  onSubmit={handleSubmit}variant="standard">
+         <FormControl variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
          New Phone Number 
         </InputLabel>
@@ -87,7 +87,7 @@ const {id} = useParams()
           }
         />
       </FormControl>
-      <FormControl  onSubmit={handleSubmit}variant="standard">
+      <FormControl variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
          New Profile Picture
         </InputLabel>
@@ -104,7 +104,7 @@ const {id} = useParams()
           }
         />
       </FormControl>
-      <FormControl  onSubmit={handleSubmit}variant="standard">
+      <FormControl  variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
          Update your zipcode
         </InputLabel>
@@ -121,7 +121,7 @@ const {id} = useParams()
           }
         />
       </FormControl>
-      <FormControl  onSubmit={handleSubmit}variant="standard">
+      <FormControl  variant="standard">
         <InputLabel htmlFor="input-with-icon-adornment">
          update cuisine choice
         </InputLabel>
@@ -139,7 +139,7 @@ const {id} = useParams()
         />
       </FormControl>
       <div>
-            <Button  onSubmit={handleSubmit} type="submit" color = "primary">Submit</Button>
+            <Button type="submit" color = "primary">Submit</Button>
           </div>
         {/* <form onSubmit={handleSubmit}>
           <h2> Edit your profile information below: </h2>
