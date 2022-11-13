@@ -23,6 +23,16 @@ router.get("/:id", checkUser, async (req, res, next) => {
   }
 });
 
+router.put("/:id",checkUser, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    await user.update(req.body);
+    res.json(user)
+  } catch (err) {
+    next(err);
+  }
+})
+
 router.delete("/:id", checkUser, checkAdmin, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);

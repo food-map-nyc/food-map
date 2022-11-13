@@ -8,7 +8,7 @@ import AllRestaurant from '../features/restaurant/AllRestaurant';
 import SingleRestaurant from '../features/restaurant/SingleRestaurant';
 import AllUsers from '../features/user/AllUsers';
 import SingleUser from '../features/user/SingleUser';
-
+import Suggestion from '../features/suggestion/suggestion';
 /**
  * COMPONENT
  */
@@ -32,6 +32,7 @@ const AppRoutes = () => {
           <Route path={`/restaurants/:objectid`} element={<SingleRestaurant />} />
           {user.isAdmin ? <Route path={'/users'} element = {<AllUsers/>} /> : null}
           {user.isAdmin ? <Route path={`/users/:userid`} element = {<SingleUser/>} /> : null}
+          <Route path={'/suggestion'} element = {<Suggestion/>}/>
         </Routes>
       ) : (
         <Routes>
