@@ -9,6 +9,7 @@ import SingleRestaurant from '../features/restaurant/SingleRestaurant';
 import AllUsers from '../features/user/AllUsers';
 import SingleUser from '../features/user/SingleUser';
 import Suggestion from '../features/suggestion/suggestion';
+import MyMap from '../features/map/MyMap';
 /**
  * COMPONENT
  */
@@ -33,6 +34,7 @@ const AppRoutes = () => {
           {user.isAdmin ? <Route path={'/users'} element = {<AllUsers/>} /> : null}
           {user.isAdmin ? <Route path={`/users/:userid`} element = {<SingleUser/>} /> : null}
           <Route path={'/suggestion'} element = {<Suggestion/>}/>
+          <Route path={'/map'} element = {<MyMap/>}/>
         </Routes>
       ) : (
         <Routes>
