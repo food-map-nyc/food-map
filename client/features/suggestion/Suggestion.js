@@ -3,33 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { fetchAllRestaurant } from '../restaurant/restaurantSlice';
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+import {Card,CardActions, CardContent, CardMedia, Button , Typography, Pagination,Stack } from "@mui/material"
 import { emoji } from 'node-emoji';
 
 const Suggestion = () => {
     const dispatch = useDispatch()
     const navigate =useNavigate()
 
-    const {prefered,username,zipcode} = useSelector((state)=> state.auth.me);
+    const {preferred,username,zipcode} = useSelector((state)=> state.auth.me);
     const allRestaurants = useSelector((state) => state.restaurant.restaurants);
 
 
     const selectedRestaurants = allRestaurants
       .filter((object) => !!object.dba) // restaurant has a name
       .filter((object) => !!object.cuisine_description) // restaurant has a cuisine
-      .filter((object) => object.cuisine_description.toLowerCase() === prefered)
+      .filter((object) => object.cuisine_description.toLowerCase() === preferred)// filter by preffered cuisine
      .filter((object) => object.critical_flag !== "Critical"); // //  restaurant does not have bad health grade
 
-
-
-console.log("prefered",prefered,"username",username,"zipcode", zipcode, "selected",selectedRestaurants)
 
     useEffect(() => {
         dispatch(fetchAllRestaurant());

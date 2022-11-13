@@ -37,7 +37,7 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },   
-  prefered: {
+  preferred: {
     type: Sequelize.STRING,
     defaultValue: "american"
   }, 
