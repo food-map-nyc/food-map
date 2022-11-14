@@ -1,6 +1,6 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import UserProfile from '../user/UserProfile';
+import React from "react";
+import { useSelector } from "react-redux";
+import UserProfile from "../user/userProfile";
 
 /**
  * COMPONENT
@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <div>
-      <UserProfile/>
+      <UserProfile />
     </div>
   );
 };

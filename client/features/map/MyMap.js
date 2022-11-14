@@ -17,7 +17,7 @@ export default function MyMap() {
     setLat(position.coords.latitude);
     setLong(position.coords.longitude);
   }
-  
+
   useEffect(() => {
     getLocation();
     if (lat) {
@@ -26,26 +26,24 @@ export default function MyMap() {
 
       const isRetina = L.Browser.retina;
 
-      const baseUrl =
-        "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey={apiKey}";
-      const retinaUrl =
-        "https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey={apiKey}";
+      const baseUrl = `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}.png?apiKey=${myAPIKey}`;
+      const retinaUrl = `https://maps.geoapify.com/v1/tile/osm-bright/{z}/{x}/{y}@2x.png?apiKey=${myAPIKey}`;
 
       L.tileLayer(isRetina ? retinaUrl : baseUrl, {
-        apiKey: myAPIKey,
+        apiKey: key,
         maxZoom: 20,
         id: "osm-bright",
       }).addTo(map);
 
       const restaurantIcon = L.icon({
-        iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=red&icon=restaurant&apiKey=${myAPIKey}`,
+        iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=red&icon=restaurant&apiKey={}`,
         iconSize: [31, 46], // size of the icon
         iconAnchor: [15.5, 42], // point of the icon which will correspond to marker's location
         popupAnchor: [0, -45], // point from which the popup should open relative to the iconAnchor
       });
 
       const homeIcon = L.icon({
-        iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=red&icon=landmark&iconType=awesome&scaleFactor=2&apiKey=${myAPIKey}`,
+        iconUrl: `https://api.geoapify.com/v1/icon/?type=material&color=red&icon=landmark&iconType=awesome&scaleFactor=2&apiKey={}`,
         iconSize: [31, 46],
         iconAnchor: [15.5, 42],
         popupAnchor: [0, -45],
