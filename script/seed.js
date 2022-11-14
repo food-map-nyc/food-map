@@ -1,14 +1,17 @@
-'use strict'
+"use strict";
 
-const {db, models: {User} } = require('../server/db')
+const {
+  db,
+  models: { User, History },
+} = require("../server/db");
 
 /**
  * seed - this function clears the database, updates tables to
  *      match the models, and populates the database.
  */
 async function seed() {
-  await db.sync({ force: true }) // clears db and matches models to tables
-  console.log('db synced!')
+  await db.sync({ force: true }); // clears db and matches models to tables
+  console.log("db synced!");
 
   // Creating Users
   const users = await Promise.all([
@@ -16,66 +19,84 @@ async function seed() {
       username: "cody",
       email: "cody123@gmail.com",
       password: "123",
-      phone: '9999393842',
+      phone: "9999393842",
       isAdmin: false,
-      isOwner:false, 
+      isOwner: false,
       preferred: "chinese",
-      zipcode: "11230"
+      zipcode: "11230",
     }),
     User.create({
       username: "murphy",
       email: "murphy123@gmail.com",
       password: "123",
-      phone: '9999393843',
+      phone: "9999393843",
       isAdmin: false,
-      isOwner:false,
+      isOwner: false,
       ed: "fusion",
-      zipcode: "11101"
+      zipcode: "11101",
     }),
     User.create({
       username: "paul",
       email: "paul123@gmail.com",
       password: "123",
-      phone: '9999393442',
+      phone: "9999393442",
       isAdmin: true,
-      isOwner:true,
+      isOwner: true,
       preferred: "caribbean",
-      zipcode: "11238"
+      zipcode: "11238",
     }),
     User.create({
       username: "Alan",
       email: "alan123@gmail.com",
       password: "123",
-      phone: '9999391842',
+      phone: "9999391842",
       isAdmin: true,
-      isOwner:true
+      isOwner: true,
     }),
     User.create({
       username: "min",
       email: "min123@gmail.com",
       password: "123",
-      phone: '9929393842',
+      phone: "9929393842",
       isAdmin: true,
-      isOwner:true
+      isOwner: true,
     }),
     User.create({
       username: "bob",
       password: "123",
-      email:"bob@mail.com",
-      phone: '9999393842',
-      isAdmin:false,
-      isOwner:true,
+      email: "bob@mail.com",
+      phone: "9999393842",
+      isAdmin: false,
+      isOwner: true,
       preferred: "french",
-      zipcode: "12100"
+      zipcode: "12100",
     }),
   ]);
 
-  console.log(`seeded ${users.length} users`)
-  console.log(`seeded successfully`)
-  
+  const histories = await Promise.all([
+    History.create({
+      restaurants: [
+        { restaurantId: 50046909, timesVisited: 2 },
+        { restaurantId: 50108172, timesVisited: 1 },
+      ],
+      userId: 2,
+    }),
+    History.create({
+      restaurants: [
+        { restaurantId: 50071766, timesVisited: 1 },
+        { restaurantId: 50089410, timesVisited: 1 },
+      ],
+      userId: 1,
+    }),
+  ]);
+
+  console.log(`seeded ${users.length} users`);
+  console.log(`seeded successfully`);
+
   return {
-    users
-  }
+    users,
+    histories,
+  };
 }
 
 /*
@@ -84,16 +105,16 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log('seeding...')
+  console.log("seeding...");
   try {
-    await seed()
+    await seed();
   } catch (err) {
-    console.error(err)
-    process.exitCode = 1
+    console.error(err);
+    process.exitCode = 1;
   } finally {
-    console.log('closing db connection')
-    await db.close()
-    console.log('db connection closed')
+    console.log("closing db connection");
+    await db.close();
+    console.log("db connection closed");
   }
 }
 
@@ -103,8 +124,8 @@ async function runSeed() {
   any errors that might occur inside of `seed`.
 */
 if (module === require.main) {
-  runSeed()
+  runSeed();
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed
+module.exports = seed;

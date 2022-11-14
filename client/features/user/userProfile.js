@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleUser } from "./singleUserSlice";
 import EditUser from "./EditUser";
+import UserHistory from "./UserHistory";
 import { Avatar, Typography, Card } from "@mui/material";
 
 export default function UserProfile() {
@@ -39,6 +40,7 @@ export default function UserProfile() {
             <div>Avid Foodie since {createdAt.slice(0, 10)}</div>
           </Card>
           <EditUser id={id} user={user} />
+          <UserHistory id={id} />
           <div />
         </>
       )}
