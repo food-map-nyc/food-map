@@ -9,7 +9,7 @@ import SingleRestaurant from "../features/restaurant/SingleRestaurant";
 import AllUsers from "../features/user/AllUsers";
 import SingleUser from "../features/user/SingleUser";
 import Suggestion from "../features/suggestion/Suggestion";
-import MyMap from "../features/map/MyMap";
+import { fetchAllRestaurant } from "../features/restaurant/restaurantSlice";
 /**
  * COMPONENT
  */
@@ -21,6 +21,7 @@ const AppRoutes = () => {
 
   useEffect(() => {
     dispatch(me());
+    dispatch(fetchAllRestaurant())
   }, []);
 
   return (
@@ -41,7 +42,6 @@ const AppRoutes = () => {
             <Route path={`/users/:userid`} element={<SingleUser />} />
           ) : null}
           <Route path={"/suggestion"} element={<Suggestion />} />
-          <Route path={"/map"} element={<MyMap />} />
         </Routes>
       ) : (
         <Routes>
