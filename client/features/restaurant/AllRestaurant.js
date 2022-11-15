@@ -1,29 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchAllRestaurant } from "./restaurantSlice";
-import Pagination from "@mui/material/Pagination";
-import Stack from "@mui/material/Stack";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+import {
+  Pagination,
+  Stack,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+} from "@mui/material";
 
 const AllRestaurant = () => {
   const allRestaurants = useSelector((state) => state.restaurant.restaurants);
-  let selectedRestaurants = allRestaurants
-    .filter((object) => !!object.dba) // restaurant has a name
-    .filter((object) => !!object.cuisine_description) // restaurant has a cuisine
-    .filter((object) => object.critical_flag !== "Critical"); // restaurant does not have bad health grade
-  const dispatch = useDispatch();
+  let selectedRestaurants = allRestaurants.filter(
+    (object) =>
+      !!object.dba &&
+      !!object.cuisine_description &&
+      object.critical_flag !== "Critical"
+  );
+
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const handleChange = (event, value) => {
@@ -33,12 +34,15 @@ const AllRestaurant = () => {
   const [cuisine, setCuisine] = useState("");
   const [borough, setBorough] = useState("");
 
-  const allCuisines = allRestaurants.map(restaurant => restaurant.cuisine_description).reduce((cuisineArray, currentCuisine) => {
-    if(currentCuisine && !cuisineArray.includes(currentCuisine)){
-      cuisineArray.push(currentCuisine)
+  const allCuisines = allRestaurants
+    .map((restaurant) => restaurant.cuisine_description)
+    .reduce((cuisineArray, currentCuisine) => {
+      if (currentCuisine && !cuisineArray.includes(currentCuisine)) {
+        cuisineArray.push(currentCuisine);
       }
-    return cuisineArray
-  }, []).sort()
+      return cuisineArray;
+    }, [])
+    .sort();
 
   const handleCuisine = (event) => {
     setCuisine(event.target.value);
@@ -48,65 +52,59 @@ const AllRestaurant = () => {
     setBorough(event.target.value);
   };
 
-  selectedRestaurants = selectedRestaurants.filter((restaurant) => {
-    if (cuisine) {
-      return restaurant.cuisine_description === cuisine
-    } else {
-      return restaurant
-    }
-  });
+  if (cuisine) {
+    selectedRestaurants = selectedRestaurants.filter(
+      (restaurant) => restaurant.cuisine_description === cuisine
+    );
+  }
 
-  selectedRestaurants = selectedRestaurants.filter((restaurant) => {
-    if (borough) {
-      return restaurant.boro === borough
-    } else {
-      return restaurant
-    }
-  });
-
-  useEffect(() => {
-    dispatch(fetchAllRestaurant());
-  }, []);
+  if (borough) {
+    selectedRestaurants = selectedRestaurants.filter(
+      (restaurant) => restaurant.boro === borough
+    );
+  }
 
   return (
     <div>
       <div>
-       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel id="demo-select-small">Cuisine</InputLabel>
-        <Select
-          labelId="demo-select-small"
-          id="demo-select-small"
-          value={cuisine}
-          label="Cuisine"
-          onChange={handleCuisine}
-        >
-          <MenuItem value="">
-            <em>All</em>
-          </MenuItem>
-          {allCuisines?.map((cuisine, idx) => 
-            <MenuItem value={cuisine} key={idx}>{cuisine}</MenuItem>
-          )}
-        </Select>
-      </FormControl>
-       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel id="demo-select-small">Borough</InputLabel>
-        <Select
-          labelId="demo-select-small"
-          id="demo-select-small"
-          value={borough}
-          label="Borough"
-          onChange={handleBorough}
-        >
-          <MenuItem value="">
-            <em>All</em>
-          </MenuItem>
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="demo-select-small">Cuisine</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={cuisine}
+            label="Cuisine"
+            onChange={handleCuisine}
+          >
+            <MenuItem value="">
+              <em>All</em>
+            </MenuItem>
+            {allCuisines?.map((cuisine, idx) => (
+              <MenuItem value={cuisine} key={idx}>
+                {cuisine}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="demo-select-small">Borough</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={borough}
+            label="Borough"
+            onChange={handleBorough}
+          >
+            <MenuItem value="">
+              <em>All</em>
+            </MenuItem>
             <MenuItem value="Brooklyn">Brooklyn</MenuItem>
             <MenuItem value="Bronx">Bronx</MenuItem>
             <MenuItem value="Manhattan">Manhattan</MenuItem>
             <MenuItem value="Queens">Queens</MenuItem>
             <MenuItem value="Staten Island">Staten Island</MenuItem>
-        </Select>
-      </FormControl>
+          </Select>
+        </FormControl>
       </div>
       <div className="container">
         {selectedRestaurants

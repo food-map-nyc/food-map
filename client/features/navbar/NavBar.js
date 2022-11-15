@@ -5,7 +5,6 @@ import { logout } from "../../app/store";
 
 import GroupsIcon from "@mui/icons-material/Groups";
 import HomeIcon from "@mui/icons-material/Home";
-import MapIcon from '@mui/icons-material/Map';
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.me);
@@ -34,9 +33,6 @@ const Navbar = () => {
                 <GroupsIcon sx={{ fontSize: 40 }} />
               </Link>
             ) : null}
-            <Link to="/map">
-              <MapIcon sx={{ fontSize: 40 }} />
-            </Link>
             <Link to="/suggestion">Give me a Suggestion</Link>
             <button type="button" onClick={logoutAndRedirectHome}>
               Logout
