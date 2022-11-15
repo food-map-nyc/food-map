@@ -2,9 +2,14 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 const History = db.define("history", {
-  restaurants: {
-    type: Sequelize.ARRAY(Sequelize.JSON),
-    defaultValue: [],
+  restaurantId: {
+    type: Sequelize.INTEGER,
+  },
+  restaurantName: {
+    type: Sequelize.STRING,
+  },
+  timesVisited: {
+    type: Sequelize.INTEGER,
   },
 });
 

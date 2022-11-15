@@ -28,8 +28,7 @@ router.get("/:id", checkUser, async (req, res, next) => {
 
 router.get("/:id/history", async (req, res, next) => {
   try {
-    console.log(req.params);
-    const history = await History.findOne({
+    const history = await History.findAll({
       where: {
         userId: req.params.id,
       },

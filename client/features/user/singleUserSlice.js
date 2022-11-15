@@ -92,7 +92,7 @@ const singleUserSlice = createSlice({
   name: "user",
   initialState: {
     user: {},
-    userHistory: {},
+    userHistory: [],
   },
   reducers: {},
   extraReducers: (builder) => {
