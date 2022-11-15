@@ -2,29 +2,27 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "./userSlice";
 import { useNavigate } from "react-router-dom";
-import { deleteSingleUser } from "./singleUserSlice";
+import { deleteSingleUser } from "./userSlice";
 
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 
 import Avatar from "@mui/material/Avatar";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const AllUsers = () => {
   const dispatch = useDispatch();
-  const allUsers = useSelector((state) => state.user);
+  const allUsers = useSelector((state) => state.user.users);
   const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUsers());
   }, []);
 
-  const handleDelete = async (userId) => {
-    await dispatch(deleteSingleUser(userId));
-    await dispatch(fetchUsers());
+  const handleDelete = (userId) => {
+    dispatch(deleteSingleUser(userId))
   };
 
 return (

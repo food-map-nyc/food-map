@@ -1,19 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleUser } from "./singleUserSlice";
+import { fetchSingleUser } from "./userSlice";
 import EditUser from "./EditUser";
 import UserHistory from "./UserHistory";
 import { Avatar, Typography, Card } from "@mui/material";
 
 export default function UserProfile() {
-  const { user, isLoggedIn } = useSelector((state) => {
-    return {
-      user: state.auth.me,
-      isLoggedIn: !!state.auth.me.id,
-    };
-  });
+  const user = useSelector((state) => state.auth.me);
+  const currentUser = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  const { id, email, phone, createdAt, username, imageUrl } = user;
+  const {
+    id,
+    email,
+    phone,
+    createdAt,
+    username,
+    imageUrl,
+    preferred,
+    zipcode,
+  } = currentUser;
   useEffect(() => {
     dispatch(fetchSingleUser(user.id));
   }, []);
@@ -35,9 +40,11 @@ export default function UserProfile() {
 
             <h4>Welcome to your User Dashboard</h4>
             <div> Email: {email}</div>
+            <div> Zipcode: {zipcode}</div>
             <div> You can be reached at: {phone}</div>
             <div>Membership Status: Active</div>
             <div>Avid Foodie since {createdAt.slice(0, 10)}</div>
+            <div>Member's Preferred Cuisine is {preferred}</div>
           </Card>
           <EditUser id={id} user={user} />
           <UserHistory id={id} />

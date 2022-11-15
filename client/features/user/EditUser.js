@@ -1,20 +1,33 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { editSingleUser } from "./singleUserSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { editSingleUser } from "./userSlice";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import {
   Button,
   Card,
-  Typography,
   Box,
   Input,
   InputLabel,
   InputAdornment,
   FormControl,
+  Select,
+  MenuItem,
 } from "@mui/material";
 
-const EditUser = (user) => {
+const EditUser = () => {
+  const allRestaurants = useSelector((state) => state.restaurant.restaurants);
+  const user = useSelector((state) => state.user.user);
+  const allCuisines = allRestaurants
+    .map((restaurant) => restaurant.cuisine_description)
+    .reduce((cuisineArray, currentCuisine) => {
+      if (currentCuisine && !cuisineArray.includes(currentCuisine)) {
+        cuisineArray.push(currentCuisine);
+      }
+      return cuisineArray;
+    }, [])
+    .sort();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -124,19 +137,25 @@ const EditUser = (user) => {
             />
           </FormControl>
           <FormControl variant="standard">
-            <InputLabel htmlFor="input-with-icon-adornment">
-              update cuisine choice
+            <InputLabel id="demo-select-small">
+              Updata Cuisine Choice
             </InputLabel>
-            <Input
-              id={id}
-              onChange={(e) => setcuisine(e.target.value)}
-              name="cuisine"
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
               value={cuisine}
-              placeholder="american"
-              startAdornment={
-                <InputAdornment position="start"></InputAdornment>
-              }
-            />
+              label="Cuisine"
+              onChange={(e) => setcuisine(e.target.value)}
+            >
+              <MenuItem value="">
+                <em>All</em>
+              </MenuItem>
+              {allCuisines?.map((cuisines, idx) => (
+                <MenuItem value={cuisines} key={idx}>
+                  {cuisines}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
           <div>
             <Button type="submit" color="primary">
