@@ -13,6 +13,7 @@ export default function MyMap() {
     }
   }
 
+  // o: you can write this function inline above
   function showPosition(position) {
     setLat(position.coords.latitude);
     setLong(position.coords.longitude);
@@ -20,8 +21,12 @@ export default function MyMap() {
 
   useEffect(() => {
     getLocation();
+    
     if (lat) {
       const map = L.map(`my-map`).setView([lat, long], 10);
+
+      // o: this line is unecessary... you can do this on import
+      // import { key as myAPIKEY } from "../../../secrets";
       const myAPIKey = key;
 
       const isRetina = L.Browser.retina;

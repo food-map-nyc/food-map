@@ -12,6 +12,7 @@ const SingleRestaurant = () => {
     dispatch(fetchSingleRestaurant(objectid));
   }, []);
 
+  // o: you can destructure above in line 8
   const { dba, building, street, boro, zipcode, phone, cuisine_description } = singleRestaurant;
 
   return (

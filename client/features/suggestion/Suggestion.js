@@ -14,6 +14,7 @@ const Suggestion = () => {
     const allRestaurants = useSelector((state) => state.restaurant.restaurants);
 
 
+    // o: you are kinda running this sort of code in many places
     const selectedRestaurants = allRestaurants
       .filter((object) => !!object.dba) // restaurant has a name
       .filter((object) => !!object.cuisine_description) // restaurant has a cuisine
@@ -29,6 +30,7 @@ const Suggestion = () => {
           <div className="container">
             <Typography> These are the places we think you would like {username} {emoji.smiley}</Typography>
             <div></div>
+            {/* o: this code looks weirdly formatted */}
         {selectedRestaurants
           .map((restaurant, idx) => (
             <div key={idx} className="row">

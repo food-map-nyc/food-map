@@ -24,6 +24,7 @@ const AllUsers = () => {
 
   const handleDelete = async (userId) => {
     await dispatch(deleteSingleUser(userId));
+    // o: why do you need to fetch users after a delete?
     await dispatch(fetchUsers());
   };
 

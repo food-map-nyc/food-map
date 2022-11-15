@@ -8,6 +8,8 @@ export default function SingleUser() {
   const user = useSelector((state) => state.singleUser);
   const dispatch = useDispatch();
   const { userid } = useParams();
+
+  // o: you can do this on line 8
   const { email, phone, createdAt, username, imageUrl } = user;
   useEffect(() => {
     dispatch(fetchSingleUser(userid));

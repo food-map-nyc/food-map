@@ -17,10 +17,13 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+// o: why is there an AllRestaurant.js and AllRestaurants.js file?
 const AllRestaurant = () => {
   const allRestaurants = useSelector((state) => state.restaurant.restaurants);
+
+  // o: you can use one filter with &&'s in between each condition
   let selectedRestaurants = allRestaurants
-    .filter((object) => !!object.dba) // restaurant has a name
+    .filter((object) => !!object.dba && !!object.cuisine_description && object.critical_flag !== "Critical") // restaurant has a name
     .filter((object) => !!object.cuisine_description) // restaurant has a cuisine
     .filter((object) => object.critical_flag !== "Critical"); // restaurant does not have bad health grade
   const dispatch = useDispatch();
@@ -33,7 +36,10 @@ const AllRestaurant = () => {
   const [cuisine, setCuisine] = useState("");
   const [borough, setBorough] = useState("");
 
+  // o: you don't need a map and 
   const allCuisines = allRestaurants.map(restaurant => restaurant.cuisine_description).reduce((cuisineArray, currentCuisine) => {
+    // o: you can avoid this check if you make the starting value of cuisineArray into a set
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/Set
     if(currentCuisine && !cuisineArray.includes(currentCuisine)){
       cuisineArray.push(currentCuisine)
       }
@@ -48,6 +54,7 @@ const AllRestaurant = () => {
     setBorough(event.target.value);
   };
 
+  // o: it makes more sense to check if you need to filter via several ifs
   selectedRestaurants = selectedRestaurants.filter((restaurant) => {
     if (cuisine) {
       return restaurant.cuisine_description === cuisine
@@ -109,6 +116,7 @@ const AllRestaurant = () => {
       </FormControl>
       </div>
       <div className="container">
+        {/* o: why are you slicing here? */}
         {selectedRestaurants
           .slice((page - 1) * 18, page * 18)
           .map((restaurant, idx) => (

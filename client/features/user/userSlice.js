@@ -11,6 +11,7 @@ export const fetchUsers = createAsyncThunk("allUsers", async () => {
       return data;
     }
   } catch (err) {
+    // o: avoid try catches in thunks
     console.log(`${err} from get all users`);
   }
 });
@@ -21,6 +22,10 @@ const usersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
+      return action.payload;
+    })
+    
+    builder.addCase(fetchUsers.rejected, (state, action) => {
       return action.payload;
     });
   },

@@ -11,6 +11,7 @@ export const fetchSingleUser = createAsyncThunk("singleUser", async (id) => {
       return data;
     }
   } catch (err) {
+    // o: avoid try catches in thunks
     console.log(`${err} from get single users`);
   }
 });
