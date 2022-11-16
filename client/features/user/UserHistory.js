@@ -1,16 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleUserHistory } from "./singleUserSlice";
+import { editSingleUserHistory, fetchSingleUserHistory } from "./userSlice";
 
 function UserHistory(id) {
-  const history = useSelector((state) => state.singleUser.userHistory);
+  const history = useSelector((state) => state.user.currentUserHistory);
   const dispatch = useDispatch();
   const userId = id.id;
   console.log(history);
 
+  const editHistory = (id) => {
+    dispatch(editSingleUserHistory({ id, userId }));
+  };
+
   useEffect(() => {
     dispatch(fetchSingleUserHistory(userId));
-  }, [dispatch]);
+  }, []);
 
   return (
     <div>
@@ -18,6 +22,7 @@ function UserHistory(id) {
         <div>
           <p>{restaurant.restaurantName}</p>
           <p>Times visited: {restaurant.timesVisited}</p>
+          <p onClick={() => editHistory(restaurant.id)}>+</p>
         </div>
       ))}
     </div>

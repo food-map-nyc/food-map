@@ -52,13 +52,15 @@ router.put("/:id", checkUser, async (req, res, next) => {
 
 router.put("/:id/history", checkUser, async (req, res, next) => {
   try {
-    const history = await History.findOrCreate({
+    const history = await History.findOne({
       where: {
-        userId: req.params.id,
+        id: req.body.id,
       },
     });
-    console.log("history", history);
-    console.log("req.body", req.body);
+    console.log(history);
+    const newVisit = history.dataValues.timesVisited + 1;
+    res.json(await history.update({ timesVisited: newVisit }));
+    console.log(history);
   } catch (err) {
     next(err);
   }
