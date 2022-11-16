@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { ids } from "webpack";
 import { API_KEY } from "../../../secrets";
 
 
@@ -11,8 +10,6 @@ export const fetchAllRestaurant = createAsyncThunk(
       return data;
   }
 );
-
-
 
 export const fetchSingleRestaurant = createAsyncThunk(
   "fetchSingleRestaurant",
