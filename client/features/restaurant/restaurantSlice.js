@@ -1,29 +1,35 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { ids } from "webpack";
+import { API_KEY } from "../../../secrets";
+
+
 
 export const fetchAllRestaurant = createAsyncThunk(
   "fetchAllRestaurant", async () => {
-      const { data } = await axios.get(
-        "https://data.cityofnewyork.us/resource/43nn-pn8j.json"
-      );
+      const { data } = await axios.get(`api/yelp`);
       return data;
   }
 );
 
+
+
 export const fetchSingleRestaurant = createAsyncThunk(
   "fetchSingleRestaurant",
-  async (camis) => {
-      const { data } = await axios.get(
-        "https://data.cityofnewyork.us/resource/43nn-pn8j.json",
-        {
-          params: {
-            camis: camis,
-          },
-        }
-      );
-      return data[0];
+  async (id) => {
+      const { data } = await axios.get(`api/yelp/${id}`);
+      return data;
   }
 );
+
+export const fetchResturantReviews = createAsyncThunk(
+  "resturantReviews",
+  async (id) => {
+      const { data } = await axios.get(`api/yelp/${id}/reviews`);
+      return data;
+  }
+);
+
 
 export const restaurantSlice = createSlice({
   name: "restaurant",
