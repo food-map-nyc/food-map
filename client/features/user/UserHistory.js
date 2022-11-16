@@ -4,6 +4,7 @@ import { editSingleUserHistory, fetchSingleUserHistory } from "./userSlice";
 
 function UserHistory(id) {
   const history = useSelector((state) => state.user.currentUserHistory);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const userId = id.id;
   console.log(history);
@@ -14,7 +15,7 @@ function UserHistory(id) {
 
   useEffect(() => {
     dispatch(fetchSingleUserHistory(userId));
-  }, []);
+  }, [user]);
 
   return (
     <div>
