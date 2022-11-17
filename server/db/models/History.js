@@ -10,6 +10,7 @@ const History = db.define("history", {
   },
   timesVisited: {
     type: Sequelize.INTEGER,
+    defaultValue: 1,
   },
 });
 

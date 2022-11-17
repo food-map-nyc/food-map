@@ -68,6 +68,23 @@ export const editSingleUserHistory = createAsyncThunk(
   }
 );
 
+export const createNewUserHistory = createAsyncThunk(
+  "createUserHistory",
+  async ({ userId, restaurantId, restaurantName }) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.post(
+        `/api/users/${userId}/history`,
+        { userId, restaurantId, restaurantName },
+        {
+          headers: { authorization: token },
+        }
+      );
+      return data;
+    }
+  }
+);
+
 export const deleteSingleUser = createAsyncThunk("deleteUser", async (user) => {
   const token = window.localStorage.getItem("token");
   if (token) {
@@ -122,6 +139,12 @@ const usersSlice = createSlice({
       });
     });
     builder.addCase(editSingleUserHistory.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(createNewUserHistory.fulfilled, (state, action) => {
+      state.currentUserHistory = action.payload;
+    });
+    builder.addCase(createNewUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
