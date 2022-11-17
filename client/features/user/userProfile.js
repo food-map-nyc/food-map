@@ -2,13 +2,23 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleUser } from "./userSlice";
 import EditUser from "./EditUser";
+import UserHistory from "./UserHistory";
 import { Avatar, Typography, Card } from "@mui/material";
 
 export default function UserProfile() {
   const user = useSelector((state) => state.auth.me);
-  const currentUser = useSelector(state => state.user.user) 
+  const currentUser = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  const { id, email, phone, createdAt, username, imageUrl, preferred, zipcode } = currentUser;
+  const {
+    id,
+    email,
+    phone,
+    createdAt,
+    username,
+    imageUrl,
+    preferred,
+    zipcode,
+  } = currentUser;
   useEffect(() => {
     dispatch(fetchSingleUser(user.id));
   }, []);
@@ -36,7 +46,8 @@ export default function UserProfile() {
             <div>Avid Foodie since {createdAt.slice(0, 10)}</div>
             <div>Member's Preferred Cuisine is {preferred}</div>
           </Card>
-          <EditUser />
+          <EditUser id={id} user={user} />
+          <UserHistory id={id} />
           <div />
         </>
       )}
