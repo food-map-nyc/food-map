@@ -16,17 +16,17 @@ import {
 } from "@mui/material";
 
 const EditUser = () => {
-  const allRestaurants = useSelector((state) => state.restaurant.restaurants);
+  const allRestaurants = useSelector((state) => state.restaurant.businesses);
   const user = useSelector(state => state.user.user)
-  const allCuisines = allRestaurants
-  .map((restaurant) => restaurant.cuisine_description)
-  .reduce((cuisineArray, currentCuisine) => {
-    if (currentCuisine && !cuisineArray.includes(currentCuisine)) {
-      cuisineArray.push(currentCuisine);
-    }
-    return cuisineArray;
-  }, [])
-  .sort();
+  // const allCuisines = allRestaurants
+  // .map((restaurant) => restaurant.cuisine_description)
+  // .reduce((cuisineArray, currentCuisine) => {
+  //   if (currentCuisine && !cuisineArray.includes(currentCuisine)) {
+  //     cuisineArray.push(currentCuisine);
+  //   }
+  //   return cuisineArray;
+  // }, [])
+  // .sort();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -135,8 +135,8 @@ const EditUser = () => {
                 <InputAdornment position="start"></InputAdornment>
               }
             />
-          </FormControl>
-          <FormControl variant="standard">
+            </FormControl> 
+          {/* <FormControl variant="standard">
           <InputLabel id="demo-select-small">Updata Cuisine Choice</InputLabel>
           <Select
             labelId="demo-select-small"
@@ -154,7 +154,7 @@ const EditUser = () => {
               </MenuItem>
             ))}
           </Select>
-          </FormControl>
+          </FormControl>  */}
           <div>
             <Button type="submit" color="primary">
               Submit

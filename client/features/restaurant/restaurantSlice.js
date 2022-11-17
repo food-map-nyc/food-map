@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { API_KEY } from "../../../secrets";
-
 
 
 export const fetchAllRestaurant = createAsyncThunk(
@@ -14,7 +12,8 @@ export const fetchAllRestaurant = createAsyncThunk(
 export const fetchSingleRestaurant = createAsyncThunk(
   "fetchSingleRestaurant",
   async (id) => {
-      const { data } = await axios.get(`api/yelp/${id}`);
+      const  data  = await axios.get(`api/yelp/${id}`);
+      console.log(data, "data from single fetch")
       return data;
   }
 );

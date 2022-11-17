@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
@@ -13,18 +13,15 @@ import { emoji } from "node-emoji";
 import MyMap from "./MyMap";
 
 const Suggestion = () => {
+  const suggestions = useSelector((state)=> state.suggestions.suggested)
+  const  { email, username, imageUrl, preferred, zipcode } = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
-  const { preferred, username } = useSelector((state) => state.user.user);
-  const allRestaurants = useSelector((state) => state.restaurant.restaurants);
+ const [searchParams, setSearchParams] = useState({ term, location });
 
-  const selectedRestaurants = allRestaurants.filter(
-    (object) =>
-      !!object.dba &&
-      !!object.cuisine_description &&
-      object.cuisine_description.toLowerCase() === preferred.toLowerCase() &&
-      object.critical_flag !== "Critical"
-  );
+const Cuisines = suggestions.categories.map((item, key) =>
+<span key={key}>{item.title}, </span>
+)
 
   return (
     <div>
@@ -34,21 +31,21 @@ const Suggestion = () => {
         </Typography>
       </div>
       <div className="container">
-        <MyMap selectedRestaurants={selectedRestaurants} />
-        {selectedRestaurants.map((restaurant, idx) => (
+        <MyMap selectedRestaurants={suggestions} />
+        {suggestions.map((restaurant, idx) => (
           <div key={idx}>
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia
                 component="img"
                 height="70"
-                image="https://toppng.com/uploads/preview/restaurant-png-11554005053riiacqdjki.png"
+                image=""
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
-                  {restaurant.dba}
+                  {restaurant.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Address: {restaurant.building} {restaurant.street},{" "}
+                  Address: {restaurant.address1} {restaurant.address2},{" "}
                   {restaurant.boro}, NY {restaurant.zipcode}
                 </Typography>
               </CardContent>
@@ -56,7 +53,7 @@ const Suggestion = () => {
                 <Button size="small">Check-In</Button>
                 <Button
                   size="small"
-                  onClick={() => navigate(`/restaurants/${restaurant.camis}`)}
+                  onClick={() => navigate(`/restaurants/${restaurant.id}`)}
                 >
                   Learn More
                 </Button>
