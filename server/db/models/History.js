@@ -12,6 +12,10 @@ const History = db.define("history", {
     type: Sequelize.INTEGER,
     defaultValue: 1,
   },
+  favorite: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 module.exports = History;

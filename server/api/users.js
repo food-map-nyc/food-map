@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User, History },
+  models: { User, History, Favorite },
 } = require("../db");
 const { checkAdmin, checkUser } = require("./middleware");
 module.exports = router;
@@ -25,7 +25,7 @@ router.get("/:id", checkUser, async (req, res, next) => {
   }
 });
 
-router.get("/:id/history", async (req, res, next) => {
+router.get("/:id/history", checkUser, async (req, res, next) => {
   try {
     const history = await History.findAll({
       where: {
@@ -33,6 +33,19 @@ router.get("/:id/history", async (req, res, next) => {
       },
     });
     res.json(history);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:id/favorites", async (req, res, next) => {
+  try {
+    const favorites = await Favorite.findAll({
+      where: {
+        userId: req.params.id,
+      },
+    });
+    res.json(favorites);
   } catch (err) {
     next(err);
   }

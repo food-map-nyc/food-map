@@ -14,8 +14,8 @@ const SingleRestaurant = () => {
   const user = useSelector((state) => state.auth.me);
   const history = useSelector((state) => state.user.currentUserHistory);
   const userId = user.id;
+  const timesVisited = 0;
   const dispatch = useDispatch();
-  console.log(history);
   const {
     camis,
     dba,
@@ -27,15 +27,37 @@ const SingleRestaurant = () => {
     cuisine_description,
   } = singleRestaurant;
 
-  // const addToUserHistory = () => {
-  //   // if ()
-  //   dispatch(createNewUserHistory({ userId, camis, dba }));
+  const addToUserHistory = () => {
+    dispatch(
+      createNewUserHistory({
+        userId: userId,
+        restaurantId: camis,
+        restaurantName: dba,
+      })
+    );
+    dispatch(fetchSingleUserHistory(userId));
+  };
+
+  // const findTimesVisited = () => {
+  //   for (let i = 0; i < history.length; i++) {
+  //     if (history[i].restaurantId === singleRestaurant.camis)
+  //       return history[i].timesVisited;
+  //   }
+  //   return false;
   // };
+
   useEffect(() => {
     dispatch(fetchSingleRestaurant(objectid));
-    dispatch(fetchSingleUser(userId));
-    dispatch(fetchSingleUserHistory(userId));
-  }, []);
+    if (userId) {
+      dispatch(fetchSingleUser(userId));
+      dispatch(fetchSingleUserHistory(userId));
+      for (let i = 0; i < history.length; i++) {
+        if (history[i].restaurantId === singleRestaurant.camis)
+          timesVisited = history[i].timesVisited;
+      }
+    }
+  }, [userId]);
+  console.log(timesVisited);
 
   return (
     <div>
@@ -49,6 +71,11 @@ const SingleRestaurant = () => {
         </p>
         <p>Phone Number: {phone}</p>
         <p>Cuisine: {cuisine_description}</p>
+        {timesVisited ? (
+          <p>You have been here {timesVisited} times</p>
+        ) : (
+          <p>You haven't been here yet!</p>
+        )}
         <button onClick={() => addToUserHistory()}>
           Add to restaurant history
         </button>
