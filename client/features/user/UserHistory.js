@@ -11,11 +11,12 @@ function UserHistory(id) {
 
   const editHistory = (id) => {
     dispatch(editSingleUserHistory({ id, userId }));
+    dispatch(fetchSingleUserHistory(userId));
   };
 
   useEffect(() => {
     dispatch(fetchSingleUserHistory(userId));
-  }, [user]);
+  }, []);
 
   return (
     <div>
