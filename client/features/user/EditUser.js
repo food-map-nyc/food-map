@@ -12,7 +12,7 @@ import {
   InputAdornment,
   FormControl,
   Select,
-  MenuItem
+  MenuItem,
 } from "@mui/material";
 
 const EditUser = () => {
@@ -27,6 +27,7 @@ const EditUser = () => {
   //   return cuisineArray;
   // }, [])
   // .sort();
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -135,6 +136,7 @@ const EditUser = () => {
                 <InputAdornment position="start"></InputAdornment>
               }
             />
+
             </FormControl> 
           {/* <FormControl variant="standard">
           <InputLabel id="demo-select-small">Updata Cuisine Choice</InputLabel>

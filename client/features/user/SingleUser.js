@@ -5,7 +5,8 @@ import { fetchSingleUser } from "./userSlice";
 import Avatar from "@mui/material/Avatar";
 
 export default function SingleUser() {
-  const  { email, phone, createdAt, username, imageUrl, preferred, zipcode } = useSelector((state) => state.user.user);
+  const { email, phone, createdAt, username, imageUrl, preferred, zipcode } =
+    useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const { userid } = useParams();
   useEffect(() => {
