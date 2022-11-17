@@ -14,7 +14,8 @@ export const fetchSingleRestaurant = createAsyncThunk(
   async (id) => {
       const  data  = await axios.get(`api/yelp/${id}`);
       console.log(data, "data from single fetch")
-      return data;
+      console.log (id,"id from slice")
+      return data[0];
   }
 );
 

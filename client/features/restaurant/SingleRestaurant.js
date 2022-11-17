@@ -7,9 +7,8 @@ const SingleRestaurant = () => {
   const { id } = useParams();
   const singleRestaurant = useSelector((state) => state.restaurant.restaurant);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(fetchSingleRestaurant(id));
+    dispatch(fetchSingleRestaurant('KgpOYAG-r_eDsQXFXt0nnQ'));
   }, []);
 
   const {name, image_url} = singleRestaurant;

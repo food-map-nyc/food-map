@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Card,
   CardActions,
@@ -11,17 +11,34 @@ import {
 } from "@mui/material";
 import { emoji } from "node-emoji";
 import MyMap from "./MyMap";
+import { getSuggestedResturant } from "./suggestionSlice";
 
 const Suggestion = () => {
-  const suggestions = useSelector((state)=> state.suggestions.suggested)
+  const dispatch = useDispatch()
+  const suggestions = useSelector((state)=> state.suggestion.restaurants.businesses)
+  const allRestaurants = useSelector((state) => state.restaurant.restaurants.businesses);
   const  { email, username, imageUrl, preferred, zipcode } = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
- const [searchParams, setSearchParams] = useState({ term, location });
+//  const [searchParams, setSearchParams] = useState({ term: preferred, location:"NYC" });
 
-const Cuisines = suggestions.categories.map((item, key) =>
-<span key={key}>{item.title}, </span>
-)
+
+// const Cuisines = suggestions[].categories.map((item, key) =>
+// <span key={key}>{item.title}, </span>
+// )
+// const selectedRestaurants = allRestaurants.filter(
+//   (object) =>
+//     object.categories.filter((cuisine)=> cuisine.title === preferred)
+// )
+console.log(suggestions, "selected resturants")
+
+// const cuisine = suggestions.categories.map((item, key) =>
+// <span key={key}>{item.title}, </span>
+// )
+
+useEffect(() => {
+  dispatch(getSuggestedResturant());
+}, []);
 
   return (
     <div>
@@ -34,20 +51,27 @@ const Cuisines = suggestions.categories.map((item, key) =>
         <MyMap selectedRestaurants={suggestions} />
         {suggestions.map((restaurant, idx) => (
           <div key={idx}>
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ maxWidth: 200 }}>
               <CardMedia
                 component="img"
-                height="70"
-                image=""
+                height="50"
+                width='50'
+                image={restaurant.image_url}
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {restaurant.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Address: {restaurant.address1} {restaurant.address2},{" "}
-                  {restaurant.boro}, NY {restaurant.zipcode}
+                  Address: {restaurant.location.display_address[0]},{" "}
+                  {restaurant.location.display_address[1]}
                 </Typography>
+                <Typography>
+            {restaurant.rating} out of 5 {emoji.star2}
+        </Typography>
+        <Typography>
+            {restaurant.price} {emoji.money_with_wings}
+        </Typography>
               </CardContent>
               <CardActions>
                 <Button size="small">Check-In</Button>

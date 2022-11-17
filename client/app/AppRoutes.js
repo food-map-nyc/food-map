@@ -10,6 +10,7 @@ import AllUsers from "../features/user/AllUsers";
 import SingleUser from "../features/user/SingleUser";
 import Suggestion from "../features/suggestion/Suggestion";
 import { fetchAllRestaurant } from "../features/restaurant/restaurantSlice";
+import { getSuggestedResturant } from "../features/suggestion/suggestionSlice";
 /**
  * COMPONENT
  */
@@ -22,6 +23,7 @@ const AppRoutes = () => {
   useEffect(() => {
     dispatch(me());
     dispatch(fetchAllRestaurant())
+    dispatch(getSuggestedResturant())
   }, []);
 
   return (

@@ -3,8 +3,10 @@ import axios from "axios";
 
 
 export const getSuggestedResturant  = createAsyncThunk(
-  "suggestion", async ({searchParams}) => {
-      const { data } = await axios.get(`api/yelp/suggestion`, {searchParams});
+//   "suggestion", async ({searchParams}) => {
+    // const { data } = await axios.get(`api/suggestion`, {searchParams});
+     "suggestion", async () => {
+      const { data } = await axios.get(`api/suggestion`);
       return data;
   }
 );

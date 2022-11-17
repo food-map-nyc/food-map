@@ -56,7 +56,7 @@ import { fetchAllRestaurant } from "./restaurantSlice";
                   return (
                     <Grid item key={id} xs={12} sm={6} md={4} lg={4}>
                       <CardContent>
-                        <Link to={`/restaurants/${id}`}>
+                        <Link to={`/restaurants/KgpOYAG-r_eDsQXFXt0nnQ`}>
                           <Button>
                             <Typography
                               variant="h6"
