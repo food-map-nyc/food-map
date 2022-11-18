@@ -16,13 +16,23 @@ import { getSuggestedResturant } from "./suggestionSlice";
 const Suggestion = () => {
   const dispatch = useDispatch()
   const suggestions = useSelector((state)=> state.suggestion.restaurants.businesses)
-  const allRestaurants = useSelector((state) => state.restaurant.restaurants.businesses);
   const  { email, username, imageUrl, preferred, zipcode } = useSelector((state) => state.user.user);
   const navigate = useNavigate();
 
-//  const [searchParams, setSearchParams] = useState({ term: preferred, location:"NYC" });
+ const [searchParams, setSearchParams] = useState({ term: "american", limit:5});
+const [lattitude, setLattitude] = useState("");
+const [longitude, setLongitude] = useState("");
 
-
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLattitude(position.coords.latitude);
+      setLongitude (position.coords.longitude);
+    });
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
+}
 // const Cuisines = suggestions[].categories.map((item, key) =>
 // <span key={key}>{item.title}, </span>
 // )
@@ -30,7 +40,6 @@ const Suggestion = () => {
 //   (object) =>
 //     object.categories.filter((cuisine)=> cuisine.title === preferred)
 // )
-console.log(suggestions, "selected resturants")
 
 // const cuisine = suggestions.categories.map((item, key) =>
 // <span key={key}>{item.title}, </span>
