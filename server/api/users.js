@@ -56,10 +56,8 @@ router.put("/:id/history", checkUser, async (req, res, next) => {
         id: req.body.id,
       },
     });
-    console.log(history);
     const newVisit = history.dataValues.timesVisited + 1;
     res.json(await history.update({ timesVisited: newVisit }));
-    console.log(history);
   } catch (err) {
     next(err);
   }

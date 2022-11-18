@@ -7,7 +7,7 @@ function UserHistory(id) {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const userId = id.id;
-  console.log(history);
+
 
   const editHistory = (id) => {
     dispatch(editSingleUserHistory({ id, userId }));
