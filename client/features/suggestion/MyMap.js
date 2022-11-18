@@ -4,6 +4,7 @@ export default function MyMap(props) {
   const [lat, setLat] = useState("");
   const [long, setLong] = useState("");
   const { selectedRestaurants } = props;
+  const { businesses } = selectedRestaurants;
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -35,14 +36,14 @@ export default function MyMap(props) {
       popupAnchor: [0, -45],
     });
 
-    if (lat) {
-      const container = document.getElementById("map-container");
-      container.removeChild(container.firstElementChild);
-      const newMap = document.createElement("div");
-      newMap.setAttribute("id", "my-map");
-      container.appendChild(newMap);
+    const container = document.getElementById("map-container");
+    container.removeChild(container.firstElementChild);
+    const newMap = document.createElement("div");
+    newMap.setAttribute("id", "my-map");
+    container.appendChild(newMap);
 
-      const map = L.map(`my-map`).setView([lat, long], 10);
+    if (lat && businesses) {
+      const map = L.map(`my-map`).setView([lat, long], 12);
 
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 20,
@@ -55,33 +56,47 @@ export default function MyMap(props) {
         .bindPopup(homeMarkerPopup)
         .addTo(map);
 
-      selectedRestaurants.forEach((restaurant) => {
-        if (restaurant.latitude && restaurant.longitude) {
-          L.marker([restaurant.latitude, restaurant.longitude], {
-            icon: restaurantIcon,
-          })
-            .bindPopup(L.popup().setContent(restaurant.dba))
+      businesses.forEach((restaurant) => {
+        if (
+          restaurant.coordinates.latitude &&
+          restaurant.coordinates.longitude
+        ) {
+          L.marker(
+            [restaurant.coordinates.latitude, restaurant.coordinates.longitude],
+            {
+              icon: restaurantIcon,
+            }
+          )
+            .bindPopup(L.popup().setContent(restaurant.name))
             .addTo(map);
         }
       });
-    } else {
-      const map = L.map(`my-map`).setView([40.7896239, -73.9598939], 10);
+    }
+
+    if (!lat && businesses) {
+      const map = L.map(`my-map`).setView([40.72393, -73.98383], 12);
 
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 20,
       }).addTo(map);
 
-      selectedRestaurants.forEach((restaurant) => {
-        if (restaurant.latitude && restaurant.longitude) {
-          L.marker([restaurant.latitude, restaurant.longitude], {
-            icon: restaurantIcon,
-          })
-            .bindPopup(L.popup().setContent(restaurant.dba))
+      businesses.forEach((restaurant) => {
+        if (
+          restaurant.coordinates.latitude &&
+          restaurant.coordinates.longitude
+        ) {
+          L.marker(
+            [restaurant.coordinates.latitude, restaurant.coordinates.longitude],
+            {
+              icon: restaurantIcon,
+            }
+          )
+            .bindPopup(L.popup().setContent(restaurant.name))
             .addTo(map);
         }
       });
     }
-  }, [lat]);
+  }, [lat, businesses]);
   return (
     <div id="map-container">
       <div id="my-map"></div>

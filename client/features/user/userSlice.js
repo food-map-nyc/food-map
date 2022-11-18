@@ -23,12 +23,21 @@ export const fetchSingleUser = createAsyncThunk("singleUser", async (id) => {
 
 export const editSingleUser = createAsyncThunk(
   "editUser",
-  async ({ id, username, email, phone, imageUrl, preferred, zipcode }) => {
+  async ({
+    id,
+    username,
+    email,
+    phone,
+    imageUrl,
+    preferred,
+    cuisine,
+    zipcode,
+  }) => {
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.put(
         `/api/users/${id}`,
-        { username, email, phone, imageUrl, preferred, zipcode },
+        { username, email, phone, imageUrl, preferred, cuisine, zipcode },
         {
           headers: { authorization: token },
         }
@@ -61,23 +70,35 @@ const usersSlice = createSlice({
       state.users = action.payload;
     });
     builder.addCase(fetchUsers.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(fetchSingleUser.fulfilled, (state, action) => {
       state.user = action.payload;
     });
     builder.addCase(fetchSingleUser.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(editSingleUser.fulfilled, (state, action) => {
-      state.user = action.payload
-      state.users.filter((user) => user.id !== action.payload.id )
-      state.users.push(action.payload)
+      state.user = action.payload;
+      state.users.filter((user) => user.id !== action.payload.id);
+      state.users.push(action.payload);
     });
     builder.addCase(editSingleUser.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.fulfilled, (state, action) => {
@@ -85,9 +106,5 @@ const usersSlice = createSlice({
     });
   },
 });
-
-export const selectUsers = (state) => {
-  return state.users;
-};
 
 export default usersSlice.reducer;
