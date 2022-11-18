@@ -39,8 +39,12 @@ const User = db.define('user', {
   },   
   preferred: {
     type: Sequelize.STRING,
-    defaultValue: "american"
-  }, 
+    defaultValue: "American (New)"
+  },
+  cuisine: {
+    type: Sequelize.STRING,
+    defaultValue: "newamerican"
+  },  
   zipcode: {
     type:Sequelize.STRING,
     defaultValue: "11001"

@@ -21,9 +21,10 @@ async function seed() {
       password: "123",
       phone: "9999393842",
       isAdmin: false,
-      isOwner: false,
-      preferred: "chinese",
-      zipcode: "11230",
+      isOwner:false, 
+      preferred: "Chinese",
+      cuisine: "chinese",
+      zipcode: "11230"
     }),
     User.create({
       username: "murphy",
@@ -31,9 +32,10 @@ async function seed() {
       password: "123",
       phone: "9999393843",
       isAdmin: false,
-      isOwner: false,
-      ed: "fusion",
-      zipcode: "11101",
+      isOwner:false,
+      preferred: "Korean",
+      cuisine: "korean",
+      zipcode: "11101"
     }),
     User.create({
       username: "paul",
@@ -41,9 +43,10 @@ async function seed() {
       password: "123",
       phone: "9999393442",
       isAdmin: true,
-      isOwner: true,
-      preferred: "caribbean",
-      zipcode: "11238",
+      isOwner:true,
+      preferred: "Pizza",
+      cuisine: "pizza",
+      zipcode: "11238"
     }),
     User.create({
       username: "Alan",
@@ -68,7 +71,8 @@ async function seed() {
       phone: "9999393842",
       isAdmin: false,
       isOwner: true,
-      preferred: "french",
+      preferred: "French",
+      cuisine: "french",
       zipcode: "12100",
     }),
   ]);

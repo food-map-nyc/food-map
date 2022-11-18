@@ -20,8 +20,8 @@ function UserHistory(id) {
 
   return (
     <div>
-      {history?.map((restaurant) => (
-        <div>
+      {history?.map((restaurant, idx) => (
+        <div key={idx}>
           <p>{restaurant.restaurantName}</p>
           <p>Times visited: {restaurant.timesVisited}</p>
           <p onClick={() => editHistory(restaurant.id)}>+</p>
