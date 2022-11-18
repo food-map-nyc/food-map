@@ -73,7 +73,7 @@ const AllRestaurant = () => {
             <MenuItem value="">
               <em>All</em>
             </MenuItem>
-            {cuisineFilter?.map((cuisine, idx) => (
+            {cuisineFilter?.sort().map((cuisine, idx) => (
               <MenuItem value={cuisine} key={idx}>
                 {cuisine}
               </MenuItem>
