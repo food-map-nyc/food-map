@@ -162,7 +162,7 @@ const usersSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(createNewUserHistory.fulfilled, (state, action) => {
-      state.currentUserHistory = action.payload;
+      state.currentUserHistory.push(action.payload);
     });
     builder.addCase(createNewUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
