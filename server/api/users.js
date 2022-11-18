@@ -18,7 +18,6 @@ router.get("/", checkUser, checkAdmin, async (req, res, next) => {
 
 router.get("/:id", checkUser, async (req, res, next) => {
   try {
-    console.log(req.params);
     const user = await User.findByPk(req.params.id);
     res.json(user);
   } catch (err) {
@@ -57,10 +56,8 @@ router.put("/:id/history", checkUser, async (req, res, next) => {
         id: req.body.id,
       },
     });
-    console.log(history);
     const newVisit = history.dataValues.timesVisited + 1;
     res.json(await history.update({ timesVisited: newVisit }));
-    console.log(history);
   } catch (err) {
     next(err);
   }

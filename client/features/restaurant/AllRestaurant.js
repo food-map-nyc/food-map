@@ -1,101 +1,152 @@
-
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  Button,
-  CardContent,
-  Grid,
-  Typography,
   Pagination,
-  Box,
+  Stack,
+  Card,
+  Button,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Grid,
 } from "@mui/material";
-import { fetchAllRestaurant } from "./restaurantSlice";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import {
+  fetchAllRestaurant,
+  fetchByBorough,
+  fetchByCuisine,
+  fetchByBoroughCuisine,
+} from "./restaurantSlice";
 
-/**
- * COMPONENT
- */
- const AllRestaurant = () => {
-  const user = useSelector((state) => state.auth.me);
-  const userId = user.id;
-
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(9);
+const AllRestaurant = () => {
+  const allRestaurants = useSelector((state) => state.restaurant.restaurants);
 
   const dispatch = useDispatch();
-  const allRestaurants = useSelector((state) => state.restaurant.restaurants.businesses);
 
+  const [page, setPage] = useState(1);
+  const [cuisine, setCuisine] = useState("");
+  const [borough, setBorough] = useState("");
+
+  let cuisineFilter = [];
+
+  const allCuisines = allRestaurants.businesses
+    ?.map((restaurant) => restaurant.categories)
+    .flat()
+    .reduce((cuisineObject, cuisineArray) => {
+      if (!(cuisineArray.title in cuisineObject)) {
+        cuisineObject[cuisineArray.title] = cuisineArray.alias;
+        cuisineFilter.push(cuisineArray.title);
+      }
+      return cuisineObject;
+    }, {});
 
   useEffect(() => {
-    dispatch(fetchAllRestaurant());
-  }, []);
-
-  useEffect(() => {
-    if (allRestaurants.length > 0) {
-      setLoading(false);
+    if (borough && cuisine) {
+      let alias = allCuisines[cuisine];
+      dispatch(fetchByBoroughCuisine({ borough, cuisine: alias, page }));
+    } else if (borough && !cuisine) {
+      dispatch(fetchByBorough({ borough, page }));
+    } else if (!borough && cuisine) {
+      let alias = allCuisines[cuisine];
+      dispatch(fetchByCuisine({ cuisine: alias, page }));
+    } else {
+      dispatch(fetchAllRestaurant(page));
     }
-  }, [allRestaurants]);
+  }, [page, cuisine, borough]);
 
-
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-
-  return loading ? (
-    <Typography>
-      <img src="https://i.ibb.co/3F9Q14c/Albums-2.gif"></img>
-    </Typography>
-  ) : (
+  return (
     <div>
       <div>
-        <Grid container>
-          {allRestaurants && allRestaurants.length
-            ? allRestaurants
-                .map(({ id, name, image_url }) => {
-                  return (
-                    <Grid item key={id} xs={12} sm={6} md={4} lg={4}>
-                      <CardContent>
-                        <Link to={`/restaurants/KgpOYAG-r_eDsQXFXt0nnQ`}>
-                          <Button>
-                            <Typography
-                              variant="h6"
-                              fontFamily="Barlow Condensed"
-                            > {name}
-                            </Typography>
-                          </Button>
-                          <br></br>
-                          <img
-                            src={image_url}
-                            loading="lazy"
-                            width="300px"
-                            height="300px"
-                          />
-                        </Link>
-                        <br></br>
-                      </CardContent>
-                    </Grid>
-                  );
-                })
-                .slice(indexOfFirstPost, indexOfLastPost)
-            : null}
-        </Grid>
-        <Box
-          justifyContent={"center"}
-          alignItems="center"
-          display={"flex"}
-          sx={{ margin: "20px 0px" }}
-        >
-          <Pagination
-            count={Math.ceil(allRestaurants.length / 9)}
-            onChange={(e, value) => setCurrentPage(value)}
-          />
-        </Box>
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="demo-select-small">Cuisine</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={cuisine}
+            label="Cuisine"
+            onChange={(event) => {
+              setCuisine(event.target.value);
+            }}
+          >
+            <MenuItem value="">
+              <em>All</em>
+            </MenuItem>
+            {cuisineFilter?.sort().map((cuisine, idx) => (
+              <MenuItem value={cuisine} key={idx}>
+                {cuisine}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="demo-select-small">Borough</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={borough}
+            label="Borough"
+            onChange={(event) => setBorough(event.target.value)}
+          >
+            <MenuItem value="">
+              <em>All</em>
+            </MenuItem>
+            <MenuItem value="Brooklyn">Brooklyn</MenuItem>
+            <MenuItem value="Bronx">Bronx</MenuItem>
+            <MenuItem value="New York">New York</MenuItem>
+            <MenuItem value="Queens">Queens</MenuItem>
+            <MenuItem value="Staten Island">Staten Island</MenuItem>
+          </Select>
+        </FormControl>
       </div>
+      <Grid container spacing={2}>
+        {allRestaurants.businesses
+          ? allRestaurants.businesses.map((restaurant, idx) => (
+              <Grid item xs={12} md={6} key={idx}>
+                <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
+                  <div>
+                    <img className="image" src={restaurant.image_url} />
+                  </div>
+                  <div>
+                    <a href={`/restaurants/${restaurant.id}`}>
+                      <h3>{restaurant.name}</h3>
+                    </a>
+                    <p>
+                      {restaurant.location.display_address[0]},{" "}
+                      {restaurant.location.display_address[1]}
+                    </p>
+                    <p>
+                      Cuisine:{" "}
+                      {restaurant.categories
+                        .map((cuisine) => cuisine.title)
+                        .join(", ")}
+                    </p>
+                    <div>
+                      <Button size="small">
+                        <CheckCircleOutlineIcon />
+                        Check-In
+                      </Button>
+                      <Button size="small">
+                        <StarOutlineIcon />
+                        Wish List
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </Grid>
+            ))
+          : null}
+      </Grid>
+      <Stack spacing={2}>
+        <Pagination
+          count={20}
+          page={page}
+          onChange={(event, value) => setPage(value)}
+        />
+      </Stack>
     </div>
   );
 };
 
-export default AllRestaurant
-
-
+export default AllRestaurant;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSingleRestaurant } from "./restaurantSlice";
+import { Rating } from "@mui/material";
 
 const SingleRestaurant = () => {
   const { id } = useParams();
@@ -11,20 +12,38 @@ const SingleRestaurant = () => {
     dispatch(fetchSingleRestaurant('KgpOYAG-r_eDsQXFXt0nnQ'));
   }, []);
 
-  const {name, image_url} = singleRestaurant;
+  const {
+    name,
+    image_url,
+    location,
+    display_phone,
+    categories,
+    price,
+    rating,
+    review_count,
+  } = singleRestaurant;
 
   return (
-    <div>
-        <img
-          src={image_url}
-        />
+    <div className="container">
+      <div>
+        <img src={image_url} />
+      </div>
       <div>
         <h1>{name}</h1>
-        {/* <p>
-          Address: {building} {street}, {boro} NY {zipcode}
+        <p>
+          Rating:{" "}
+          {rating ? (
+            <Rating name="half-rating" defaultValue={rating} precision={0.5} />
+          ) : null}{" "}
+          ({review_count} reviews)
         </p>
-        <p>Phone Number: {phone}</p>
-        <p>Cuisine: {cuisine_description}</p> */}
+        <p>Price: {price}</p>
+        <p>
+          Address: {location?.display_address[0]},{" "}
+          {location?.display_address[1]}
+        </p>
+        <p>Phone Number: {display_phone}</p>
+        <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
       </div>
     </div>
   );
