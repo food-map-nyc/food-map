@@ -5,11 +5,13 @@ import { fetchSingleRestaurant } from "./restaurantSlice";
 import { Rating } from "@mui/material";
 
 const SingleRestaurant = () => {
-  const { id } = useParams();
+  const { objectid } = useParams();
   const singleRestaurant = useSelector((state) => state.restaurant.restaurant);
+  console.log(singleRestaurant);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(fetchSingleRestaurant('KgpOYAG-r_eDsQXFXt0nnQ'));
+    dispatch(fetchSingleRestaurant(objectid));
   }, []);
 
   const {
