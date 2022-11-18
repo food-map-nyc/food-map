@@ -5,6 +5,12 @@ import { logout } from "../../app/store";
 
 import GroupsIcon from "@mui/icons-material/Groups";
 import HomeIcon from "@mui/icons-material/Home";
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.me);
@@ -16,36 +22,50 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div>
-      <Link to="/restaurants">
+      <Link to="/">
         <h1>Welcome to FoodMap</h1>
       </Link>
-      <nav>
+      <Tabs
+      value={value}
+      onChange={handleChange}
+      aria-label="icon position tabs example"
+    >
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
             <Link to="/home">
-              <HomeIcon sx={{ fontSize: 40 }} />
+              <Tab icon={<HomeIcon sx={{ fontSize: 40 }}/>} label="HOME"/>
             </Link>
+            <Link to="/restaurants">
+              <Tab icon={<RestaurantIcon sx={{ fontSize: 40 }}/>} label="RESTAURANTS"/> 
+              </Link>
             {user.isAdmin ? (
               <Link to="/users">
-                <GroupsIcon sx={{ fontSize: 40 }} />
+                <Tab icon={<GroupsIcon sx={{ fontSize: 40 }}/>} label="ALL USERS" />
               </Link>
             ) : null}
-            <Link to="/suggestion">Give me a Suggestion</Link>
-            <button type="button" onClick={logoutAndRedirectHome}>
-              Logout
-            </button>
+              <Tab icon={<LogoutIcon sx={{ fontSize: 40 }}/>} label="LOGOUT" onClick={logoutAndRedirectHome}/> 
           </div>
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">
+              <Tab icon={<LoginIcon sx={{ fontSize: 40 }}/>} label="LOGIN"/>
+            </Link>
+            <Link to="/signup">
+              <Tab icon={<AppRegistrationIcon sx={{ fontSize: 40 }}/>} label="SIGN UP"/>
+            </Link>
           </div>
         )}
-      </nav>
+        </Tabs>
       <hr />
     </div>
   );

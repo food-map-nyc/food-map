@@ -6,14 +6,6 @@ import { Rating } from "@mui/material";
 
 const SingleRestaurant = () => {
   const { objectid } = useParams();
-  const singleRestaurant = useSelector((state) => state.restaurant.restaurant);
-  console.log(singleRestaurant);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchSingleRestaurant(objectid));
-  }, []);
-
   const {
     name,
     image_url,
@@ -23,11 +15,17 @@ const SingleRestaurant = () => {
     price,
     rating,
     review_count,
-  } = singleRestaurant;
+  } = useSelector((state) => state.restaurant.restaurant);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchSingleRestaurant(objectid));
+  }, []);
 
   return (
     <div className="container">
-      <div>
+      <div className="single">
         <img src={image_url} />
       </div>
       <div>

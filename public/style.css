@@ -20,7 +20,7 @@ body {
     display: inline-block;
   }
 
-   img {
+   .single > img{
     width: 500px;
     height: 500px;
   }
@@ -32,13 +32,21 @@ body {
     border-radius: 3px 0 0 3px;
   }
 
+  .text_box{
+    font-family: cursive;
+    width: 50%;
+  }
  
   .container {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
   }
-
+  .featured_box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .row {
     display: flex;
     flex-shrink: 1;

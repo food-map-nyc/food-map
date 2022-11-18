@@ -18,7 +18,6 @@ router.get("/", checkUser, checkAdmin, async (req, res, next) => {
 
 router.get("/:id", checkUser, async (req, res, next) => {
   try {
-    console.log(req.params);
     const user = await User.findByPk(req.params.id);
     res.json(user);
   } catch (err) {

@@ -9,6 +9,7 @@ import SingleRestaurant from "../features/restaurant/SingleRestaurant";
 import AllUsers from "../features/user/AllUsers";
 import SingleUser from "../features/user/SingleUser";
 import Suggestion from "../features/suggestion/Suggestion";
+import FeaturedRestaurant from "../features/restaurant/FeaturedRestaurant";
 /**
  * COMPONENT
  */
@@ -26,7 +27,7 @@ const AppRoutes = () => {
     <div>
       {isLoggedIn ? (
         <Routes>
-          <Route path="/*" element={<Home />} />
+          <Route path="/*" element={<FeaturedRestaurant />} />
           <Route to="/home" element={<Home />} />
           <Route path="/restaurants" element={<AllRestaurant />} />
           <Route
@@ -45,7 +46,7 @@ const AppRoutes = () => {
         <Routes>
           <Route
             path="/*"
-            element={<AuthForm name="login" displayName="Login" />}
+            element={<FeaturedRestaurant />}
           />
           <Route
             path="/login"
