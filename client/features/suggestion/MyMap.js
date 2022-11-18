@@ -1,25 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 
 export default function MyMap(props) {
-  const [lat, setLat] = useState("");
-  const [long, setLong] = useState("");
-  const { selectedRestaurants } = props;
-  const { businesses } = selectedRestaurants;
-
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLat(position.coords.latitude);
-        setLong(position.coords.longitude);
-      });
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  }
+  
+  const { selectedRestaurants , longitude, latitude} = props;
 
   useEffect(() => {
-    getLocation();
-
     const restaurantIcon = L.icon({
       iconUrl:
         "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png",
@@ -42,21 +27,21 @@ export default function MyMap(props) {
     newMap.setAttribute("id", "my-map");
     container.appendChild(newMap);
 
-    if (lat && businesses) {
-      const map = L.map(`my-map`).setView([lat, long], 12);
+    if (latitude && selectedRestaurants) {
+      const map = L.map(`my-map`).setView([latitude, longitude], 12);
 
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 20,
       }).addTo(map);
 
       const homeMarkerPopup = L.popup().setContent("Me");
-      const homeMarker = L.marker([lat, long], {
+      const homeMarker = L.marker([latitude, longitude], {
         icon: homeIcon,
       })
         .bindPopup(homeMarkerPopup)
         .addTo(map);
 
-      businesses.forEach((restaurant) => {
+      selectedRestaurants.forEach((restaurant) => {
         if (
           restaurant.coordinates.latitude &&
           restaurant.coordinates.longitude
@@ -73,14 +58,14 @@ export default function MyMap(props) {
       });
     }
 
-    if (!lat && businesses) {
+    if (!latitude && selectedRestaurants) {
       const map = L.map(`my-map`).setView([40.72393, -73.98383], 12);
 
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 20,
       }).addTo(map);
 
-      businesses.forEach((restaurant) => {
+      selectedRestaurants.forEach((restaurant) => {
         if (
           restaurant.coordinates.latitude &&
           restaurant.coordinates.longitude
@@ -96,7 +81,7 @@ export default function MyMap(props) {
         }
       });
     }
-  }, [lat, businesses]);
+  }, [latitude,selectedRestaurants]);
   return (
     <div id="map-container">
       <div id="my-map"></div>
