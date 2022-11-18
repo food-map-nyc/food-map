@@ -77,6 +77,16 @@ export const editSingleUserHistory = createAsyncThunk(
   }
 );
 
+// export const addOrRemoveFromFavorites = createAsyncThunk("addOrRemoveFromFavorites", async ({ id, userId }) => {
+//   const token = window.localStorage.getItem("token");
+//   if (token) {
+//     const { data } = await axios.put(`api/users/${userId}/history`, {id}, {
+//       headers: { authorization: token },
+//     })
+//     return data;
+//   }
+// })
+
 export const deleteSingleUser = createAsyncThunk("deleteUser", async (user) => {
   const token = window.localStorage.getItem("token");
   if (token) {
@@ -142,6 +152,16 @@ const usersSlice = createSlice({
     builder.addCase(editSingleUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
     });
+    // builder.addCase(addOrRemoveFromFavorites.fulfilled, (state, action) => {
+    //   state.currentUserHistory.map((restaurant) => {
+    //     if (restaurant.id === action.payload.id) {
+    //       restaurant = action.payload;
+    //     }
+    //   });
+    // });
+    // builder.addCase(addOrRemoveFromFavorites.rejected, (state, action) => {
+    //   state.error = action.error.message;
+    // });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
       if (action.payload) {
         state.error = action.payload.errorMessage;

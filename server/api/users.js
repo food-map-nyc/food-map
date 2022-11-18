@@ -25,7 +25,7 @@ router.get("/:id", checkUser, async (req, res, next) => {
   }
 });
 
-router.get("/:id/history", async (req, res, next) => {
+router.get("/:id/history", checkUser, async (req, res, next) => {
   try {
     const history = await History.findAll({
       where: {
@@ -38,6 +38,19 @@ router.get("/:id/history", async (req, res, next) => {
     next(err);
   }
 });
+
+// router.get("/:id/favorites", checkUser, async (req, res, next) => {
+//   try {
+//     const favorites = await History.findAll({
+//       where: {
+//         favorite: true
+//       }
+//     });
+//     res.json(favorites)
+//   } catch (err) {
+    
+//   }
+// })
 
 router.put("/:id", checkUser, async (req, res, next) => {
   try {
@@ -62,6 +75,20 @@ router.put("/:id/history", checkUser, async (req, res, next) => {
     next(err);
   }
 });
+
+// router.put("/:id/favorites", checkUser, async (req, res, next) => {
+//   try {
+//     const favorite = await History.findOne({
+//       where: {
+//         id: req.body.id,
+//       }
+//     });
+//     const isFavorite = favorite.dataValues.favorite
+//     res.json(await favorite.update({ favorite: !isFavorite }))
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 router.delete("/:id", checkUser, checkAdmin, async (req, res, next) => {
   try {

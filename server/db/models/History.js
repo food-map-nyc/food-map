@@ -3,7 +3,7 @@ const db = require("../db");
 
 const History = db.define("history", {
   restaurantId: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   restaurantName: {
     type: Sequelize.STRING,
@@ -11,6 +11,10 @@ const History = db.define("history", {
   timesVisited: {
     type: Sequelize.INTEGER,
   },
+  favorite: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
 });
 
 module.exports = History;
