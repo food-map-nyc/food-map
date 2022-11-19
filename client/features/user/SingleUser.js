@@ -5,7 +5,7 @@ import { fetchSingleUser } from "./userSlice";
 import Avatar from "@mui/material/Avatar";
 
 export default function SingleUser() {
-  const { email, phone, createdAt, username, imageUrl, preferred, zipcode } =
+  const { email, phone, createdAt, username, imageUrl, cuisine, zipcode } =
     useSelector((state) => state.user.user);
   const dispatch = useDispatch();
   const { userid } = useParams();
@@ -22,7 +22,7 @@ export default function SingleUser() {
       <div> Zipcode: {zipcode}</div>
       <div> Membership Status: Active</div>
       <div> Member since: {createdAt?.slice(0, 10)}</div>
-      <div> Member's Preferred Cuisine: {preferred}</div>
+      <div> Member's Preferred Cuisine: {cuisine}</div>
     </div>
   );
 }

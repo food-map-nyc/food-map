@@ -3,6 +3,28 @@ const axios = require("axios");
 const { API_KEY } = require("../../secrets");
 module.exports = router;
 
+router.get("/featured", async (req, res, next) => {
+  try {
+    const { data } = await axios.get(
+      "https://api.yelp.com/v3/businesses/search",
+      {
+        params: {
+          location: "NYC",
+          term: "restaurants",
+          sort_by: "review_count",
+          limit: 50,
+        },
+        headers: {
+          Authorization: `Bearer ${API_KEY}`,
+        },
+      }
+    );
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/page/:number", async (req, res, next) => {
   try {
     const { data } = await axios.get(

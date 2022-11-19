@@ -53,11 +53,20 @@ export const fetchResturantReviews = createAsyncThunk(
 );
 
 
+export const fetchFeatured = createAsyncThunk(
+  "fetchFeatured",
+  async () => {
+    const { data } = await axios.get(`/api/restaurants/featured`);
+    return data;
+  }
+);
+
 export const restaurantSlice = createSlice({
   name: "restaurant",
   initialState: {
     restaurants: [],
     restaurant: {},
+    featured: [],
     error: null,
   },
   reducers: {},
@@ -102,6 +111,15 @@ export const restaurantSlice = createSlice({
       state.restaurant = action.payload;
     });
     builder.addCase(fetchSingleRestaurant.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
+      state.error = action.error.message;
+    });
+    builder.addCase(fetchFeatured.fulfilled, (state, action) => {
+      state.featured = action.payload;
+    });
+    builder.addCase(fetchFeatured.rejected, (state, action) => {
       if (action.payload) {
         state.error = action.payload.errorMessage;
       }

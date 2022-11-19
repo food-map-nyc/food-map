@@ -3,17 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSingleRestaurant } from "./restaurantSlice";
 import { Rating } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import { Button } from "@mui/material";
 
 const SingleRestaurant = () => {
   const { objectid } = useParams();
-  const singleRestaurant = useSelector((state) => state.restaurant.restaurant);
-  console.log(singleRestaurant);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchSingleRestaurant(objectid));
-  }, []);
-
   const {
     name,
     image_url,
@@ -23,11 +18,17 @@ const SingleRestaurant = () => {
     price,
     rating,
     review_count,
-  } = singleRestaurant;
+  } = useSelector((state) => state.restaurant.restaurant);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchSingleRestaurant(objectid));
+  }, []);
 
   return (
     <div className="container">
-      <div>
+      <div className="single">
         <img src={image_url} />
       </div>
       <div>
@@ -46,6 +47,16 @@ const SingleRestaurant = () => {
         </p>
         <p>Phone Number: {display_phone}</p>
         <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
+        <div>
+          <Button variant="outlined">
+            <CheckCircleOutlineIcon />
+            Check-In
+          </Button>
+          <Button variant="outlined">
+            <StarOutlineIcon />
+            Wish List
+          </Button>
+        </div>
       </div>
     </div>
   );
