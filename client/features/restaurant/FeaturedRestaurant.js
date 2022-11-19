@@ -14,16 +14,21 @@ const FeaturedRestaurant = () => {
       .sort((a, b) => b.rating - a.rating)
   );
 
-  const [image, setImage] = useState("");
+  const [restaurant, setRestaurant] = useState({
+    name: "FoodMap",
+    image_url: "https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?b=1&s=170667a&w=0&k=20&c=P3jIQq8gVqlXjd4kP2OrXYyzqEXSWCwwYtwrd81psDY=",
+    review_count: 10000,
+    rating: "5.0"
+  });
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
 
   const movingImage = () => {
     if (index < 6) {
-      setImage(featuredRestaurants[index]);
+      setRestaurant(featuredRestaurants[index]);
       setIndex(index + 1);
     } else {
-      setImage(featuredRestaurants[index]);
+      setRestaurant(featuredRestaurants[index]);
       setIndex(0);
     }
   };
@@ -37,16 +42,16 @@ const FeaturedRestaurant = () => {
   return (
     <div>
       <div className="featured_box">
-        <Link to={`/restaurants/${image.id}`}>
+        <Link to={`/restaurants/${restaurant.id}`}>
           <Card sx={{ width: 600, height: 600 }}>
-            <h1>{image?.name} </h1>
+            <h1>{restaurant.name} </h1>
             <h2>
-              {image?.rating} {emoji.star} ({image?.review_count} reviews)
+              {restaurant.rating} {emoji.star} ({restaurant.review_count} reviews)
             </h2>
             <CardMedia
               component="img"
               height="600"
-              image={image?.image_url}
+              image={restaurant.image_url}
               alt="Dish"
             />
           </Card>
@@ -105,6 +110,7 @@ const FeaturedRestaurant = () => {
         </div>
       </div>
       <hr />
+      <h2>RESTAURANTS WITH THE MOST REVIEWS IN ALL OF NEW YORK CITY!!!</h2>
       <Grid container spacing={2}>
         {featuredRestaurants
           ? featuredRestaurants.map((restaurant, idx) => (

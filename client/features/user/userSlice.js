@@ -42,7 +42,6 @@ export const editSingleUser = createAsyncThunk(
     email,
     phone,
     imageUrl,
-    preferred,
     cuisine,
     zipcode,
   }) => {
@@ -50,7 +49,7 @@ export const editSingleUser = createAsyncThunk(
     if (token) {
       const { data } = await axios.put(
         `/api/users/${id}`,
-        { username, email, phone, imageUrl, preferred, cuisine, zipcode },
+        { username, email, phone, imageUrl, cuisine, zipcode },
         {
           headers: { authorization: token },
         }
@@ -119,6 +118,9 @@ const usersSlice = createSlice({
       state.currentUserHistory = action.payload;
     });
     builder.addCase(fetchSingleUserHistory.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(editSingleUser.fulfilled, (state, action) => {
@@ -140,6 +142,9 @@ const usersSlice = createSlice({
       });
     });
     builder.addCase(editSingleUserHistory.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
