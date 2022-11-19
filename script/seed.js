@@ -75,14 +75,14 @@ async function seed() {
 
   const histories = await Promise.all([
     History.create({
-      restaurantId: 50071766,
-      restaurantName: "Mary's Palace",
+      restaurantId: 'oe8GEFE4QLFAKt87y7zcgA',
+      restaurantName: 'Very Fresh Noodles',
       timesVisited: 2,
       userId: 2,
     }),
     History.create({
-      restaurantId: 50089410,
-      restaurantName: "Teriyaki 365",
+      restaurantId:'X07rATb-pc3gevQRTE0FGA',
+      restaurantName: "Farida Central Asian Cuisine & Grill",
       timesVisited: 1,
       userId: 2,
     }),

@@ -9,7 +9,7 @@ router.get ('/:term/:longitude/:latitude', async (req, res, next) => {
             `https://api.yelp.com/v3/businesses/search`, 
              {
               params : {
-                term: "restaurants",
+                term:req.params.term,
                 categories: req.params.term,
                 longitude: req.params.longitude,
                 latitude: req.params.latitude,

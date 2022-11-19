@@ -24,9 +24,15 @@ const Suggestion = () => {
 
   const dispatch = useDispatch();
 
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  const [latitude, setLatitude] = useState(40.758896);
+  const [longitude, setLongitude] = useState(-73.985130);
   const [loading, setLoading] = useState(true);
+
+
+// function defaultLocation(){
+//   setLatitude(40.758896);
+//   setLongitude(-73.8740551);
+// }
 
   function getLocation() {
     if (navigator.geolocation) {
@@ -34,7 +40,7 @@ const Suggestion = () => {
         setLatitude(position.coords.latitude);
         setLongitude(position.coords.longitude);
       });
-    } else {
+    } else{
       console.log("Geolocation is not supported by this browser.");
     }
   }
