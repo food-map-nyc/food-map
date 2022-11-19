@@ -3,14 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../app/store";
 
-import GroupsIcon from "@mui/icons-material/Groups";
-import HomeIcon from "@mui/icons-material/Home";
-import RestaurantIcon from '@mui/icons-material/Restaurant';
-import LogoutIcon from '@mui/icons-material/Logout';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import LoginIcon from '@mui/icons-material/Login';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import {
+  Groups,
+  Home,
+  Restaurant,
+  Person,
+  Star,
+  Favorite,
+  Logout,
+  Login,
+  AppRegistration
+} from "@mui/icons-material";
+import { Button, Stack } from "@mui/material";
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.me);
@@ -22,50 +26,91 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   return (
     <div>
       <Link to="/">
         <h1>Welcome to FoodMap</h1>
       </Link>
-      <Tabs
-      value={value}
-      onChange={handleChange}
-      aria-label="icon position tabs example"
-    >
+      <nav>
+       
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
-            <Link to="/home">
-              <Tab icon={<HomeIcon sx={{ fontSize: 40 }}/>} label="HOME"/>
-            </Link>
-            <Link to="/restaurants">
-              <Tab icon={<RestaurantIcon sx={{ fontSize: 40 }}/>} label="RESTAURANTS"/> 
-              </Link>
+             <Stack spacing={2} direction = "row">
+              <Button
+                variant="outlined"
+                onClick={()=>{navigate("/home")}}
+                startIcon={<Home sx={{ fontSize: 40 }} />}
+              >
+                HOME
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={()=>{navigate("/profile")}}
+                startIcon={<Person sx={{ fontSize: 40 }} />}
+              >
+                USER PROFILE
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={()=>{navigate("/restaurants")}}
+                startIcon={<Restaurant sx={{ fontSize: 40 }} />}
+              >
+                RESTAURANTS
+              </Button>
+            <Button
+              variant="outlined"
+              startIcon={<Favorite sx={{ fontSize: 40 }} />}
+            >
+              FAVORITES
+            </Button>
+            <Button
+              variant="outlined"
+              startIcon={<Star sx={{ fontSize: 40 }} />}
+            >
+              WISHLIST
+            </Button>
             {user.isAdmin ? (
-              <Link to="/users">
-                <Tab icon={<GroupsIcon sx={{ fontSize: 40 }}/>} label="ALL USERS" />
-              </Link>
+              <Button
+              variant="outlined"
+              onClick={()=>{navigate("/users")}}
+              startIcon={<Groups sx={{ fontSize: 40 }} />}
+            >
+              ALL USERS
+            </Button>
             ) : null}
-              <Tab icon={<LogoutIcon sx={{ fontSize: 40 }}/>} label="LOGOUT" onClick={logoutAndRedirectHome}/> 
+            <Button
+              variant="outlined"
+              onClick={logoutAndRedirectHome}
+              startIcon={<Logout sx={{ fontSize: 40 }} />}
+            >
+              LOGOUT
+            </Button>
+             </Stack>
           </div>
         ) : (
           <div>
             {/* The navbar will show these links before you log in */}
-            <Link to="/login">
-              <Tab icon={<LoginIcon sx={{ fontSize: 40 }}/>} label="LOGIN"/>
-            </Link>
-            <Link to="/signup">
-              <Tab icon={<AppRegistrationIcon sx={{ fontSize: 40 }}/>} label="SIGN UP"/>
-            </Link>
+            <Stack spacing={2} direction = "row">
+            <Button
+              variant="outlined"
+              onClick={()=>{navigate("/login")}}
+              startIcon={<Login sx={{ fontSize: 40 }} />}
+            >
+              LOGIN
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={()=>{navigate("/signup")}}
+              startIcon={<AppRegistration sx={{ fontSize: 40 }} />}
+            >
+              SIGN IN
+            </Button>
+            </Stack>
           </div>
         )}
-        </Tabs>
+       
+      </nav>
       <hr />
     </div>
   );

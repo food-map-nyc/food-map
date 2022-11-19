@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSingleRestaurant } from "./restaurantSlice";
 import { Rating } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import { Button } from "@mui/material";
 
 const SingleRestaurant = () => {
   const { objectid } = useParams();
@@ -44,6 +47,16 @@ const SingleRestaurant = () => {
         </p>
         <p>Phone Number: {display_phone}</p>
         <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
+        <div>
+          <Button variant="outlined">
+            <CheckCircleOutlineIcon />
+            Check-In
+          </Button>
+          <Button variant="outlined">
+            <StarOutlineIcon />
+            Wish List
+          </Button>
+        </div>
       </div>
     </div>
   );

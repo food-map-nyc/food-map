@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFeatured } from "./restaurantSlice";
-import {
-  Pagination,
-  Stack,
-  Card,
-  Button,
-  InputLabel,
-  MenuItem,
-  FormControl,
-  Select,
-  Grid,
-  CardMedia,
-  CardHeader,
-  CardContent,
-  Rating,
-} from "@mui/material";
+import { useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
+import { Stack, Card, Button, Grid, CardMedia } from "@mui/material";
 import { emoji } from "node-emoji";
-import StarBorderIcon from "@mui/icons-material/StarBorder";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
-import { Link } from "react-router-dom";
 
 const FeaturedRestaurant = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -29,15 +13,10 @@ const FeaturedRestaurant = () => {
       ?.filter((restaurants) => restaurants.rating)
       .sort((a, b) => b.rating - a.rating)
   );
-  //   const filteredRestaurants = featuredRestaurants
-
-  //   const featuredImage = filteredRestaurants
-  //     ? filteredRestaurants[0]?.image_url
-  //     : null;
 
   const [image, setImage] = useState("");
   const [index, setIndex] = useState(0);
-  // console.log(featuredRestaurants)
+  const navigate = useNavigate();
 
   const movingImage = () => {
     if (index < 6) {
@@ -48,12 +27,6 @@ const FeaturedRestaurant = () => {
       setIndex(0);
     }
   };
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchFeatured());
-  }, []);
 
   useEffect(() => {
     if (featuredRestaurants) {
@@ -80,25 +53,53 @@ const FeaturedRestaurant = () => {
         </Link>
         <div className="text_box">
           <h2>Do you know someone who has trouble deciding where to eat?</h2>
-          <h1>Is it you?</h1>
-          <h1>No worries, FoodMap got your back.</h1>
+          <h1>IS IT YOU?</h1>
+          <h1>
+            No worries, <strong>FoodMap</strong> got your back.
+          </h1>
           <h2>
             Let us do all the work and you can take all the credit for finding
             the new spot!
           </h2>
           {isLoggedIn ? (
             <Stack spacing={2} direction="row">
-              <Link to="/suggestions">
-                <Button variant="outlined">Suggestions For You</Button>
-              </Link>
-              <Button variant="outlined">Feeling Risky? Click Here</Button>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  navigate("/suggestion");
+                }}
+              >
+                Suggestions For You
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  navigate("/random");
+                }}
+              >
+                Feeling Risky? Click Here
+              </Button>
             </Stack>
           ) : (
             <Stack spacing={2} direction="row">
               <Link to="signup">
-                <Button variant="outlined">Sign Up for Suggestions</Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
+                >
+                  Sign Up for Suggestions
+                </Button>
               </Link>
-              <Button variant="outlined">Feeling Risky? Click Here</Button>
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  navigate("/random");
+                }}
+              >
+                Feeling Risky? Click Here
+              </Button>
             </Stack>
           )}
         </div>
@@ -127,11 +128,11 @@ const FeaturedRestaurant = () => {
                         .join(", ")}
                     </p>
                     <div>
-                      <Button size="small">
+                      <Button variant="outlined">
                         <CheckCircleOutlineIcon />
                         Check-In
                       </Button>
-                      <Button size="small">
+                      <Button variant="outlined">
                         <StarOutlineIcon />
                         Wish List
                       </Button>

@@ -10,6 +10,9 @@ import AllUsers from "../features/user/AllUsers";
 import SingleUser from "../features/user/SingleUser";
 import Suggestion from "../features/suggestion/Suggestion";
 import FeaturedRestaurant from "../features/restaurant/FeaturedRestaurant";
+import UserProfile from "../features/user/userProfile";
+import RandomRestaurant from "../features/restaurant/RandomRestarant";
+import { fetchFeatured } from "../features/restaurant/restaurantSlice";
 /**
  * COMPONENT
  */
@@ -21,6 +24,7 @@ const AppRoutes = () => {
 
   useEffect(() => {
     dispatch(me());
+    dispatch(fetchFeatured())
   }, []);
 
   return (
@@ -30,6 +34,8 @@ const AppRoutes = () => {
           <Route path="/*" element={<FeaturedRestaurant />} />
           <Route to="/home" element={<Home />} />
           <Route path="/restaurants" element={<AllRestaurant />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/random" element={<RandomRestaurant/>} />
           <Route
             path={`/restaurants/:objectid`}
             element={<SingleRestaurant />}
@@ -61,6 +67,7 @@ const AppRoutes = () => {
             path={`/restaurants/:objectid`}
             element={<SingleRestaurant />}
           />
+          <Route path="/random" element={<RandomRestaurant/>} />
         </Routes>
       )}
     </div>
