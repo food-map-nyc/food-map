@@ -49,12 +49,21 @@ export const fetchSingleUserFavorites = createAsyncThunk(
 
 export const editSingleUser = createAsyncThunk(
   "editUser",
-  async ({ id, username, email, phone, imageUrl, preferred, zipcode }) => {
+  async ({
+    id,
+    username,
+    email,
+    phone,
+    imageUrl,
+    preferred,
+    cuisine,
+    zipcode,
+  }) => {
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.put(
         `/api/users/${id}`,
-        { username, email, phone, imageUrl, preferred, zipcode },
+        { username, email, phone, imageUrl, preferred, cuisine, zipcode },
         {
           headers: { authorization: token },
         }
@@ -70,7 +79,7 @@ export const editSingleUserHistory = createAsyncThunk(
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.put(
-        `/api/users/${id}/history`,
+        `/api/users/${userId}/history`,
         { id },
         {
           headers: { authorization: token },
@@ -81,14 +90,14 @@ export const editSingleUserHistory = createAsyncThunk(
   }
 );
 
-export const createNewUserHistory = createAsyncThunk(
-  "createUserHistory",
-  async ({ userId, restaurantId, restaurantName }) => {
+export const addOrRemoveFromFavorites = createAsyncThunk(
+  "addOrRemoveFromFavorites",
+  async ({ id, userId }) => {
     const token = window.localStorage.getItem("token");
     if (token) {
-      const { data } = await axios.post(
-        `/api/users/${userId}/history`,
-        { userId, restaurantId, restaurantName },
+      const { data } = await axios.put(
+        `api/users/${userId}/favorites`,
+        { id },
         {
           headers: { authorization: token },
         }
@@ -114,7 +123,6 @@ const usersSlice = createSlice({
     users: [],
     user: {},
     currentUserHistory: [],
-    currentUserFavorites: [],
     error: null,
   },
   reducers: {},
@@ -123,15 +131,22 @@ const usersSlice = createSlice({
       state.users = action.payload;
     });
     builder.addCase(fetchUsers.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(fetchSingleUser.fulfilled, (state, action) => {
       state.user = action.payload;
     });
     builder.addCase(fetchSingleUser.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(fetchSingleUserHistory.fulfilled, (state, action) => {
+      console.log(state.currentUserHistory);
       state.currentUserHistory = action.payload;
     });
     builder.addCase(fetchSingleUserHistory.rejected, (state, action) => {
@@ -149,25 +164,27 @@ const usersSlice = createSlice({
       state.users.push(action.payload);
     });
     builder.addCase(editSingleUser.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(editSingleUserHistory.fulfilled, (state, action) => {
-      state.currentUserHistory.map((restaurant) => {
-        if (restaurant.id === action.payload.id) {
-          restaurant = action.payload;
-        }
-      });
+      state.currentUserHistory = action.payload;
     });
     builder.addCase(editSingleUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    builder.addCase(createNewUserHistory.fulfilled, (state, action) => {
-      state.currentUserHistory.push(action.payload);
+    builder.addCase(addOrRemoveFromFavorites.fulfilled, (state, action) => {
+      state.currentUserHistory = action.payload;
     });
-    builder.addCase(createNewUserHistory.rejected, (state, action) => {
+    builder.addCase(addOrRemoveFromFavorites.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.fulfilled, (state, action) => {
@@ -175,9 +192,5 @@ const usersSlice = createSlice({
     });
   },
 });
-
-export const selectUsers = (state) => {
-  return state.users;
-};
 
 export default usersSlice.reducer;

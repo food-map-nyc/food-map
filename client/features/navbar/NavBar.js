@@ -3,8 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../app/store";
 
-import GroupsIcon from "@mui/icons-material/Groups";
-import HomeIcon from "@mui/icons-material/Home";
+import {Groups, Home} from "@mui/icons-material";
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.me);
@@ -15,6 +14,7 @@ const Navbar = () => {
     dispatch(logout());
     navigate("/login");
   };
+  
 
   return (
     <div>
@@ -26,14 +26,14 @@ const Navbar = () => {
           <div>
             {/* The navbar will show these links after you log in */}
             <Link to="/home">
-              <HomeIcon sx={{ fontSize: 40 }} />
+              <Home sx={{ fontSize: 40 }} />
             </Link>
             {user.isAdmin ? (
               <Link to="/users">
-                <GroupsIcon sx={{ fontSize: 40 }} />
+                <Groups sx={{ fontSize: 40 }} />
               </Link>
             ) : null}
-            <Link to="/suggestion">Give me a Suggestion</Link>
+            <Link onClick to="/suggestion">Give me a Suggestion</Link>
             <button type="button" onClick={logoutAndRedirectHome}>
               Logout
             </button>

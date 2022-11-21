@@ -3,7 +3,7 @@ const db = require("../db");
 
 const History = db.define("history", {
   restaurantId: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
   },
   restaurantName: {
     type: Sequelize.STRING,

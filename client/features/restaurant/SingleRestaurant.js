@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
-  createNewUserHistory,
-  fetchSingleUser,
   fetchSingleUserHistory,
+  editSingleUserHistory,
 } from "../user/userSlice";
 import { fetchSingleRestaurant } from "./restaurantSlice";
+import { Rating } from "@mui/material";
 
 const SingleRestaurant = () => {
   const { objectid } = useParams();
@@ -14,71 +14,82 @@ const SingleRestaurant = () => {
   const user = useSelector((state) => state.auth.me);
   const history = useSelector((state) => state.user.currentUserHistory);
   const userId = user.id;
-  const timesVisited = 0;
   const dispatch = useDispatch();
+
   const {
-    camis,
-    dba,
-    building,
-    street,
-    boro,
-    zipcode,
-    phone,
-    cuisine_description,
+    name,
+    image_url,
+    location,
+    display_phone,
+    categories,
+    price,
+    rating,
+    review_count,
   } = singleRestaurant;
 
-  const addToUserHistory = () => {
-    dispatch(
-      createNewUserHistory({
-        userId: userId,
-        restaurantId: camis,
-        restaurantName: dba,
-      })
-    );
+  // history[i].timesVisited is read only, so it can't be reassigned to a variable???
+  const findTimesVisited = () => {
+    for (let i = 0; i < history.length; i++) {
+      if (history[i].restaurantName === name) {
+        return history[i].timesVisited;
+      }
+    }
+  };
+
+  const isFavorite = () => {
+    for (let i = 0; i < history.length; i++) {
+      if (history[i].restaurantName === name) {
+        return history[i].favorite;
+      }
+    }
+  };
+
+  const addToHistory = () => {
+    dispatch(editSingleUserHistory({ id: objectid, userId: userId }));
     dispatch(fetchSingleUserHistory(userId));
   };
 
-  // const findTimesVisited = () => {
-  //   for (let i = 0; i < history.length; i++) {
-  //     if (history[i].restaurantId === singleRestaurant.camis)
-  //       return history[i].timesVisited;
-  //   }
-  //   return false;
-  // };
-
   useEffect(() => {
-    dispatch(fetchSingleRestaurant(objectid));
     if (userId) {
-      dispatch(fetchSingleUser(userId));
+      dispatch(fetchSingleRestaurant(objectid));
       dispatch(fetchSingleUserHistory(userId));
-      for (let i = 0; i < history.length; i++) {
-        if (history[i].restaurantId === singleRestaurant.camis)
-          timesVisited = history[i].timesVisited;
-      }
     }
   }, [userId]);
-  console.log(timesVisited);
+
+  useEffect(() => {
+    if (history) {
+      findTimesVisited();
+    }
+  }, [history]);
 
   return (
-    <div>
-      <img
-        src={`https://toppng.com/uploads/preview/restaurant-png-11554005053riiacqdjki.png`}
-      />
+    <div className="container">
       <div>
-        <h1>{dba}</h1>
+        <img src={image_url} />
+      </div>
+      <div>
+        <h1>{name}</h1>
         <p>
-          Address: {building} {street}, {boro} NY {zipcode}
+          Rating:{" "}
+          {rating ? (
+            <Rating name="half-rating" defaultValue={rating} precision={0.5} />
+          ) : null}{" "}
+          ({review_count} reviews)
         </p>
-        <p>Phone Number: {phone}</p>
-        <p>Cuisine: {cuisine_description}</p>
-        {timesVisited ? (
-          <p>You have been here {timesVisited} times</p>
-        ) : (
-          <p>You haven't been here yet!</p>
-        )}
-        <button onClick={() => addToUserHistory()}>
-          Add to restaurant history
-        </button>
+        <p>Price: {price}</p>
+        <p>
+          Address: {location?.display_address[0]},{" "}
+          {location?.display_address[1]}
+        </p>
+        <p>Phone Number: {display_phone}</p>
+        <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
+        {userId ? (
+          <div>
+            <p>You have been here {findTimesVisited()} times</p>
+            <p>Favorite? {isFavorite() ? "Yes" : "No"}</p>
+            <button onClick={addToHistory}>Add to Restaurant History</button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

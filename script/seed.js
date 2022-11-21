@@ -21,9 +21,9 @@ async function seed() {
       password: "123",
       phone: "9999393842",
       isAdmin: false,
-      isOwner: false,
-      preferred: "chinese",
-      zipcode: "11230",
+      isOwner:false, 
+      cuisine: "chinese",
+      zipcode: "11230"
     }),
     User.create({
       username: "murphy",
@@ -31,9 +31,9 @@ async function seed() {
       password: "123",
       phone: "9999393843",
       isAdmin: false,
-      isOwner: false,
-      ed: "fusion",
-      zipcode: "11101",
+      isOwner:false,
+      cuisine: "korean",
+      zipcode: "11101"
     }),
     User.create({
       username: "paul",
@@ -41,9 +41,9 @@ async function seed() {
       password: "123",
       phone: "9999393442",
       isAdmin: true,
-      isOwner: true,
-      preferred: "caribbean",
-      zipcode: "11238",
+      isOwner:true,
+      cuisine: "carribean",
+      zipcode: "11238"
     }),
     User.create({
       username: "Alan",
@@ -68,23 +68,24 @@ async function seed() {
       phone: "9999393842",
       isAdmin: false,
       isOwner: true,
-      preferred: "french",
+      cuisine: "french",
       zipcode: "12100",
     }),
   ]);
 
   const histories = await Promise.all([
     History.create({
-      restaurantId: 50071766,
-      restaurantName: "Mary's Palace",
+      restaurantId: "0CjK3esfpFcxIopebzjFxA",
+      restaurantName: "Joe's Shanghai",
       timesVisited: 2,
-      userId: 2,
+      userId: 1,
     }),
     History.create({
-      restaurantId: 50089410,
-      restaurantName: "Teriyaki 365",
+      restaurantId: "jjJc_CrkB2HodEinB6cWww",
+      restaurantName: "LoveMama",
       timesVisited: 1,
-      userId: 2,
+      userId: 1,
+      favorite: true
     }),
   ]);
 

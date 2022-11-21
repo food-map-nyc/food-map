@@ -1,16 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editSingleUserHistory, fetchSingleUserHistory } from "./userSlice";
+import {
+  addOrRemoveFromFavorites,
+  editSingleUserHistory,
+  fetchSingleUserHistory,
+} from "./userSlice";
 
 function UserHistory(id) {
   const history = useSelector((state) => state.user.currentUserHistory);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const userId = id.id;
-  console.log(history);
 
   const editHistory = (id) => {
     dispatch(editSingleUserHistory({ id, userId }));
+    dispatch(fetchSingleUserHistory(userId));
+  };
+
+  const toggleFavorite = (id) => {
+    dispatch(addOrRemoveFromFavorites({ id, userId: userId }));
     dispatch(fetchSingleUserHistory(userId));
   };
 
@@ -20,11 +28,19 @@ function UserHistory(id) {
 
   return (
     <div>
-      {history?.map((restaurant) => (
-        <div>
-          <p>{restaurant.restaurantName}</p>
+      {history?.map((restaurant, idx) => (
+        <div key={idx}>
+          <a href={`/restaurants/${restaurant.restaurantId}`}>
+            <h3>{restaurant.restaurantName}</h3>
+          </a>
           <p>Times visited: {restaurant.timesVisited}</p>
-          <p onClick={() => editHistory(restaurant.id)}>+</p>
+          <p>Favorite? {restaurant.favorite ? "Yes" : "No"}</p>
+          <button onClick={() => toggleFavorite(restaurant.restaurantId)}>
+            Toggle Favorite
+          </button>
+          <button onClick={() => editHistory(restaurant.restaurantId)}>
+            +
+          </button>
         </div>
       ))}
     </div>

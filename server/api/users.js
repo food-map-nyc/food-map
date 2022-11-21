@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User, History, Favorite },
+  models: { User, History },
 } = require("../db");
 const { checkAdmin, checkUser } = require("./middleware");
 module.exports = router;
@@ -38,18 +38,18 @@ router.get("/:id/history", checkUser, async (req, res, next) => {
   }
 });
 
-router.get("/:id/favorites", async (req, res, next) => {
-  try {
-    const favorites = await Favorite.findAll({
-      where: {
-        userId: req.params.id,
-      },
-    });
-    res.json(favorites);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get("/:id/favorites", checkUser, async (req, res, next) => {
+//   try {
+//     const favorites = await History.findAll({
+//       where: {
+//         favorite: true
+//       }
+//     });
+//     res.json(favorites)
+//   } catch (err) {
+
+//   }
+// })
 
 router.put("/:id", checkUser, async (req, res, next) => {
   try {
@@ -65,11 +65,18 @@ router.put("/:id/history", checkUser, async (req, res, next) => {
   try {
     const history = await History.findOne({
       where: {
-        id: req.body.id,
+        userId: req.params.id,
+        restaurantId: req.body.id,
       },
     });
     const newVisit = history.dataValues.timesVisited + 1;
-    res.json(await history.update({ timesVisited: newVisit }));
+    await history.update({ timesVisited: newVisit });
+    const allRestaurants = await History.findAll({
+      where: {
+        userId: req.params.id,
+      },
+    });
+    res.json(allRestaurants);
   } catch (err) {
     next(err);
   }
@@ -77,8 +84,32 @@ router.put("/:id/history", checkUser, async (req, res, next) => {
 
 router.post("/:id/history", checkUser, async (req, res, next) => {
   try {
-    const history = History.create(req.body);
+    const history = await History.create({
+      restaurantId: req.body.id,
+      restaurantName: req.body.name,
+    });
     res.json(history);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.put("/:id/favorites", checkUser, async (req, res, next) => {
+  try {
+    const favorite = await History.findOne({
+      where: {
+        userId: req.params.id,
+        restaurantId: req.body.id,
+      },
+    });
+    const isFavorite = favorite.dataValues.favorite;
+    await favorite.update({ favorite: !isFavorite });
+    const allRestaurants = await History.findAll({
+      where: {
+        userId: req.params.id,
+      },
+    });
+    res.json(allRestaurants);
   } catch (err) {
     next(err);
   }

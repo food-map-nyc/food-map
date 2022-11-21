@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editSingleUser } from "./userSlice";
 import { useNavigate } from "react-router-dom";
-import { useParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -14,29 +13,36 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { fetchAllRestaurant } from "../restaurant/restaurantSlice";
 
 const EditUser = () => {
   const allRestaurants = useSelector((state) => state.restaurant.restaurants);
   const user = useSelector((state) => state.user.user);
-  const allCuisines = allRestaurants
-    .map((restaurant) => restaurant.cuisine_description)
-    .reduce((cuisineArray, currentCuisine) => {
-      if (currentCuisine && !cuisineArray.includes(currentCuisine)) {
-        cuisineArray.push(currentCuisine);
+  let cuisineFilter = [];
+
+  const allCuisines = allRestaurants.businesses
+    ?.map((restaurant) => restaurant.categories)
+    .flat()
+    .reduce((cuisineObject, cuisineArray) => {
+      if (!(cuisineArray.title in cuisineObject)) {
+        cuisineObject[cuisineArray.title] = cuisineArray.alias;
+        cuisineFilter.push(cuisineArray.title);
       }
-      return cuisineArray;
-    }, [])
-    .sort();
+      return cuisineObject;
+    }, {});
+
+  useEffect(() => {
+    dispatch(fetchAllRestaurant(1));
+  }, []);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { id } = useParams();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [cuisine, setcuisine] = useState("");
+  const [newCuisine, setcuisine] = useState("");
   const [zipcode, setZipcode] = useState("");
 
   const handleSubmit = (event) => {
@@ -48,7 +54,8 @@ const EditUser = () => {
         email,
         phone,
         imageUrl,
-        preferred: cuisine,
+        preferred: newCuisine,
+        cuisine: allCuisines[newCuisine],
         zipcode,
       })
     );
@@ -65,7 +72,6 @@ const EditUser = () => {
               New Username
             </InputLabel>
             <Input
-              id={id}
               onChange={(e) => setUsername(e.target.value)}
               value={username}
               name="username"
@@ -81,7 +87,6 @@ const EditUser = () => {
               New email address
             </InputLabel>
             <Input
-              id={id}
               onChange={(e) => setEmail(e.target.value)}
               name="email"
               value={email}
@@ -96,7 +101,6 @@ const EditUser = () => {
               New Phone Number
             </InputLabel>
             <Input
-              id={id}
               onChange={(e) => setPhone(e.target.value)}
               name="phone"
               value={phone}
@@ -111,7 +115,6 @@ const EditUser = () => {
               New Profile Picture
             </InputLabel>
             <Input
-              id={id}
               onChange={(e) => setImageUrl(e.target.value)}
               name="phone"
               value={imageUrl}
@@ -126,7 +129,6 @@ const EditUser = () => {
               Update your zipcode
             </InputLabel>
             <Input
-              id={id}
               onChange={(e) => setZipcode(e.target.value)}
               name="zipcode"
               value={zipcode}
@@ -143,14 +145,14 @@ const EditUser = () => {
             <Select
               labelId="demo-select-small"
               id="demo-select-small"
-              value={cuisine}
-              label="Cuisine"
+              value={newCuisine}
+              label="newCuisine"
               onChange={(e) => setcuisine(e.target.value)}
             >
               <MenuItem value="">
                 <em>All</em>
               </MenuItem>
-              {allCuisines?.map((cuisines, idx) => (
+              {cuisineFilter?.sort().map((cuisines, idx) => (
                 <MenuItem value={cuisines} key={idx}>
                   {cuisines}
                 </MenuItem>
