@@ -1,3 +1,4 @@
+import { create } from "@mui/material/styles/createTransitions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -22,7 +23,7 @@ export const fetchSingleUser = createAsyncThunk("singleUser", async (id) => {
 });
 
 export const fetchSingleUserHistory = createAsyncThunk(
-  "userHistory",
+  "fetchUserHistory",
   async (id) => {
     const token = window.localStorage.getItem("token");
     if (token) {
@@ -34,17 +35,22 @@ export const fetchSingleUserHistory = createAsyncThunk(
   }
 );
 
+export const fetchUserWishlist = createAsyncThunk(
+  "fetchUserWishlist",
+  async (id) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.get(`/api/users/${id}/wishlist`, {
+        headers: { authorization: token },
+      });
+      return data;
+    }
+  }
+);
+
 export const editSingleUser = createAsyncThunk(
   "editUser",
-  async ({
-    id,
-    username,
-    email,
-    phone,
-    imageUrl,
-    cuisine,
-    zipcode,
-  }) => {
+  async ({ id, username, email, phone, imageUrl, cuisine, zipcode }) => {
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.put(
@@ -65,7 +71,41 @@ export const editSingleUserHistory = createAsyncThunk(
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.put(
-        `/api/users/${id}/history`,
+        `/api/users/${userId}/history`,
+        { id },
+        {
+          headers: { authorization: token },
+        }
+      );
+      return data;
+    }
+  }
+);
+
+export const createNewUserHistory = createAsyncThunk(
+  "createUserHistory",
+  async ({ id, userId, name }) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.post(
+        `/api/users/${userId}/history`,
+        { id, name },
+        {
+          headers: { authorization: token },
+        }
+      );
+      return data;
+    }
+  }
+);
+
+export const addOrRemoveFromFavorites = createAsyncThunk(
+  "addOrRemoveFromFavorites",
+  async ({ id, userId }) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.put(
+        `/api/users/${userId}/favorites`,
         { id },
         {
           headers: { authorization: token },
@@ -92,6 +132,7 @@ const usersSlice = createSlice({
     users: [],
     user: {},
     currentUserHistory: [],
+    currentUserWishlist: [],
     error: null,
   },
   reducers: {},
@@ -123,6 +164,15 @@ const usersSlice = createSlice({
       }
       state.error = action.error.message;
     });
+    builder.addCase(fetchUserWishlist.fulfilled, (state, action) => {
+      state.currentUserWishlist = action.payload;
+    });
+    builder.addCase(fetchUserWishlist.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
+      state.error = action.error.message;
+    });
     builder.addCase(editSingleUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.users.filter((user) => user.id !== action.payload.id);
@@ -135,16 +185,24 @@ const usersSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(editSingleUserHistory.fulfilled, (state, action) => {
-      state.currentUserHistory.map((restaurant) => {
-        if (restaurant.id === action.payload.id) {
-          restaurant = action.payload;
-        }
-      });
+      state.currentUserHistory = action.payload;
     });
     builder.addCase(editSingleUserHistory.rejected, (state, action) => {
       if (action.payload) {
         state.error = action.payload.errorMessage;
       }
+      state.error = action.error.message;
+    });
+    builder.addCase(addOrRemoveFromFavorites.fulfilled, (state, action) => {
+      state.currentUserHistory = action.payload;
+    });
+    builder.addCase(addOrRemoveFromFavorites.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(createNewUserHistory.fulfilled, (state, action) => {
+      state.currentUserHistory.push(action.payload);
+    });
+    builder.addCase(createNewUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {

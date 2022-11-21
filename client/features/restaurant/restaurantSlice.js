@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
 export const fetchAllRestaurant = createAsyncThunk(
   "fetchAllRestaurant",
   async (pageNumber) => {
@@ -47,19 +46,15 @@ export const fetchSingleRestaurant = createAsyncThunk(
 export const fetchResturantReviews = createAsyncThunk(
   "resturantReviews",
   async (id) => {
-      const { data } = await axios.get(`api/yelp/${id}/reviews`);
-      return data;
-  }
-);
-
-
-export const fetchFeatured = createAsyncThunk(
-  "fetchFeatured",
-  async () => {
-    const { data } = await axios.get(`/api/restaurants/featured`);
+    const { data } = await axios.get(`api/yelp/${id}/reviews`);
     return data;
   }
 );
+
+export const fetchFeatured = createAsyncThunk("fetchFeatured", async () => {
+  const { data } = await axios.get(`/api/restaurants/featured`);
+  return data;
+});
 
 export const restaurantSlice = createSlice({
   name: "restaurant",

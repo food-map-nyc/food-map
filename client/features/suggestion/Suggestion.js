@@ -9,12 +9,7 @@ import {
   SignalCellularNull,
   ConstructionOutlined,
 } from "@mui/icons-material";
-import {
-  Card,
-  Button,
-  Typography,
-  Grid,
-} from "@mui/material";
+import { Card, Button, Typography, Grid } from "@mui/material";
 
 const Suggestion = () => {
   const { cuisine, username } = useSelector((state) => state.auth.me);
