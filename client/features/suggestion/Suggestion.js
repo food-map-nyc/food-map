@@ -55,7 +55,6 @@ const Suggestion = () => {
 
   useEffect(() => {
     getLocation();
-
     const fetchData = async () => {
       if (longitude && latitude) {
         await dispatch(getSuggestedResturant({ cuisine, longitude, latitude }));
