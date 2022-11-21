@@ -26,18 +26,7 @@ const SingleRestaurant = () => {
   const user = useSelector((state) => state.auth.me);
   const history = useSelector((state) => state.user.currentUserHistory);
   const userId = user.id;
-   const dispatch = useDispatch();
-
-  const {
-    name,
-    image_url,
-    location,
-    display_phone,
-    categories,
-    price,
-    rating,
-    review_count,
-  } = singleRestaurant;
+  const dispatch = useDispatch();
 
   // history[i].timesVisited is read only, so it can't be reassigned to a variable???
   const findTimesVisited = () => {
@@ -76,10 +65,6 @@ const SingleRestaurant = () => {
 
   return (
     <div className="container">
-      <div>
-        <img src={image_url} />
-      </div>
-    <div className="container">
       <div className="single">
         <img src={image_url} />
       </div>
@@ -109,6 +94,15 @@ const SingleRestaurant = () => {
             Wish List
           </Button>
         </div>
+        <p>Phone Number: {display_phone}</p>
+        <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
+        {userId ? (
+          <div>
+            <p>You have been here {findTimesVisited()} times</p>
+            <p>Favorite? {isFavorite() ? "Yes" : "No"}</p>
+            <button onClick={addToHistory}>Add to Restaurant History</button>
+          </div>
+        ) : null}
       </div>
     </div>
   );

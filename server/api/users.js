@@ -38,19 +38,6 @@ router.get("/:id/history", checkUser, async (req, res, next) => {
   }
 });
 
-// router.get("/:id/favorites", checkUser, async (req, res, next) => {
-//   try {
-//     const favorites = await History.findAll({
-//       where: {
-//         favorite: true
-//       }
-//     });
-//     res.json(favorites)
-//   } catch (err) {
-
-//   }
-// })
-
 router.put("/:id", checkUser, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id);

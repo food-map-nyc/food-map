@@ -34,19 +34,6 @@ export const fetchSingleUserHistory = createAsyncThunk(
   }
 );
 
-export const fetchSingleUserFavorites = createAsyncThunk(
-  "fetchUserFavorites",
-  async (id) => {
-    const token = window.localStorage.getItem("token");
-    if (token) {
-      const { data } = await axios.get(`/api/users/${id}/favorites`, {
-        headers: { authorization: token },
-      });
-      return data;
-    }
-  }
-);
-
 export const editSingleUser = createAsyncThunk(
   "editUser",
   async ({ id, username, email, phone, imageUrl, cuisine, zipcode }) => {
@@ -125,9 +112,6 @@ const usersSlice = createSlice({
       if (action.payload) {
         state.error = action.payload.errorMessage;
       }
-      if (action.payload) {
-        state.error = action.payload.errorMessage;
-      }
       state.error = action.error.message;
     });
     builder.addCase(fetchSingleUser.fulfilled, (state, action) => {
@@ -137,31 +121,15 @@ const usersSlice = createSlice({
       if (action.payload) {
         state.error = action.payload.errorMessage;
       }
-      if (action.payload) {
-        state.error = action.payload.errorMessage;
-      }
       state.error = action.error.message;
     });
     builder.addCase(fetchSingleUserHistory.fulfilled, (state, action) => {
-      console.log(state.currentUserHistory);
       state.currentUserHistory = action.payload;
     });
     builder.addCase(fetchSingleUserHistory.rejected, (state, action) => {
       if (action.payload) {
         state.error = action.payload.errorMessage;
       }
-      state.error = action.error.message;
-    });
-    builder.addCase(fetchSingleUserFavorites.fulfilled, (state, action) => {
-      state.currentUserFavorites = action.payload;
-    });
-    builder.addCase(fetchSingleUserFavorites.rejected, (state, action) => {
-      state.error = action.error.message;
-    });
-    builder.addCase(fetchSingleUserFavorites.fulfilled, (state, action) => {
-      state.currentUserFavorites = action.payload;
-    });
-    builder.addCase(fetchSingleUserFavorites.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(editSingleUser.fulfilled, (state, action) => {
@@ -191,9 +159,6 @@ const usersSlice = createSlice({
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
-      if (action.payload) {
-        state.error = action.payload.errorMessage;
-      }
       if (action.payload) {
         state.error = action.payload.errorMessage;
       }
