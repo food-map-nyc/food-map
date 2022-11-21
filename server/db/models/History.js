@@ -10,7 +10,16 @@ const History = db.define("history", {
   },
   timesVisited: {
     type: Sequelize.INTEGER,
+    defaultValue: 1,
   },
+  favorite: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
+  favorite: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
 });
 
 module.exports = History;

@@ -1,7 +1,7 @@
-const router = require('express').Router()
-const axios = require('axios')
-const {API_KEY} = require('../../secrets.js')
-module.exports = router
+const router = require("express").Router();
+const axios = require("axios");
+const { API_KEY } = require("../../secrets.js");
+module.exports = router;
 
 router.get ('/:term/:longitude/:latitude', async (req, res, next) => {
     try {

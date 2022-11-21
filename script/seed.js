@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, History },
+  models: { User, History, Wishlist },
 } = require("../server/db");
 
 /**
@@ -21,9 +21,9 @@ async function seed() {
       password: "123",
       phone: "9999393842",
       isAdmin: false,
-      isOwner:false, 
+      isOwner: false,
       cuisine: "chinese",
-      zipcode: "11230"
+      zipcode: "11230",
     }),
     User.create({
       username: "murphy",
@@ -31,9 +31,9 @@ async function seed() {
       password: "123",
       phone: "9999393843",
       isAdmin: false,
-      isOwner:false,
+      isOwner: false,
       cuisine: "korean",
-      zipcode: "11101"
+      zipcode: "11101",
     }),
     User.create({
       username: "paul",
@@ -41,9 +41,9 @@ async function seed() {
       password: "123",
       phone: "9999393442",
       isAdmin: true,
-      isOwner:true,
+      isOwner: true,
       cuisine: "carribean",
-      zipcode: "11238"
+      zipcode: "11238",
     }),
     User.create({
       username: "Alan",
@@ -75,16 +75,30 @@ async function seed() {
 
   const histories = await Promise.all([
     History.create({
-      restaurantId: 'oe8GEFE4QLFAKt87y7zcgA',
-      restaurantName: 'Very Fresh Noodles',
+      restaurantId: "0CjK3esfpFcxIopebzjFxA",
+      restaurantName: "Joe's Shanghai",
       timesVisited: 2,
-      userId: 2,
+      userId: 1,
     }),
     History.create({
-      restaurantId:'X07rATb-pc3gevQRTE0FGA',
-      restaurantName: "Farida Central Asian Cuisine & Grill",
+      restaurantId: "jjJc_CrkB2HodEinB6cWww",
+      restaurantName: "LoveMama",
       timesVisited: 1,
-      userId: 2,
+      userId: 1,
+      favorite: true,
+    }),
+  ]);
+
+  const wishlists = await Promise.all([
+    Wishlist.create({
+      restaurantId: "hdiuRS9sVZSMReZm4oV5SA",
+      restaurantName: "Da Andrea",
+      userId: 1,
+    }),
+    Wishlist.create({
+      restaurantId: "ysqgdbSrezXgVwER2kQWKA",
+      restaurantName: "Juliana's",
+      userId: 1,
     }),
   ]);
 
@@ -94,6 +108,7 @@ async function seed() {
   return {
     users,
     histories,
+    wishlists,
   };
 }
 
