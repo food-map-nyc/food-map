@@ -10,7 +10,7 @@ router.get ('/:term/:longitude/:latitude', async (req, res, next) => {
              {
               params : {
                 term:req.params.term,
-                categories: req.params.term,
+                categories: 'restaurants',
                 longitude: req.params.longitude,
                 latitude: req.params.latitude,
                 limit:5

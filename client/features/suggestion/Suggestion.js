@@ -24,36 +24,45 @@ const Suggestion = () => {
 
   const dispatch = useDispatch();
 
-  const [latitude, setLatitude] = useState(40.758896);
-  const [longitude, setLongitude] = useState(-73.985130);
+  const [latitude, setLatitude] = useState(null);
+  const [longitude, setLongitude] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  function error(err) {
+    setLatitude(40.758896)
+    setLongitude(-73.985130)
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
 
-// function defaultLocation(){
-//   setLatitude(40.758896);
-//   setLongitude(-73.8740551);
-// }
+  const options = {
+    enableHighAccuracy: false,
+    timeout:5000,
+    maximumAge: 4000 
+  };
+
+  function success (){
+       if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude)
+     })
+}
+  }
 
   function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-      });
-    } else{
-      console.log("Geolocation is not supported by this browser.");
-    }
+    navigator.geolocation.getCurrentPosition(success,error,options);
   }
 
   useEffect(() => {
     getLocation();
+
     const fetchData = async () => {
-      if (cuisine && longitude && latitude) {
+      if (longitude && latitude) {
         await dispatch(getSuggestedResturant({ cuisine, longitude, latitude }));
       }
     };
     fetchData();
-  }, [cuisine, longitude, latitude]);
+  }, [longitude, latitude]);
 
   useEffect(() => {
     if (suggestions) {
