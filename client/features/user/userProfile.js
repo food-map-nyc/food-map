@@ -3,22 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleUser } from "./userSlice";
 import EditUser from "./EditUser";
 import UserHistory from "./UserHistory";
+import UserWishlist from "./UserWishlist";
 import { Avatar, Typography, Card } from "@mui/material";
 
 export default function UserProfile() {
   const user = useSelector((state) => state.auth.me);
   const currentUser = useSelector((state) => state.user.user);
   const dispatch = useDispatch();
-  const {
-    id,
-    email,
-    phone,
-    createdAt,
-    username,
-    imageUrl,
-    cuisine,
-    zipcode,
-  } = currentUser;
+  const { id, email, phone, createdAt, username, imageUrl, cuisine, zipcode } =
+    currentUser;
   useEffect(() => {
     dispatch(fetchSingleUser(user.id));
   }, []);
@@ -48,6 +41,7 @@ export default function UserProfile() {
           </Card>
           <EditUser id={id} user={user} />
           <UserHistory id={id} />
+          <UserWishlist id={id} />
           <div />
         </>
       )}

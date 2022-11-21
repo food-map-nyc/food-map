@@ -1,3 +1,4 @@
+import { create } from "@mui/material/styles/createTransitions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -27,6 +28,19 @@ export const fetchSingleUserHistory = createAsyncThunk(
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.get(`/api/users/${id}/history`, {
+        headers: { authorization: token },
+      });
+      return data;
+    }
+  }
+);
+
+export const fetchUserWishlist = createAsyncThunk(
+  "fetchUserWishlist",
+  async (id) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.get(`/api/users/${id}/wishlist`, {
         headers: { authorization: token },
       });
       return data;
@@ -102,16 +116,6 @@ export const addOrRemoveFromFavorites = createAsyncThunk(
   }
 );
 
-// export const addOrRemoveFromFavorites = createAsyncThunk("addOrRemoveFromFavorites", async ({ id, userId }) => {
-//   const token = window.localStorage.getItem("token");
-//   if (token) {
-//     const { data } = await axios.put(`api/users/${userId}/history`, {id}, {
-//       headers: { authorization: token },
-//     })
-//     return data;
-//   }
-// })
-
 export const deleteSingleUser = createAsyncThunk("deleteUser", async (user) => {
   const token = window.localStorage.getItem("token");
   if (token) {
@@ -160,6 +164,15 @@ const usersSlice = createSlice({
       }
       state.error = action.error.message;
     });
+    builder.addCase(fetchUserWishlist.fulfilled, (state, action) => {
+      state.currentUserWishlist = action.payload;
+    });
+    builder.addCase(fetchUserWishlist.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
+      state.error = action.error.message;
+    });
     builder.addCase(editSingleUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.users.filter((user) => user.id !== action.payload.id);
@@ -192,16 +205,6 @@ const usersSlice = createSlice({
     builder.addCase(createNewUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
     });
-    // builder.addCase(addOrRemoveFromFavorites.fulfilled, (state, action) => {
-    //   state.currentUserHistory.map((restaurant) => {
-    //     if (restaurant.id === action.payload.id) {
-    //       restaurant = action.payload;
-    //     }
-    //   });
-    // });
-    // builder.addCase(addOrRemoveFromFavorites.rejected, (state, action) => {
-    //   state.error = action.error.message;
-    // });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
       if (action.payload) {
         state.error = action.payload.errorMessage;

@@ -115,19 +115,6 @@ router.put("/:id/favorites", checkUser, async (req, res, next) => {
     next(err);
   }
 });
-
-// router.put("/:id/favorites", checkUser, async (req, res, next) => {
-//   try {
-//     const favorite = await History.findOne({
-//       where: {
-//         id: req.body.id,
-//       }
-//     });
-//     const isFavorite = favorite.dataValues.favorite
-//     res.json(await favorite.update({ favorite: !isFavorite }))
-//   } catch (err) {
-//     next(err)
-//   }
 // })
 
 router.delete("/:id", checkUser, checkAdmin, async (req, res, next) => {
