@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import {
   fetchSingleUserHistory,
   editSingleUserHistory,
+  addOrRemoveFromFavorites,
+  createNewUserHistory,
 } from "../user/userSlice";
 import { fetchSingleRestaurant } from "./restaurantSlice";
 import { Rating } from "@mui/material";
@@ -45,8 +47,20 @@ const SingleRestaurant = () => {
     }
   };
 
-  const addToHistory = () => {
+  const incrementHistory = () => {
     dispatch(editSingleUserHistory({ id: objectid, userId: userId }));
+    dispatch(fetchSingleUserHistory(userId));
+  };
+
+  const addToHistory = () => {
+    dispatch(
+      createNewUserHistory({ id: objectid, userId: userId, name: name })
+    );
+    dispatch(fetchSingleUserHistory(userId));
+  };
+
+  const toggleFavorite = () => {
+    dispatch(addOrRemoveFromFavorites({ id: objectid, userId: userId }));
     dispatch(fetchSingleUserHistory(userId));
   };
 
@@ -60,6 +74,7 @@ const SingleRestaurant = () => {
   useEffect(() => {
     if (history) {
       findTimesVisited();
+      isFavorite();
     }
   }, [history]);
 
@@ -100,7 +115,14 @@ const SingleRestaurant = () => {
           <div>
             <p>You have been here {findTimesVisited()} times</p>
             <p>Favorite? {isFavorite() ? "Yes" : "No"}</p>
-            <button onClick={addToHistory}>Add to Restaurant History</button>
+            <button onClick={toggleFavorite}>Toggle favorite</button>
+            {findTimesVisited() ? (
+              <button onClick={incrementHistory}>
+                Add to Restaurant History
+              </button>
+            ) : (
+              <button onClick={addToHistory}>Add to Restaurant History</button>
+            )}
           </div>
         ) : null}
       </div>

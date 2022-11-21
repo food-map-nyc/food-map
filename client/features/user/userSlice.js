@@ -68,13 +68,30 @@ export const editSingleUserHistory = createAsyncThunk(
   }
 );
 
+export const createNewUserHistory = createAsyncThunk(
+  "createUserHistory",
+  async ({ id, userId, name }) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.post(
+        `/api/users/${userId}/history`,
+        { id, name },
+        {
+          headers: { authorization: token },
+        }
+      );
+      return data;
+    }
+  }
+);
+
 export const addOrRemoveFromFavorites = createAsyncThunk(
   "addOrRemoveFromFavorites",
   async ({ id, userId }) => {
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.put(
-        `api/users/${userId}/favorites`,
+        `/api/users/${userId}/favorites`,
         { id },
         {
           headers: { authorization: token },
@@ -101,6 +118,7 @@ const usersSlice = createSlice({
     users: [],
     user: {},
     currentUserHistory: [],
+    currentUserWishlist: [],
     error: null,
   },
   reducers: {},
@@ -156,6 +174,12 @@ const usersSlice = createSlice({
       state.currentUserHistory = action.payload;
     });
     builder.addCase(addOrRemoveFromFavorites.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(createNewUserHistory.fulfilled, (state, action) => {
+      state.currentUserHistory.push(action.payload);
+    });
+    builder.addCase(createNewUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {

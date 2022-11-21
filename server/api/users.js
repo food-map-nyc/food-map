@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User, History },
+  models: { User, History, Wishlist },
 } = require("../db");
 const { checkAdmin, checkUser } = require("./middleware");
 module.exports = router;
@@ -33,6 +33,19 @@ router.get("/:id/history", checkUser, async (req, res, next) => {
       },
     });
     res.json(history);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:id/wishlist", async (req, res, next) => {
+  try {
+    const wishlist = await Wishlist.findAll({
+      where: {
+        userId: req.params.id,
+      },
+    });
+    res.json(wishlist);
   } catch (err) {
     next(err);
   }
@@ -74,6 +87,7 @@ router.post("/:id/history", checkUser, async (req, res, next) => {
     const history = await History.create({
       restaurantId: req.body.id,
       restaurantName: req.body.name,
+      userId: req.params.id,
     });
     res.json(history);
   } catch (err) {

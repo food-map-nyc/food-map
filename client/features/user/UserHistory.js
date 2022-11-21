@@ -8,7 +8,6 @@ import {
 
 function UserHistory(id) {
   const history = useSelector((state) => state.user.currentUserHistory);
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const userId = id.id;
 
