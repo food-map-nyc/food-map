@@ -7,14 +7,26 @@ import {
 } from "../user/userSlice";
 import { fetchSingleRestaurant } from "./restaurantSlice";
 import { Rating } from "@mui/material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import { Button } from "@mui/material";
 
 const SingleRestaurant = () => {
   const { objectid } = useParams();
-  const singleRestaurant = useSelector((state) => state.restaurant.restaurant);
+  const {
+    name,
+    image_url,
+    location,
+    display_phone,
+    categories,
+    price,
+    rating,
+    review_count,
+  } = useSelector((state) => state.restaurant.restaurant);
   const user = useSelector((state) => state.auth.me);
   const history = useSelector((state) => state.user.currentUserHistory);
   const userId = user.id;
-  const dispatch = useDispatch();
+   const dispatch = useDispatch();
 
   const {
     name,
@@ -67,6 +79,10 @@ const SingleRestaurant = () => {
       <div>
         <img src={image_url} />
       </div>
+    <div className="container">
+      <div className="single">
+        <img src={image_url} />
+      </div>
       <div>
         <h1>{name}</h1>
         <p>
@@ -83,13 +99,16 @@ const SingleRestaurant = () => {
         </p>
         <p>Phone Number: {display_phone}</p>
         <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
-        {userId ? (
-          <div>
-            <p>You have been here {findTimesVisited()} times</p>
-            <p>Favorite? {isFavorite() ? "Yes" : "No"}</p>
-            <button onClick={addToHistory}>Add to Restaurant History</button>
-          </div>
-        ) : null}
+        <div>
+          <Button variant="outlined">
+            <CheckCircleOutlineIcon />
+            Check-In
+          </Button>
+          <Button variant="outlined">
+            <StarOutlineIcon />
+            Wish List
+          </Button>
+        </div>
       </div>
     </div>
   );

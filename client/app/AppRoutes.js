@@ -9,6 +9,10 @@ import SingleRestaurant from "../features/restaurant/SingleRestaurant";
 import AllUsers from "../features/user/AllUsers";
 import SingleUser from "../features/user/SingleUser";
 import Suggestion from "../features/suggestion/Suggestion";
+import FeaturedRestaurant from "../features/restaurant/FeaturedRestaurant";
+import UserProfile from "../features/user/userProfile";
+import RandomRestaurant from "../features/restaurant/RandomRestarant";
+import { fetchFeatured } from "../features/restaurant/restaurantSlice";
 /**
  * COMPONENT
  */
@@ -20,15 +24,18 @@ const AppRoutes = () => {
 
   useEffect(() => {
     dispatch(me());
+    dispatch(fetchFeatured());
   }, []);
 
   return (
     <div>
       {isLoggedIn ? (
         <Routes>
-          <Route path="/*" element={<Home />} />
+          <Route path="/*" element={<FeaturedRestaurant />} />
           <Route to="/home" element={<Home />} />
           <Route path="/restaurants" element={<AllRestaurant />} />
+          <Route path="/profile" element={<UserProfile />} />
+          <Route path="/random" element={<RandomRestaurant />} />
           <Route
             path={`/restaurants/:objectid`}
             element={<SingleRestaurant />}
@@ -43,10 +50,7 @@ const AppRoutes = () => {
         </Routes>
       ) : (
         <Routes>
-          <Route
-            path="/*"
-            element={<AuthForm name="login" displayName="Login" />}
-          />
+          <Route path="/*" element={<FeaturedRestaurant />} />
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
@@ -60,6 +64,7 @@ const AppRoutes = () => {
             path={`/restaurants/:objectid`}
             element={<SingleRestaurant />}
           />
+          <Route path="/random" element={<RandomRestaurant />} />
         </Routes>
       )}
     </div>

@@ -16,7 +16,7 @@ export default function UserProfile() {
     createdAt,
     username,
     imageUrl,
-    preferred,
+    cuisine,
     zipcode,
   } = currentUser;
   useEffect(() => {
@@ -44,7 +44,7 @@ export default function UserProfile() {
             <div> You can be reached at: {phone}</div>
             <div>Membership Status: Active</div>
             <div>Avid Foodie since {createdAt.slice(0, 10)}</div>
-            <div>Member's Preferred Cuisine is {preferred}</div>
+            <div>Member's preferred cuisine is {cuisine}</div>
           </Card>
           <EditUser id={id} user={user} />
           <UserHistory id={id} />

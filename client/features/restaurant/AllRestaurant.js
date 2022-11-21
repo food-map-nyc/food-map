@@ -123,11 +123,11 @@ const AllRestaurant = () => {
                         .join(", ")}
                     </p>
                     <div>
-                      <Button size="small">
+                      <Button variant="outlined">
                         <CheckCircleOutlineIcon />
                         Check-In
                       </Button>
-                      <Button size="small">
+                      <Button variant="outlined">
                         <StarOutlineIcon />
                         Wish List
                       </Button>
