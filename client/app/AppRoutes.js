@@ -24,7 +24,7 @@ const AppRoutes = () => {
 
   useEffect(() => {
     dispatch(me());
-    dispatch(fetchFeatured())
+    dispatch(fetchFeatured());
   }, []);
 
   return (
@@ -35,7 +35,7 @@ const AppRoutes = () => {
           <Route to="/home" element={<Home />} />
           <Route path="/restaurants" element={<AllRestaurant />} />
           <Route path="/profile" element={<UserProfile />} />
-          <Route path="/random" element={<RandomRestaurant/>} />
+          <Route path="/random" element={<RandomRestaurant />} />
           <Route
             path={`/restaurants/:objectid`}
             element={<SingleRestaurant />}
@@ -50,10 +50,7 @@ const AppRoutes = () => {
         </Routes>
       ) : (
         <Routes>
-          <Route
-            path="/*"
-            element={<FeaturedRestaurant />}
-          />
+          <Route path="/*" element={<FeaturedRestaurant />} />
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
@@ -67,7 +64,7 @@ const AppRoutes = () => {
             path={`/restaurants/:objectid`}
             element={<SingleRestaurant />}
           />
-          <Route path="/random" element={<RandomRestaurant/>} />
+          <Route path="/random" element={<RandomRestaurant />} />
         </Routes>
       )}
     </div>

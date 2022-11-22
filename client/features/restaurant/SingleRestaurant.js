@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import {
+  fetchSingleUserHistory,
+  editSingleUserHistory,
+  addOrRemoveFromFavorites,
+  createNewUserHistory,
+} from "../user/userSlice";
 import { fetchSingleRestaurant } from "./restaurantSlice";
 import { Rating, Grid, Card } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -25,13 +31,58 @@ const SingleRestaurant = () => {
     review_count,
     photos,
   } = singleRestaurant;
-
+  const user = useSelector((state) => state.auth.me);
+  const history = useSelector((state) => state.user.currentUserHistory);
+  const userId = user.id;
   const dispatch = useDispatch();
 
+  // history[i].timesVisited is read only, so it can't be reassigned to a variable???
+  const findTimesVisited = () => {
+    for (let i = 0; i < history.length; i++) {
+      if (history[i].restaurantName === name) {
+        return history[i].timesVisited;
+      }
+    }
+  };
+
+  const isFavorite = () => {
+    for (let i = 0; i < history.length; i++) {
+      if (history[i].restaurantName === name) {
+        return history[i].favorite;
+      }
+    }
+  };
+
+  const incrementHistory = () => {
+    dispatch(editSingleUserHistory({ id: objectid, userId: userId }));
+    dispatch(fetchSingleUserHistory(userId));
+  };
+
+  const addToHistory = () => {
+    dispatch(
+      createNewUserHistory({ id: objectid, userId: userId, name: name })
+    );
+    dispatch(fetchSingleUserHistory(userId));
+  };
+
+  const toggleFavorite = () => {
+    dispatch(addOrRemoveFromFavorites({ id: objectid, userId: userId }));
+    dispatch(fetchSingleUserHistory(userId));
+  };
+
   useEffect(() => {
-    dispatch(fetchSingleRestaurant(objectid));
-    dispatch(fetchReviews(objectid));
-  }, []);
+    if (userId) {
+      dispatch(fetchSingleRestaurant(objectid));
+      dispatch(fetchSingleUserHistory(userId));
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    if (history) {
+      findTimesVisited();
+      isFavorite();
+    }
+  }, [history]);
 
   return (
     <div>

@@ -1,62 +1,62 @@
 body {
-    font-family: sans-serif;
-  }
-  
-  a {
-    text-decoration: none;
-  }
-  
-  label {
-    display: block;
-  }
-  
-  nav a {
-    display: inline-block;
-    margin: 1em;
-  }
-  
-  form div {
-    margin: 1em;
-    display: inline-block;
-  }
+  font-family: sans-serif;
+}
 
-   .single > img{
-    width: 500px;
-    height: 500px;
-  }
+a {
+  text-decoration: none;
+}
 
-  img.image {
-    width: 200px;
-    height: 200px;
-    margin-right: 10px;
-    border-radius: 3px 0 0 3px;
-  }
+label {
+  display: block;
+}
 
-  .text_box{
-    font-family: cursive;
-    width: 50%;
-  }
- 
-  .container {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-  .featured_box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .row {
-    display: flex;
-    flex-shrink: 1;
-    border-color: lightgray;
-  }
+nav a {
+  display: inline-block;
+  margin: 1em;
+}
 
-  .user {
-    display: flex;
-    justify-content: space-evenly;
-  }
+form div {
+  margin: 1em;
+  display: inline-block;
+}
+
+.single > img {
+  width: 500px;
+  height: 500px;
+}
+
+img.image {
+  width: 200px;
+  height: 200px;
+  margin-right: 10px;
+  border-radius: 3px 0 0 3px;
+}
+
+.text_box {
+  font-family: cursive;
+  width: 50%;
+}
+
+.container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.featured_box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.row {
+  display: flex;
+  flex-shrink: 1;
+  border-color: lightgray;
+}
+
+.user {
+  display: flex;
+  justify-content: space-evenly;
+}
 
 #my-map {
   width: 500px;
