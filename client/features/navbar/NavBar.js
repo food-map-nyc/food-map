@@ -115,7 +115,7 @@ const Navbar = () => {
                 }}
                 startIcon={<AppRegistration sx={{ fontSize: 40 }} />}
               >
-                SIGN IN
+                SIGN UP
               </Button>
             </Stack>
           </div>

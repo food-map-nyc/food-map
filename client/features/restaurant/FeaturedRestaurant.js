@@ -60,11 +60,10 @@ const FeaturedRestaurant = () => {
           <h2>Do you know someone who has trouble deciding where to eat?</h2>
           <h1>IS IT YOU?</h1>
           <h1>
-            No worries, <strong>FoodMap</strong> got your back.
+            No worries, <strong>FoodMap</strong> has got your back.
           </h1>
           <h2>
-            Let us do all the work and you can take all the credit for finding
-            the new spot!
+            Let us do all the work and you can take all the credit for finding the new spot!
           </h2>
           {isLoggedIn ? (
             <Stack spacing={2} direction="row">
