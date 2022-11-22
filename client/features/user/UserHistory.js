@@ -47,6 +47,7 @@ function UserHistory(id) {
 
   return (
     <div>
+      <h2>History</h2>
       {history?.map((restaurant, idx) => (
         <div key={idx}>
           <a href={`/restaurants/${restaurant.restaurantId}`}>
