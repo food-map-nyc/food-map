@@ -11,11 +11,12 @@ import {
   deleteWishlistItem,
 } from "../user/userSlice";
 import { fetchSingleRestaurant } from "./restaurantSlice";
-import { Rating, Modal, Box, Typography } from "@mui/material";
+import { Rating, Modal, Box, Typography, Grid, Card } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { Favorite, FavoriteBorder, Star } from "@mui/icons-material";
 import { Button } from "@mui/material";
+import { fetchReviews } from "./restaurantSlice";
 
 const style = {
   position: "absolute",
@@ -30,7 +31,11 @@ const style = {
 };
 
 const SingleRestaurant = () => {
+  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const { objectid } = useParams();
+  const singleRestaurant = useSelector((state) => state.restaurant.restaurant);
+  const { reviews } = useSelector((state) => state.restaurant.reviews);
+
   const {
     name,
     image_url,
@@ -40,8 +45,8 @@ const SingleRestaurant = () => {
     price,
     rating,
     review_count,
-  } = useSelector((state) => state.restaurant.restaurant);
-
+    photos,
+  } = singleRestaurant;
   const user = useSelector((state) => state.auth.me);
   const history = useSelector((state) => state.user.currentUserHistory);
   const wishlist = useSelector((state) => state.user.currentUserWishlist);
@@ -58,7 +63,6 @@ const SingleRestaurant = () => {
         return history[i].timesVisited;
       }
     }
-    return 0;
   };
 
   const isFavorite = () => {
@@ -108,8 +112,12 @@ const SingleRestaurant = () => {
   };
 
   useEffect(() => {
+    dispatch(fetchSingleRestaurant(objectid));
+    dispatch(fetchReviews(objectid));
+  }, []);
+
+  useEffect(() => {
     if (userId) {
-      dispatch(fetchSingleRestaurant(objectid));
       dispatch(fetchSingleUserHistory(userId));
       dispatch(fetchUserWishlist(userId));
     }
@@ -124,130 +132,174 @@ const SingleRestaurant = () => {
   }, [history]);
 
   return (
-    <div className="container">
-      <div className="single">
-        <img src={image_url} />
-      </div>
-      <div>
-        <h1>{name}</h1>
-        <p>
-          Rating:{" "}
-          {rating ? (
-            <Rating name="half-rating" defaultValue={rating} precision={0.5} />
-          ) : null}{" "}
-          ({review_count} reviews)
-        </p>
-        <p>Price: {price}</p>
-        <p>
-          Address: {location?.display_address[0]},{" "}
-          {location?.display_address[1]}
-        </p>
-        <p>Phone Number: {display_phone}</p>
-        <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
+    <>
+      <div className="container">
+        <div className="single">
+          <img src={image_url} />
+        </div>
         <div>
-          {findTimesVisited() ? (
-            <div>
-              <Button variant="outlined" onClick={handleOpen}>
-                <CheckCircleOutlineIcon />
-                Add to Restaurant History
-              </Button>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                  >
-                    Just visited this restaurant?
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    onClick={() => {
-                      incrementHistory();
-                      handleClose();
-                    }}
-                  >
-                    <CheckCircleOutlineIcon />
-                    Add to Restaurant History
-                  </Button>
-                </Box>
-              </Modal>
-              {isFavorite() ? (
-                <Button variant="outlined" onClick={toggleFavorite}>
-                  <Favorite />
-                  Remove from Favorites
+          <h1>{name}</h1>
+          <p>
+            Rating:{" "}
+            {rating ? (
+              <Rating
+                name="half-rating"
+                defaultValue={rating}
+                precision={0.5}
+              />
+            ) : null}{" "}
+            ({review_count} reviews)
+          </p>
+          <p>Price: {price}</p>
+          <p>
+            Address: {location?.display_address[0]},{" "}
+            {location?.display_address[1]}
+          </p>
+          <p>Phone Number: {display_phone}</p>
+          <p>
+            Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}
+          </p>
+          <div>
+            {isLoggedIn && findTimesVisited() && (
+              <div>
+                <Button variant="outlined" onClick={handleOpen}>
+                  <CheckCircleOutlineIcon />
+                  Add to Restaurant History
                 </Button>
-              ) : (
-                <Button variant="outlined" onClick={toggleFavorite}>
-                  <FavoriteBorder />
-                  Add to Favorites
-                </Button>
-              )}
-            </div>
-          ) : (
-            <div>
-              <Button variant="outlined" onClick={handleOpen}>
-                <CheckCircleOutlineIcon />
-                Add to Restaurant History
-              </Button>
-              <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box sx={style}>
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h6"
-                    component="h2"
-                  >
-                    Just visited this restaurant?
-                  </Typography>
-                  <Button
-                    variant="outlined"
-                    onClick={() => {
-                      addToHistory();
-                      handleClose();
-                    }}
-                  >
-                    <CheckCircleOutlineIcon />
-                    Add to Restaurant History
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      Just visited this restaurant?
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        incrementHistory();
+                        handleClose();
+                      }}
+                    >
+                      <CheckCircleOutlineIcon />
+                      Add to Restaurant History
+                    </Button>
+                  </Box>
+                </Modal>
+                {isLoggedIn && isFavorite() && (
+                  <Button variant="outlined" onClick={toggleFavorite}>
+                    <Favorite />
+                    Remove from Favorites
                   </Button>
-                </Box>
-              </Modal>
+                )}
+                {isLoggedIn && !isFavorite() && (
+                  <Button variant="outlined" onClick={toggleFavorite}>
+                    <FavoriteBorder />
+                    Add to Favorites
+                  </Button>
+                )}
+              </div>
+            )}
+            
+            
+            {isLoggedIn && !findTimesVisited() && (
+              <div>
+                <Button variant="outlined" onClick={handleOpen}>
+                  <CheckCircleOutlineIcon />
+                  Add to Restaurant History
+                </Button>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      Just visited this restaurant?
+                    </Typography>
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        addToHistory();
+                        handleClose();
+                      }}
+                    >
+                      <CheckCircleOutlineIcon />
+                      Add to Restaurant History
+                    </Button>
+                  </Box>
+                </Modal>
+              </div>
+            )}
+            {isLoggedIn && isOnWishlist() && (
+              <Button variant="outlined" onClick={removeFromWishlist}>
+                <Star />
+                Remove From Wishlist
+              </Button>
+            )}
+            {isLoggedIn && !isOnWishlist() && (
+              <Button variant="outlined" onClick={addToWishlist}>
+                <StarOutlineIcon />
+                Add to Wishlist
+              </Button>
+            )}
+          </div>
+          {userId && (
+            <div>
+              <p>
+                {findTimesVisited()
+                  ? `You have been here ${findTimesVisited()} times`
+                  : "You have not been here yet!"}
+              </p>
             </div>
-          )}
-          {isOnWishlist() ? (
-            <Button variant="outlined" onClick={removeFromWishlist}>
-              <Star />
-              Remove From Wishlist
-            </Button>
-          ) : (
-            <Button variant="outlined" onClick={addToWishlist}>
-              <StarOutlineIcon />
-              Add to Wishlist
-            </Button>
           )}
         </div>
-        <p>Phone Number: {display_phone}</p>
-        <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
-        {userId && (
-          <div>
-            <p>
-              {findTimesVisited()
-                ? `You have been here ${findTimesVisited()} times`
-                : "You have not been here yet!"}
-            </p>
-          </div>
-        )}
       </div>
-    </div>
+
+      <div>
+        <h2>Reviews</h2>
+        <Grid container spacing={2}>
+          {reviews
+            ? reviews.map((review, idx) => (
+                <Grid item xs={12} md={6} key={idx}>
+                  <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
+                    <div>
+                      {photos ? (
+                        <img className="image" src={photos[idx]} />
+                      ) : null}
+                    </div>
+                    <div>
+                      <h3>{review.user.name}</h3>
+                      <p>
+                        Rating:{" "}
+                        {review.rating ? (
+                          <Rating
+                            name="half-rating"
+                            defaultValue={review.rating}
+                            precision={0.5}
+                          />
+                        ) : null}
+                      </p>
+                      <p>{review.text}</p>
+                    </div>
+                  </Card>
+                </Grid>
+              ))
+            : null}
+        </Grid>
+      </div>
+    </>
   );
 };
 
