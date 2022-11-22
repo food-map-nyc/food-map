@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
@@ -6,12 +6,28 @@ import {
   editSingleUserHistory,
   addOrRemoveFromFavorites,
   createNewUserHistory,
+  createNewWishlistItem,
+  fetchUserWishlist,
+  deleteWishlistItem,
 } from "../user/userSlice";
 import { fetchSingleRestaurant } from "./restaurantSlice";
-import { Rating } from "@mui/material";
+import { Rating, Modal, Box, Typography } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import { Favorite, FavoriteBorder, Star } from "@mui/icons-material";
 import { Button } from "@mui/material";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const SingleRestaurant = () => {
   const { objectid } = useParams();
@@ -25,18 +41,24 @@ const SingleRestaurant = () => {
     rating,
     review_count,
   } = useSelector((state) => state.restaurant.restaurant);
+
   const user = useSelector((state) => state.auth.me);
   const history = useSelector((state) => state.user.currentUserHistory);
+  const wishlist = useSelector((state) => state.user.currentUserWishlist);
   const userId = user.id;
   const dispatch = useDispatch();
 
-  // history[i].timesVisited is read only, so it can't be reassigned to a variable???
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const findTimesVisited = () => {
     for (let i = 0; i < history.length; i++) {
       if (history[i].restaurantName === name) {
         return history[i].timesVisited;
       }
     }
+    return 0;
   };
 
   const isFavorite = () => {
@@ -45,6 +67,15 @@ const SingleRestaurant = () => {
         return history[i].favorite;
       }
     }
+  };
+
+  const isOnWishlist = () => {
+    for (let i = 0; i < wishlist.length; i++) {
+      if (wishlist[i].restaurantName === name) {
+        return true;
+      }
+    }
+    return false;
   };
 
   const incrementHistory = () => {
@@ -64,10 +95,23 @@ const SingleRestaurant = () => {
     dispatch(fetchSingleUserHistory(userId));
   };
 
+  const addToWishlist = () => {
+    dispatch(
+      createNewWishlistItem({ id: objectid, userId: userId, name: name })
+    );
+    dispatch(fetchUserWishlist(userId));
+  };
+
+  const removeFromWishlist = () => {
+    dispatch(deleteWishlistItem({ id: objectid, userId: userId }));
+    dispatch(fetchUserWishlist(userId));
+  };
+
   useEffect(() => {
     if (userId) {
       dispatch(fetchSingleRestaurant(objectid));
       dispatch(fetchSingleUserHistory(userId));
+      dispatch(fetchUserWishlist(userId));
     }
   }, [userId]);
 
@@ -75,6 +119,7 @@ const SingleRestaurant = () => {
     if (history) {
       findTimesVisited();
       isFavorite();
+      isOnWishlist();
     }
   }, [history]);
 
@@ -100,31 +145,107 @@ const SingleRestaurant = () => {
         <p>Phone Number: {display_phone}</p>
         <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
         <div>
-          <Button variant="outlined">
-            <CheckCircleOutlineIcon />
-            Check-In
-          </Button>
-          <Button variant="outlined">
-            <StarOutlineIcon />
-            Wish List
-          </Button>
+          {findTimesVisited() ? (
+            <div>
+              <Button variant="outlined" onClick={handleOpen}>
+                <CheckCircleOutlineIcon />
+                Add to Restaurant History
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Just visited this restaurant?
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      incrementHistory();
+                      handleClose();
+                    }}
+                  >
+                    <CheckCircleOutlineIcon />
+                    Add to Restaurant History
+                  </Button>
+                </Box>
+              </Modal>
+              {isFavorite() ? (
+                <Button variant="outlined" onClick={toggleFavorite}>
+                  <Favorite />
+                  Remove from Favorites
+                </Button>
+              ) : (
+                <Button variant="outlined" onClick={toggleFavorite}>
+                  <FavoriteBorder />
+                  Add to Favorites
+                </Button>
+              )}
+            </div>
+          ) : (
+            <div>
+              <Button variant="outlined" onClick={handleOpen}>
+                <CheckCircleOutlineIcon />
+                Add to Restaurant History
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Just visited this restaurant?
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      addToHistory();
+                      handleClose();
+                    }}
+                  >
+                    <CheckCircleOutlineIcon />
+                    Add to Restaurant History
+                  </Button>
+                </Box>
+              </Modal>
+            </div>
+          )}
+          {isOnWishlist() ? (
+            <Button variant="outlined" onClick={removeFromWishlist}>
+              <Star />
+              Remove From Wishlist
+            </Button>
+          ) : (
+            <Button variant="outlined" onClick={addToWishlist}>
+              <StarOutlineIcon />
+              Add to Wishlist
+            </Button>
+          )}
         </div>
         <p>Phone Number: {display_phone}</p>
         <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
-        {userId ? (
+        {userId && (
           <div>
-            <p>You have been here {findTimesVisited()} times</p>
-            <p>Favorite? {isFavorite() ? "Yes" : "No"}</p>
-            <button onClick={toggleFavorite}>Toggle favorite</button>
-            {findTimesVisited() ? (
-              <button onClick={incrementHistory}>
-                Add to Restaurant History
-              </button>
-            ) : (
-              <button onClick={addToHistory}>Add to Restaurant History</button>
-            )}
+            <p>
+              {findTimesVisited()
+                ? `You have been here ${findTimesVisited()} times`
+                : "You have not been here yet!"}
+            </p>
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );

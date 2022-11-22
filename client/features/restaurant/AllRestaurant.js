@@ -19,6 +19,7 @@ import {
   fetchByCuisine,
   fetchByBoroughCuisine,
 } from "./restaurantSlice";
+import { fetchSingleUserHistory } from "../user/userSlice";
 
 const AllRestaurant = () => {
   const allRestaurants = useSelector((state) => state.restaurant.restaurants);
@@ -126,10 +127,6 @@ const AllRestaurant = () => {
                       <Button variant="outlined">
                         <CheckCircleOutlineIcon />
                         Check-In
-                      </Button>
-                      <Button variant="outlined">
-                        <StarOutlineIcon />
-                        Wish List
                       </Button>
                     </div>
                   </div>
