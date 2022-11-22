@@ -33,6 +33,7 @@ const Navbar = () => {
       </Link>
       <nav>
        
+       {/* o: it may make sense to create two components for the logged in and logged out navbar */}
         {isLoggedIn ? (
           <div>
             {/* The navbar will show these links after you log in */}
@@ -70,6 +71,7 @@ const Navbar = () => {
             >
               WISHLIST
             </Button>
+            {/* o: you can use user.isAdmin && ... in these circumstances */}
             {user.isAdmin ? (
               <Button
               variant="outlined"

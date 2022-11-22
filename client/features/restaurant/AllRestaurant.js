@@ -31,6 +31,8 @@ const AllRestaurant = () => {
 
   let cuisineFilter = [];
 
+  // o: make sure to write a comment explaining what this is doing when you use
+  //  more complex logic like so
   const allCuisines = allRestaurants.businesses
     ?.map((restaurant) => restaurant.categories)
     .flat()
@@ -54,6 +56,7 @@ const AllRestaurant = () => {
     } else {
       dispatch(fetchAllRestaurant(page));
     }
+    // o: good use of dependancy array
   }, [page, cuisine, borough]);
 
   return (
@@ -101,8 +104,9 @@ const AllRestaurant = () => {
         </FormControl>
       </div>
       <Grid container spacing={2}>
+        {/* o: you can use allRestaurants.businesses?.map in this example */}
         {allRestaurants.businesses
-          ? allRestaurants.businesses.map((restaurant, idx) => (
+          ? allRestaurants.businesses?.map((restaurant, idx) => (
               <Grid item xs={12} md={6} key={idx}>
                 <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
                   <div>

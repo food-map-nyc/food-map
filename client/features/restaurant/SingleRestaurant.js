@@ -35,6 +35,7 @@ const SingleRestaurant = () => {
         <h1>{name}</h1>
         <p>
           Rating:{" "}
+          {/* o: you can use rating && ... in this example */}
           {rating ? (
             <Rating name="half-rating" defaultValue={rating} precision={0.5} />
           ) : null}{" "}

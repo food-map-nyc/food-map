@@ -14,6 +14,7 @@ const FeaturedRestaurant = () => {
       .sort((a, b) => b.rating - a.rating)
   );
 
+  // o: is this a featured restaurant? ... what is this piece of data representing here?
   const [restaurant, setRestaurant] = useState({
     name: "FoodMap",
     image_url: "https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?b=1&s=170667a&w=0&k=20&c=P3jIQq8gVqlXjd4kP2OrXYyzqEXSWCwwYtwrd81psDY=",
@@ -23,6 +24,7 @@ const FeaturedRestaurant = () => {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
 
+  // o: what is happening here exactly?
   const movingImage = () => {
     if (index < 6) {
       setRestaurant(featuredRestaurants[index]);
@@ -112,6 +114,7 @@ const FeaturedRestaurant = () => {
       <hr />
       <h2>RESTAURANTS WITH THE MOST REVIEWS IN ALL OF NEW YORK CITY!!!</h2>
       <Grid container spacing={2}>
+        {/* o: you can use featuredRestaurants?.map here */}
         {featuredRestaurants
           ? featuredRestaurants.map((restaurant, idx) => (
               <Grid item xs={12} md={6} key={idx}>

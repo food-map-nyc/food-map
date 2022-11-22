@@ -1,7 +1,7 @@
 import React, { useEffect} from "react";
 
 export default function MyMap(props) {
-  
+  // o: you can destructure this above
   const { selectedRestaurants , longitude, latitude} = props;
 
   useEffect(() => {
