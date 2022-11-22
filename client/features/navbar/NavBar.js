@@ -14,7 +14,7 @@ import {
   Login,
   AppRegistration,
 } from "@mui/icons-material";
-import { Button, Stack } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.me);
@@ -27,10 +27,17 @@ const Navbar = () => {
   };
 
   return (
-    <div>
-      <Link to="/">
-        <h1>Welcome to FoodMap</h1>
-      </Link>
+    <div className="navbar">
+      <Typography className="logo">
+          <Link to="/">
+              <img
+                src="https://i.ibb.co/SrGW7L6/FOODMAP-LOGO.gif"
+                alt="FoodMap"
+                width="350px"
+                height="300px"
+              ></img>
+          </Link>
+        </Typography>
       <nav>
         {isLoggedIn ? (
           <div>

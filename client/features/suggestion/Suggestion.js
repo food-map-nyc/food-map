@@ -19,8 +19,8 @@ const Suggestion = () => {
 
   const dispatch = useDispatch();
 
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
   const [loading, setLoading] = useState(true);
 
   function error(err) {
@@ -31,8 +31,8 @@ const Suggestion = () => {
 
   const options = {
     enableHighAccuracy: false,
-    timeout:5000,
-    maximumAge: 4000 
+    timeout:10000,
+    maximumAge: 5000 
   };
 
   function success (){
