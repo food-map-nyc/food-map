@@ -95,6 +95,19 @@ router.post("/:id/history", checkUser, async (req, res, next) => {
   }
 });
 
+router.post("/:id/wishlist", checkUser, async (req, res, next) => {
+  try {
+    const wishlist = await Wishlist.create({
+      restaurantId: req.body.id,
+      restaurantName: req.body.name,
+      userId: req.params.id,
+    });
+    res.json(wishlist);
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.put("/:id/favorites", checkUser, async (req, res, next) => {
   try {
     const favorite = await History.findOne({
@@ -115,7 +128,22 @@ router.put("/:id/favorites", checkUser, async (req, res, next) => {
     next(err);
   }
 });
-// })
+
+// router.delete("/wishlist/:id", async (req, res, next) => {
+//   try {
+//     console.log(req);
+//     // const wishlist = await Wishlist.findOne({
+//     //   where: {
+//     //     restaurantId: req.body.id,
+//     //     userId: req.params.id,
+//     //   },
+//     // });
+//     // await wishlist.destroy();
+//     // res.json(wishlist);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 router.delete("/:id", checkUser, checkAdmin, async (req, res, next) => {
   try {

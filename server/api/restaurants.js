@@ -131,3 +131,19 @@ router.get("/:id", async (req, res, next) => {
     next(err);
   }
 });
+
+router.delete("/wishlist/:id", async (req, res, next) => {
+  try {
+    console.log(req);
+    // const wishlist = await Wishlist.findOne({
+    //   where: {
+    //     restaurantId: req.body.id,
+    //     userId: req.params.id,
+    //   },
+    // });
+    // await wishlist.destroy();
+    // res.json(wishlist);
+  } catch (err) {
+    next(err);
+  }
+});

@@ -6,6 +6,9 @@ import {
   editSingleUserHistory,
   addOrRemoveFromFavorites,
   createNewUserHistory,
+  createNewWishlistItem,
+  fetchUserWishlist,
+  deleteWishlistItem,
 } from "../user/userSlice";
 import { fetchSingleRestaurant } from "./restaurantSlice";
 import { Rating } from "@mui/material";
@@ -27,6 +30,7 @@ const SingleRestaurant = () => {
   } = useSelector((state) => state.restaurant.restaurant);
   const user = useSelector((state) => state.auth.me);
   const history = useSelector((state) => state.user.currentUserHistory);
+  const wishlist = useSelector((state) => state.user.currentUserWishlist);
   const userId = user.id;
   const dispatch = useDispatch();
 
@@ -47,6 +51,15 @@ const SingleRestaurant = () => {
     }
   };
 
+  const isOnWishlist = () => {
+    for (let i = 0; i < wishlist.length; i++) {
+      if (wishlist[i].restaurantName === name) {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const incrementHistory = () => {
     dispatch(editSingleUserHistory({ id: objectid, userId: userId }));
     dispatch(fetchSingleUserHistory(userId));
@@ -64,10 +77,23 @@ const SingleRestaurant = () => {
     dispatch(fetchSingleUserHistory(userId));
   };
 
+  const addToWishlist = () => {
+    dispatch(
+      createNewWishlistItem({ id: objectid, userId: userId, name: name })
+    );
+    dispatch(fetchUserWishlist(userId));
+  };
+
+  const removeFromWishlist = () => {
+    dispatch(deleteWishlistItem({ id: objectid, userId: userId }));
+    dispatch(fetchUserWishlist(userId));
+  };
+
   useEffect(() => {
     if (userId) {
       dispatch(fetchSingleRestaurant(objectid));
       dispatch(fetchSingleUserHistory(userId));
+      dispatch(fetchUserWishlist(userId));
     }
   }, [userId]);
 
@@ -75,6 +101,7 @@ const SingleRestaurant = () => {
     if (history) {
       findTimesVisited();
       isFavorite();
+      isOnWishlist();
     }
   }, [history]);
 
@@ -104,10 +131,17 @@ const SingleRestaurant = () => {
             <CheckCircleOutlineIcon />
             Check-In
           </Button>
-          <Button variant="outlined">
-            <StarOutlineIcon />
-            Wish List
-          </Button>
+          {isOnWishlist() ? (
+            <Button variant="outlined" onClick={removeFromWishlist}>
+              <StarOutlineIcon />
+              Remove From Wishlist
+            </Button>
+          ) : (
+            <Button variant="outlined" onClick={addToWishlist}>
+              <StarOutlineIcon />
+              Wish List
+            </Button>
+          )}
         </div>
         <p>Phone Number: {display_phone}</p>
         <p>Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}</p>
