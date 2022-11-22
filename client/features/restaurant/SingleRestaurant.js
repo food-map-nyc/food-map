@@ -9,10 +9,11 @@ import { Button } from "@mui/material";
 import { fetchReviews } from "./restaurantSlice";
 
 const SingleRestaurant = () => {
+  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const { objectid } = useParams();
   const singleRestaurant = useSelector((state) => state.restaurant.restaurant);
   const { reviews } = useSelector((state) => state.restaurant.reviews);
-  console.log(reviews)
+  
   const {
     name,
     image_url,
@@ -60,6 +61,7 @@ const SingleRestaurant = () => {
           <p>
             Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}
           </p>
+          {isLoggedIn &&
           <div>
             <Button variant="outlined">
               <CheckCircleOutlineIcon />
@@ -69,7 +71,7 @@ const SingleRestaurant = () => {
               <StarOutlineIcon />
               Wish List
             </Button>
-          </div>
+          </div> }
         </div>
       </div>
       <div>

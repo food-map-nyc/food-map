@@ -22,6 +22,7 @@ import {
 
 const AllRestaurant = () => {
   const allRestaurants = useSelector((state) => state.restaurant.restaurants);
+  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
 
   const dispatch = useDispatch();
 
@@ -99,6 +100,14 @@ const AllRestaurant = () => {
             <MenuItem value="Staten Island">Staten Island</MenuItem>
           </Select>
         </FormControl>
+        <Stack spacing={2}>
+          <Pagination
+            count={20}
+            page={page}
+            onChange={(event, value) => setPage(value)}
+          />
+        </Stack>
+        <hr/>
       </div>
       <Grid container spacing={2}>
         {allRestaurants.businesses
@@ -122,6 +131,7 @@ const AllRestaurant = () => {
                         .map((cuisine) => cuisine.title)
                         .join(", ")}
                     </p>
+                    {isLoggedIn &&
                     <div>
                       <Button variant="outlined">
                         <CheckCircleOutlineIcon />
@@ -131,20 +141,13 @@ const AllRestaurant = () => {
                         <StarOutlineIcon />
                         Wish List
                       </Button>
-                    </div>
+                    </div> }
                   </div>
                 </Card>
               </Grid>
             ))
           : null}
       </Grid>
-      <Stack spacing={2}>
-        <Pagination
-          count={20}
-          page={page}
-          onChange={(event, value) => setPage(value)}
-        />
-      </Stack>
     </div>
   );
 };

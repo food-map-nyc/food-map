@@ -1,13 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import Navbar from '../features/navbar/NavBar';
-import AppRoutes from './AppRoutes';
+import Navbar from "../features/navbar/NavBar";
+import AppRoutes from "./AppRoutes";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "../../public/style"
 
 const App = () => {
+
   return (
     <div>
-      <Navbar />
-      <AppRoutes />
+      <ThemeProvider theme={theme}>
+        <Navbar />
+        <AppRoutes />
+      </ThemeProvider>
     </div>
   );
 };
