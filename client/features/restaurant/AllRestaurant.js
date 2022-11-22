@@ -19,6 +19,7 @@ import {
   fetchByCuisine,
   fetchByBoroughCuisine,
 } from "./restaurantSlice";
+import { fetchSingleUserHistory } from "../user/userSlice";
 
 const AllRestaurant = () => {
   const allRestaurants = useSelector((state) => state.restaurant.restaurants);
