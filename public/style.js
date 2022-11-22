@@ -9,22 +9,22 @@ export const theme = createTheme({
       secondary: {
         main: "#2962ff",
       },
-    //   text: {
-    //     primary: "#2962ff"
-    //   }
+      text: {
+        primary: "#2962ff"
+      }
     },
     typography: {
       fontFamily: "monospace",
     },
-    // components: {
-    //     MuiButton: {
-    //         styleOverrides: {
-    //             root: {
-    //                 color: "#2962ff",
-    //                 border: "#2962ff",
-    //                 fontSize: 15
-    //             }
-    //         }
-    //     },
-    // }
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    color: "#2962ff",
+                    border: "#2962ff",
+                    fontSize: 15
+                }
+            }
+        },
+    }
   });

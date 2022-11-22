@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { logout } from "../../app/store";
 
 import { Button, Typography, AppBar, Box, Toolbar, IconButton, Menu, Container, Avatar, Tooltip, MenuItem } from "@mui/material";
-
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 
 const Navbar = () => {
@@ -33,27 +32,16 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <LunchDiningIcon
-            sx={{ display: { xs: "none", md: "flex" }, mr: 1, fontSize: 40, color: "blue" }}
-          />
-          <Typography
-            variant="h3"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "blue",
-              textDecoration: "none",
-            }}
-            onClick={()=>{navigate("/")}}
-          >
-            FOODMAP
-          </Typography>
+          <Typography className="logo">
+          <Link to="/">
+              <img
+                src="https://i.ibb.co/SrGW7L6/FOODMAP-LOGO.gif"
+                alt="FoodMap"
+                width="150px"
+                height="120px"
+              ></img>
+          </Link>
+        </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
               <Button
