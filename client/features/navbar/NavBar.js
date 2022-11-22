@@ -1,135 +1,140 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { logout } from "../../app/store";
 
-import {
-  Groups,
-  Home,
-  Restaurant,
-  Person,
-  Star,
-  Favorite,
-  Logout,
-  Login,
-  AppRegistration,
-} from "@mui/icons-material";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Typography, AppBar, Box, Toolbar, IconButton, Menu, Container, Avatar, Tooltip, MenuItem } from "@mui/material";
+import LunchDiningIcon from "@mui/icons-material/LunchDining";
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.me);
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl)
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logoutAndRedirectHome = () => {
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+    const logoutAndRedirectHome = () => {
+    setAnchorEl(null)
     dispatch(logout());
     navigate("/login");
   };
 
   return (
-    <div className="navbar">
-      <Typography className="logo">
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Typography className="logo">
           <Link to="/">
               <img
                 src="https://i.ibb.co/SrGW7L6/FOODMAP-LOGO.gif"
                 alt="FoodMap"
-                width="350px"
-                height="300px"
+                width="150px"
+                height="120px"
               ></img>
           </Link>
         </Typography>
-      <nav>
-        {isLoggedIn ? (
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <Stack spacing={2} direction="row">
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
               <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/home");
-                }}
-                startIcon={<Home sx={{ fontSize: 40 }} />}
+                key="Home"
+                sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
+                onClick={()=>{navigate("/home")}}
               >
-                HOME
+                Home
               </Button>
               <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/profile");
-                }}
-                startIcon={<Person sx={{ fontSize: 40 }} />}
-              >
-                USER PROFILE
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/restaurants");
-                }}
-                startIcon={<Restaurant sx={{ fontSize: 40 }} />}
-              >
-                RESTAURANTS
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<Favorite sx={{ fontSize: 40 }} />}
-              >
-                FAVORITES
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<Star sx={{ fontSize: 40 }} />}
-              >
-                WISHLIST
-              </Button>
-              {user.isAdmin ? (
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    navigate("/users");
-                  }}
-                  startIcon={<Groups sx={{ fontSize: 40 }} />}
-                >
-                  ALL USERS
-                </Button>
-              ) : null}
-              <Button
-                variant="outlined"
-                onClick={logoutAndRedirectHome}
-                startIcon={<Logout sx={{ fontSize: 40 }} />}
-              >
-                LOGOUT
-              </Button>
-            </Stack>
-          </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Stack spacing={2} direction="row">
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/login");
-                }}
-                startIcon={<Login sx={{ fontSize: 40 }} />}
-              >
-                LOGIN
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/signup");
-                }}
-                startIcon={<AppRegistration sx={{ fontSize: 40 }} />}
-              >
-                SIGN UP
-              </Button>
-            </Stack>
-          </div>
-        )}
-      </nav>
-      <hr />
-    </div>
+              key="Restaurants"
+              sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
+              onClick={()=>{navigate("/restaurants")}}
+            >
+              RESTAURANTS
+            </Button>
+            {isLoggedIn && 
+            <Button
+            key="Profile"
+            sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
+            onClick={()=>{navigate("/profile")
+            }}
+          >
+            PROFILE
+          </Button> }
+          {!isLoggedIn && 
+          <>
+            <Button
+            key="Login"
+            sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
+            onClick={()=>{navigate("/login")
+            }}
+          >
+            LOGIN
+          </Button>
+          <Button
+          key="Signup"
+          sx={{ my: 2, color: "blue", display: "block", fontSize: 25 }}
+          onClick={()=>{navigate("/signup")
+          }}
+        >
+          SIGNUP
+        </Button> </>}
+          {user.isAdmin && 
+            <Button
+            key="Users"
+            sx={{ my: 2, color: "blue", display: "block", fontSize: 25 }}
+            onClick={()=>{navigate("/users")
+            }}
+          >
+            USERS
+          </Button> }
+          </Box>
+          {isLoggedIn &&
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleClick} sx={{ p: 0 }}>
+                <Avatar src={user.imageUrl} />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem key="History">
+                <Typography textAlign="center">HISTORY</Typography>
+              </MenuItem>
+              <MenuItem key="Favorites">
+                <Typography textAlign="center">FAVORITES</Typography>
+              </MenuItem>
+              <MenuItem key="Wishlist">
+                <Typography textAlign="center">WISHLIST</Typography>
+              </MenuItem>
+              <MenuItem key="Logout">
+                <Typography textAlign="center" onClick={logoutAndRedirectHome}>LOGOUT</Typography>
+              </MenuItem>
+            </Menu>
+          </Box> }
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 

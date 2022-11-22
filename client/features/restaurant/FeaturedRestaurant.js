@@ -6,6 +6,11 @@ import { emoji } from "node-emoji";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 
+import Box from "@mui/material/Box";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import { CardHeader } from "@mui/material";
+
 const FeaturedRestaurant = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const featuredRestaurants = useSelector((state) =>
@@ -16,13 +21,13 @@ const FeaturedRestaurant = () => {
 
   const [restaurant, setRestaurant] = useState({
     name: "FoodMap",
-    image_url: "https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?b=1&s=170667a&w=0&k=20&c=P3jIQq8gVqlXjd4kP2OrXYyzqEXSWCwwYtwrd81psDY=",
+    image_url:
+      "https://media.istockphoto.com/id/1316145932/photo/table-top-view-of-spicy-food.jpg?b=1&s=170667a&w=0&k=20&c=P3jIQq8gVqlXjd4kP2OrXYyzqEXSWCwwYtwrd81psDY=",
     review_count: 10000,
-    rating: "5.0"
+    rating: "5.0",
   });
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
-
   const movingImage = () => {
     if (index < 6) {
       setRestaurant(featuredRestaurants[index]);
@@ -40,115 +45,146 @@ const FeaturedRestaurant = () => {
   }, [featuredRestaurants]);
 
   return (
-    <div>
-      <div className="featured_box">
-        <Link to={`/restaurants/${restaurant.id}`}>
-          <Card sx={{ width: 600, height: 600 }}>
-            <h1>{restaurant.name} </h1>
-            <h2>
-              {restaurant.rating} {emoji.star} ({restaurant.review_count} reviews)
-            </h2>
+    <>
+      <Card sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
+        <Card sx={{ maxHeight: 700 }} >
+          <CardHeader
+            onClick={() => {
+              navigate(`/restaurants/${restaurant.id}`);
+            }}
+            title={<Typography variant="h3">{restaurant.name}</Typography>}
+            subheader={
+              <Typography variant="h5">
+                {restaurant.rating} {emoji.star} ({restaurant.review_count}{" "}
+                reviews)
+              </Typography>
+            }
+          />
+          <Box  sx={{
+        width: 1200,
+        height: 600,
+      }}>
             <CardMedia
               component="img"
-              height="600"
+              sx={{ width: 600, height: 600 }}
               image={restaurant.image_url}
-              alt="Dish"
             />
-          </Card>
-        </Link>
-        <div className="text_box">
-          <h2>Do you know someone who has trouble deciding where to eat?</h2>
-          <h1>IS IT YOU?</h1>
-          <h1>
-            No worries, <strong>FoodMap</strong> has got your back.
-          </h1>
-          <h2>
-            Let us do all the work and you can take all the credit for finding the new spot!
-          </h2>
-          {isLoggedIn ? (
-            <Stack spacing={2} direction="row">
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/suggestion");
-                }}
-              >
-                Suggestions For You
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/random");
-                }}
-              >
-                Feeling Risky? Click Here
-              </Button>
+          </Box>
+        </Card>
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <CardContent sx={{ flex: "1 0 auto" }}>
+            <Stack spacing={4}>
+              <Typography component="div" fontSize="30px">
+                Do you know someone who has trouble deciding where to eat?
+              </Typography>
+              <Typography component="div" fontSize="30px">
+                IS IT YOU?
+              </Typography>
+
+              <Typography component="div" fontSize="30px">
+                No worries, <strong>FoodMap</strong> got your back.
+              </Typography>
+              <Typography component="div" fontSize="30px">
+                Let us do all the work and you can take all the credit for
+                finding the new spot!
+              </Typography>
+              {isLoggedIn ? (
+                <Stack spacing={2} direction="row">
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      navigate("/suggestion");
+                    }}
+                  >
+                    Suggestions For You
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      navigate("/random");
+                    }}
+                  >
+                    Feeling Risky? Click Here
+                  </Button>
+                </Stack>
+              ) : (
+                <Stack spacing={2} direction="row">
+                  <Link to="signup">
+                    <Button
+                      variant="outlined"
+                      onClick={() => {
+                        navigate("/signup");
+                      }}
+                    >
+                      Sign Up for Suggestions
+                    </Button>
+                  </Link>
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      navigate("/random");
+                    }}
+                  >
+                    Feeling Risky? Click Here
+                  </Button>
+                </Stack>
+              )}
             </Stack>
-          ) : (
-            <Stack spacing={2} direction="row">
-              <Link to="signup">
-                <Button
-                  variant="outlined"
-                  onClick={() => {
-                    navigate("/signup");
-                  }}
-                >
-                  Sign Up for Suggestions
-                </Button>
-              </Link>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/random");
-                }}
-              >
-                Feeling Risky? Click Here
-              </Button>
-            </Stack>
-          )}
-        </div>
-      </div>
+          </CardContent>
+        </Box>
+      </Card>
       <hr />
-      <h2>RESTAURANTS WITH THE MOST REVIEWS IN ALL OF NEW YORK CITY!!!</h2>
+      <Typography fontSize="30px">
+        RESTAURANTS WITH THE MOST REVIEWS IN ALL OF NEW YORK CITY!!!
+      </Typography>
       <Grid container spacing={2}>
-        {featuredRestaurants
-          ? featuredRestaurants.map((restaurant, idx) => (
-              <Grid item xs={12} md={6} key={idx}>
-                <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
-                  <div>
-                    <img className="image" src={restaurant.image_url} />
-                  </div>
-                  <div>
-                    <a href={`/restaurants/${restaurant.id}`}>
-                      <h3>{restaurant.name}</h3>
-                    </a>
-                    <p>
-                      {restaurant.location.display_address[0]},{" "}
-                      {restaurant.location.display_address[1]}
-                    </p>
-                    <p>
-                      Cuisine:{" "}
-                      {restaurant.categories
-                        .map((cuisine) => cuisine.title)
-                        .join(", ")}
-                    </p>
-                    <div>
-                      <Button variant="outlined">
-                        <CheckCircleOutlineIcon />
-                        Check-In
-                      </Button>
-                      <Button variant="outlined">
-                        <StarOutlineIcon />
-                        Wish List
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
-              </Grid>
-            ))
-          : null}
+        {featuredRestaurants &&
+          featuredRestaurants.map((restaurant, idx) => (
+            <Grid item xs={12} md={6} key={idx}>
+              <Card sx={{ maxWidth: 650, maxHeight: 200 }} className="row">
+                <Box>
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 200, height: 200 }}
+                    image={restaurant.image_url}
+                  />
+                </Box>
+                <CardContent sx={{ flex: "1 0 auto" }}>
+                  <Link to={`/restaurants/${restaurant.id}`}>
+                  <Typography component="div" fontSize="24px">
+                    <strong>{restaurant.name}</strong>
+                  </Typography>
+                  </Link>
+                  <Typography component="div" fontSize="20px">
+                    {restaurant.location.display_address[0]}
+                  </Typography>
+
+                  <Typography component="div" fontSize="20px">
+                    {restaurant.location.display_address[1]}
+                  </Typography>
+                  <Typography component="div" fontSize="18px">
+                    Cuisine:{" "}
+                    {restaurant.categories
+                      .map((cuisine) => cuisine.title)
+                      .join(", ")}
+                  </Typography>
+                  {isLoggedIn && 
+                  <Stack spacing={2} direction="row">
+                    <Button variant="outlined">
+                      <CheckCircleOutlineIcon />
+                      Check-In
+                    </Button>
+                    <Button variant="outlined">
+                      <StarOutlineIcon />
+                      Wish List
+                    </Button>
+                  </Stack> }
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
       </Grid>
-    </div>
+    </>
   );
 };
 

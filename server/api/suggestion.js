@@ -24,3 +24,21 @@ router.get ('/:term/:longitude/:latitude', async (req, res, next) => {
               next(err)
             }
   })
+
+  router.get("/:id", async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const { data } = await axios.get(
+        `https://api.yelp.com/v3/businesses/${id}/reviews`,
+        {
+          headers: {
+            authorization: `Bearer ${API_KEY}`,
+          },
+        }
+      );
+      res.json(data);
+    } catch (err) {
+      next(err);
+    }
+  });
+  
