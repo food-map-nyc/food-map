@@ -1,4 +1,3 @@
-import { create } from "@mui/material/styles/createTransitions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -99,6 +98,23 @@ export const createNewUserHistory = createAsyncThunk(
   }
 );
 
+export const createNewWishlistItem = createAsyncThunk(
+  "createWishlistItem",
+  async ({ id, userId, name }) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.post(
+        `/api/users/${userId}/wishlist`,
+        { id, name },
+        {
+          headers: { authorization: token },
+        }
+      );
+      return data;
+    }
+  }
+);
+
 export const addOrRemoveFromFavorites = createAsyncThunk(
   "addOrRemoveFromFavorites",
   async ({ id, userId }) => {
@@ -107,6 +123,22 @@ export const addOrRemoveFromFavorites = createAsyncThunk(
       const { data } = await axios.put(
         `/api/users/${userId}/favorites`,
         { id },
+        {
+          headers: { authorization: token },
+        }
+      );
+      return data;
+    }
+  }
+);
+
+export const deleteWishlistItem = createAsyncThunk(
+  "deleteWishlist",
+  async ({ id, userId }) => {
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      const { data } = await axios.delete(
+        `/api/users/${userId}/wishlist/${id}`,
         {
           headers: { authorization: token },
         }
@@ -204,6 +236,23 @@ const usersSlice = createSlice({
     });
     builder.addCase(createNewUserHistory.rejected, (state, action) => {
       state.error = action.error.message;
+    });
+    builder.addCase(createNewWishlistItem.fulfilled, (state, action) => {
+      state.currentUserWishlist.push(action.payload);
+    });
+    builder.addCase(createNewWishlistItem.rejected, (state, action) => {
+      state.error = action.error.message;
+    });
+    builder.addCase(deleteWishlistItem.rejected, (state, action) => {
+      if (action.payload) {
+        state.error = action.payload.errorMessage;
+      }
+      state.error = action.error.message;
+    });
+    builder.addCase(deleteWishlistItem.fulfilled, (state, action) => {
+      state.currentUserWishlist = state.currentUserWishlist.filter(
+        (restaurant) => restaurant.restaurantId !== action.payload.restaurantId
+      );
     });
     builder.addCase(deleteSingleUser.rejected, (state, action) => {
       if (action.payload) {

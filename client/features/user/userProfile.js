@@ -4,6 +4,7 @@ import { fetchSingleUser } from "./userSlice";
 import EditUser from "./EditUser";
 import UserHistory from "./UserHistory";
 import UserWishlist from "./UserWishlist";
+import UserFavorites from "./UserFavorites";
 import { Avatar, Typography, Card } from "@mui/material";
 
 export default function UserProfile() {
@@ -42,6 +43,7 @@ export default function UserProfile() {
           <EditUser id={id} user={user} />
           <UserHistory id={id} />
           <UserWishlist id={id} />
+          <UserFavorites id={id} />
           <div />
         </>
       )}
