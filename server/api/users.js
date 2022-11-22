@@ -129,21 +129,24 @@ router.put("/:id/favorites", checkUser, async (req, res, next) => {
   }
 });
 
-// router.delete("/wishlist/:id", async (req, res, next) => {
-//   try {
-//     console.log(req);
-//     // const wishlist = await Wishlist.findOne({
-//     //   where: {
-//     //     restaurantId: req.body.id,
-//     //     userId: req.params.id,
-//     //   },
-//     // });
-//     // await wishlist.destroy();
-//     // res.json(wishlist);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+router.delete(
+  "/:id/wishlist/:restaurantId",
+  checkUser,
+  async (req, res, next) => {
+    try {
+      const wishlist = await Wishlist.findOne({
+        where: {
+          restaurantId: req.params.restaurantId,
+          userId: req.params.id,
+        },
+      });
+      await wishlist.destroy();
+      res.json(wishlist);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 router.delete("/:id", checkUser, checkAdmin, async (req, res, next) => {
   try {

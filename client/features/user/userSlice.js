@@ -136,16 +136,15 @@ export const deleteWishlistItem = createAsyncThunk(
   "deleteWishlist",
   async ({ id, userId }) => {
     const token = window.localStorage.getItem("token");
-    // if (token) {
-    const { data } = await axios.delete(
-      `/api/restaurants/${userId}`,
-      { id }
-      // {
-      //   headers: { authorization: token },
-      // }
-    );
-    return data;
-    // }
+    if (token) {
+      const { data } = await axios.delete(
+        `/api/users/${userId}/wishlist/${id}`,
+        {
+          headers: { authorization: token },
+        }
+      );
+      return data;
+    }
   }
 );
 
