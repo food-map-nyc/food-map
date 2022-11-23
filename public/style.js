@@ -1,27 +1,49 @@
 import { createTheme } from "@mui/material/styles";
-import {red, blue } from "@mui/material/colors"
+import {red, blue, indigo, purple } from "@mui/material/colors"
 
 export const theme = createTheme({
+  breakpoints: {
+    keys: [
+      "xxs",
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+      "xxl",
+      "xxxl",
+    ],
+    values: {
+      "xxs": 0,
+      "xs": 300,
+      "sm":600,
+      "md":900,
+      "lg":1200,
+      "xl":1400,
+      "xxl":2000,
+      "xxxl":3500,
+    },
+  },
     palette: {
       primary: {
-        main: red[500],
+        main: indigo[900],
       },
       secondary: {
-        main: "#2962ff",
+        main: red[900],
       },
       text: {
-        primary: "#2962ff"
+        primary: indigo[800]
       }
     },
     typography: {
-      fontFamily: "monospace",
+      fontFamily: "cursive",
     },
     components: {
         MuiButton: {
             styleOverrides: {
                 root: {
-                    color: "#2962ff",
-                    border: "#2962ff",
+                    color: "#b2102f",
+                    border: purple[800],
                     fontSize: 15
                 }
             }
