@@ -44,80 +44,70 @@ const Navbar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography className="logo">
-            <Link to="/">
-              <img
+          <Typography>
+          <Link to="/">
+              <img 
                 src="https://i.ibb.co/SrGW7L6/FOODMAP-LOGO.gif"
                 alt="FoodMap"
-                width="150px"
-                height="120px"
+                width="250px"
+                height="220px"
+                className="logo"
               ></img>
-            </Link>
-          </Typography>
-
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
-            <Button
-              key="Home"
-              sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
-              onClick={() => {
-                navigate("/home");
-              }}
-            >
-              Home
-            </Button>
-            <Button
+          </Link>
+        </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}> 
+           <>
+           <Button
+            key="suggestion"
+            sx={{ my: 2, display: "block", fontSize: 30, color:'gold', fontWeigth:"bold"}}
+            onClick={()=>{navigate("/suggestion")}}
+             >
+             Show Me Suggestions!
+              </Button>
+              <Button
               key="Restaurants"
-              sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
-              onClick={() => {
-                navigate("/restaurants");
-              }}
+              sx={{ my: 2, display: "block", fontSize: 30, color:'#d50000' }}
+              onClick={()=>{navigate("/restaurants")}}
             >
               RESTAURANTS
             </Button>
-            {isLoggedIn && (
-              <Button
-                key="Profile"
-                sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
-                onClick={() => {
-                  navigate("/profile");
-                }}
-              >
-                PROFILE
-              </Button>
-            )}
-            {!isLoggedIn && (
-              <>
-                <Button
-                  key="Login"
-                  sx={{ my: 2, display: "block", fontSize: 25, color: "blue" }}
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  LOGIN
-                </Button>
-                <Button
-                  key="Signup"
-                  sx={{ my: 2, color: "blue", display: "block", fontSize: 25 }}
-                  onClick={() => {
-                    navigate("/signup");
-                  }}
-                >
-                  SIGNUP
-                </Button>{" "}
-              </>
-            )}
-            {user.isAdmin && (
-              <Button
-                key="Users"
-                sx={{ my: 2, color: "blue", display: "block", fontSize: 25 }}
-                onClick={() => {
-                  navigate("/users");
-                }}
-              >
-                USERS
-              </Button>
-            )}
+            {isLoggedIn && 
+            <Button
+            key="Profile"
+            sx={{ my: 2, display: "block", fontSize: 30, color:'#d50000' }}
+            onClick={()=>{navigate("/profile")
+            }}
+          >
+            PROFILE
+          </Button> 
+          } </>
+          {!isLoggedIn && 
+          <>
+            <Button
+            key="Login"
+            sx={{ my: 2, display: "block", fontSize: 30, color:'#d50000' }}
+            onClick={()=>{navigate("/login")
+            }}
+          >
+            LOGIN
+          </Button>
+          <Button
+          key="Signup"
+          sx={{ my: 2, color: "blue", display: "block", fontSize: 25 }}
+          onClick={()=>{navigate("/signup")
+          }}
+        >
+          SIGNUP
+        </Button> </>}
+          {user.isAdmin && 
+            <Button
+            key="Users"
+            sx={{ my: 2, display: "block", fontSize: 30, color:'#d50000' }}
+            onClick={()=>{navigate("/users")
+            }}
+          >
+            USERS
+          </Button> }
           </Box>
           {isLoggedIn &&
           <Box sx={{ flexGrow: 0 }}>
