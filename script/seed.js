@@ -78,12 +78,16 @@ async function seed() {
       restaurantId: "0CjK3esfpFcxIopebzjFxA",
       restaurantName: "Joe's Shanghai",
       timesVisited: 2,
+      imageUrl:
+        "https://s3-media4.fl.yelpcdn.com/bphoto/xM4eGRjk_EfSc1V8MdkRXw/o.jpg",
       userId: 1,
     }),
     History.create({
       restaurantId: "jjJc_CrkB2HodEinB6cWww",
       restaurantName: "LoveMama",
       timesVisited: 1,
+      imageUrl:
+        "https://s3-media1.fl.yelpcdn.com/bphoto/bLlFKTlVuLfmF-lIDGIjZA/o.jpg",
       userId: 1,
       favorite: true,
     }),
@@ -93,11 +97,15 @@ async function seed() {
     Wishlist.create({
       restaurantId: "hdiuRS9sVZSMReZm4oV5SA",
       restaurantName: "Da Andrea",
+      imageUrl:
+        "https://s3-media2.fl.yelpcdn.com/bphoto/ZbJxx7Rl8fUH7Pg4GU2p3g/o.jpg",
       userId: 1,
     }),
     Wishlist.create({
       restaurantId: "ysqgdbSrezXgVwER2kQWKA",
       restaurantName: "Juliana's",
+      imageUrl:
+        "https://s3-media2.fl.yelpcdn.com/bphoto/HB5-BoJaVwOP5wLMG57TlA/o.jpg",
       userId: 1,
     }),
   ]);

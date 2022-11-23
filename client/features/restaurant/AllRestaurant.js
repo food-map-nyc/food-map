@@ -108,7 +108,7 @@ const AllRestaurant = () => {
             onChange={(event, value) => setPage(value)}
           />
         </Stack>
-        <hr/>
+        <hr />
       </div>
       <Grid container spacing={2}>
         {allRestaurants.businesses
@@ -132,17 +132,16 @@ const AllRestaurant = () => {
                         .map((cuisine) => cuisine.title)
                         .join(", ")}
                     </p>
-                    {isLoggedIn &&
-                    <div>
-                      <Button variant="outlined">
-                        <CheckCircleOutlineIcon />
-                        Check-In
-                      </Button>
-                      <Button variant="outlined">
-                        <StarOutlineIcon />
-                        Wish List
-                      </Button>
-                    </div> }
+                    {isLoggedIn && (
+                      <div>
+                        <a href={`/restaurants/${restaurant.id}`}>
+                          <Button variant="outlined">
+                            <CheckCircleOutlineIcon />
+                            Check-In
+                          </Button>
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </Card>
               </Grid>
