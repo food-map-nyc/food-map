@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleUser } from "./userSlice";
 import EditUser from "./EditUser";
@@ -8,6 +8,36 @@ import UserFavorites from "./UserFavorites";
 import { Card, CardHeader, CardMedia, Collapse, Avatar, Typography, Button, Box, Stack } from "@mui/material";
 import { red } from "@mui/material/colors";
 
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
 export default function UserProfile() {
   const user = useSelector((state) => state.auth.me);
@@ -20,6 +50,13 @@ export default function UserProfile() {
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   useEffect(() => {

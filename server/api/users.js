@@ -88,6 +88,7 @@ router.post("/:id/history", checkUser, async (req, res, next) => {
       restaurantId: req.body.id,
       restaurantName: req.body.name,
       userId: req.params.id,
+      imageUrl: req.body.imageUrl,
     });
     res.json(history);
   } catch (err) {
@@ -100,6 +101,7 @@ router.post("/:id/wishlist", checkUser, async (req, res, next) => {
     const wishlist = await Wishlist.create({
       restaurantId: req.body.id,
       restaurantName: req.body.name,
+      imageUrl: req.body.imageUrl,
       userId: req.params.id,
     });
     res.json(wishlist);
