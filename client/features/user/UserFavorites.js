@@ -62,29 +62,6 @@ function UserFavorites(id) {
           </Card>
         </Grid>
       ))}
-      {/* {favorites?.map((restaurant, idx) => (
-        <div key={idx}>
-          <a href={`/restaurants/${restaurant.restaurantId}`}>
-            <h3>{restaurant.restaurantName}</h3>
-          </a>
-          <p>Times visited: {restaurant.timesVisited}</p>
-          <a href={`/restaurants/${restaurant.restaurantId}`}>
-            <Button variant="outlined">
-              <CheckCircleOutlineIcon />
-              Check-In
-            </Button>
-          </a>
-          {restaurant.favorite && (
-            <Button
-              variant="outlined"
-              onClick={() => toggleFavorite(restaurant.restaurantId)}
-            >
-              <Favorite />
-              Remove from Favorites
-            </Button>
-          )}
-        </div>
-      ))} */}
     </div>
   );
 }

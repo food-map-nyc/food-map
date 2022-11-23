@@ -106,7 +106,12 @@ const SingleRestaurant = () => {
 
   const addToWishlist = () => {
     dispatch(
-      createNewWishlistItem({ id: objectid, userId: userId, name: name })
+      createNewWishlistItem({
+        id: objectid,
+        userId: userId,
+        name: name,
+        imageUrl: image_url,
+      })
     );
     dispatch(fetchUserWishlist(userId));
   };

@@ -3,14 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import MyMap from "./MyMap";
 import { getSuggestedResturant } from "./suggestionSlice";
 import { emoji } from "node-emoji";
-import {
-  CheckCircleOutlineIcon,
-  StarOutline,
-  SignalCellularNull,
-  ConstructionOutlined,
-  StarOutlineIcon,
-  Star,
-} from "@mui/icons-material";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import { Star } from "@mui/icons-material";
 import { Card, Button, Typography, Grid } from "@mui/material";
 import {
   fetchUserWishlist,

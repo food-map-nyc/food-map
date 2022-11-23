@@ -97,11 +97,15 @@ async function seed() {
     Wishlist.create({
       restaurantId: "hdiuRS9sVZSMReZm4oV5SA",
       restaurantName: "Da Andrea",
+      imageUrl:
+        "https://s3-media2.fl.yelpcdn.com/bphoto/ZbJxx7Rl8fUH7Pg4GU2p3g/o.jpg",
       userId: 1,
     }),
     Wishlist.create({
       restaurantId: "ysqgdbSrezXgVwER2kQWKA",
       restaurantName: "Juliana's",
+      imageUrl:
+        "https://s3-media2.fl.yelpcdn.com/bphoto/HB5-BoJaVwOP5wLMG57TlA/o.jpg",
       userId: 1,
     }),
   ]);

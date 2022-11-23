@@ -101,6 +101,7 @@ router.post("/:id/wishlist", checkUser, async (req, res, next) => {
     const wishlist = await Wishlist.create({
       restaurantId: req.body.id,
       restaurantName: req.body.name,
+      imageUrl: req.body.imageUrl,
       userId: req.params.id,
     });
     res.json(wishlist);

@@ -100,12 +100,12 @@ export const createNewUserHistory = createAsyncThunk(
 
 export const createNewWishlistItem = createAsyncThunk(
   "createWishlistItem",
-  async ({ id, userId, name }) => {
+  async ({ id, userId, name, imageUrl }) => {
     const token = window.localStorage.getItem("token");
     if (token) {
       const { data } = await axios.post(
         `/api/users/${userId}/wishlist`,
-        { id, name },
+        { id, name, imageUrl },
         {
           headers: { authorization: token },
         }
