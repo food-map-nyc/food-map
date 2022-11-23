@@ -78,12 +78,16 @@ async function seed() {
       restaurantId: "0CjK3esfpFcxIopebzjFxA",
       restaurantName: "Joe's Shanghai",
       timesVisited: 2,
+      imageUrl:
+        "https://s3-media4.fl.yelpcdn.com/bphoto/xM4eGRjk_EfSc1V8MdkRXw/o.jpg",
       userId: 1,
     }),
     History.create({
       restaurantId: "jjJc_CrkB2HodEinB6cWww",
       restaurantName: "LoveMama",
       timesVisited: 1,
+      imageUrl:
+        "https://s3-media1.fl.yelpcdn.com/bphoto/bLlFKTlVuLfmF-lIDGIjZA/o.jpg",
       userId: 1,
       favorite: true,
     }),

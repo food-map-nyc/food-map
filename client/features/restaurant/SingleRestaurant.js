@@ -89,7 +89,12 @@ const SingleRestaurant = () => {
 
   const addToHistory = () => {
     dispatch(
-      createNewUserHistory({ id: objectid, userId: userId, name: name })
+      createNewUserHistory({
+        id: objectid,
+        userId: userId,
+        name: name,
+        imageUrl: image_url,
+      })
     );
     dispatch(fetchSingleUserHistory(userId));
   };
@@ -206,8 +211,7 @@ const SingleRestaurant = () => {
                 )}
               </div>
             )}
-            
-            
+
             {isLoggedIn && !findTimesVisited() && (
               <div>
                 <Button variant="outlined" onClick={handleOpen}>

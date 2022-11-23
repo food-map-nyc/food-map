@@ -88,6 +88,7 @@ router.post("/:id/history", checkUser, async (req, res, next) => {
       restaurantId: req.body.id,
       restaurantName: req.body.name,
       userId: req.params.id,
+      imageUrl: req.body.imageUrl,
     });
     res.json(history);
   } catch (err) {
