@@ -3,14 +3,26 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import { logout } from "../../app/store";
 
-import { Button, Typography, AppBar, Box, Toolbar, IconButton, Menu, Container, Avatar, Tooltip, MenuItem } from "@mui/material";
+import {
+  Button,
+  Typography,
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Menu,
+  Container,
+  Avatar,
+  Tooltip,
+  MenuItem,
+} from "@mui/material";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.me);
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl)
+  const open = Boolean(anchorEl);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -22,8 +34,8 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-    const logoutAndRedirectHome = () => {
-    setAnchorEl(null)
+  const logoutAndRedirectHome = () => {
+    setAnchorEl(null);
     dispatch(logout());
     navigate("/login");
   };
@@ -121,13 +133,19 @@ const Navbar = () => {
               onClose={handleClose}
             >
               <MenuItem key="History">
-                <Typography textAlign="center">HISTORY</Typography>
+                <Typography textAlign="center" onClick={()=>{
+                  navigate("/history")
+                  setAnchorEl(null)}}>HISTORY</Typography>
               </MenuItem>
               <MenuItem key="Favorites">
-                <Typography textAlign="center">FAVORITES</Typography>
+                <Typography textAlign="center" onClick={()=>{
+                  navigate("/favorites")
+                  setAnchorEl(null)}}>FAVORITES</Typography>
               </MenuItem>
               <MenuItem key="Wishlist">
-                <Typography textAlign="center">WISHLIST</Typography>
+                <Typography textAlign="center" onClick={()=>{
+                  navigate("/wishlist")
+                  setAnchorEl(null)}}>WISHLIST</Typography>
               </MenuItem>
               <MenuItem key="Logout">
                 <Typography textAlign="center" onClick={logoutAndRedirectHome}>LOGOUT</Typography>

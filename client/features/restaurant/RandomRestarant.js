@@ -9,6 +9,7 @@ import StarOutlineIcon from "@mui/icons-material/StarOutline";
 
 const RandomRestaurant = () => {
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const featuredRestaurants = useSelector(
     (state) => state.restaurant.featured.businesses
   );
@@ -47,16 +48,18 @@ const RandomRestaurant = () => {
           <p>
             Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}
           </p>
-          <div>
-            <Button variant="outlined">
-              <CheckCircleOutlineIcon />
-              Check-In
-            </Button>
-            <Button variant="outlined">
-              <StarOutlineIcon />
-              Wish List
-            </Button>
-          </div>
+          {isLoggedIn && (
+            <div>
+              <Button variant="outlined">
+                <CheckCircleOutlineIcon />
+                Check-In
+              </Button>
+              <Button variant="outlined">
+                <StarOutlineIcon />
+                Wish List
+              </Button>
+            </div>
+          )}
           <Button
             variant="outlined"
             onClick={() => {

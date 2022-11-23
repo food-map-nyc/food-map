@@ -24,6 +24,7 @@ async function seed() {
       isOwner: false,
       cuisine: "chinese",
       zipcode: "11230",
+      imageUrl: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8bWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
     }),
     User.create({
       username: "murphy",
@@ -34,6 +35,7 @@ async function seed() {
       isOwner: false,
       cuisine: "korean",
       zipcode: "11101",
+      imageUrl: "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
     }),
     User.create({
       username: "paul",
@@ -44,6 +46,7 @@ async function seed() {
       isOwner: true,
       cuisine: "carribean",
       zipcode: "11238",
+      imageUrl: "https://media.istockphoto.com/id/1219935640/photo/sancocho-soup-or-stew.jpg?b=1&s=170667a&w=0&k=20&c=5up43MnFKa6yUFdpcnBwqoIAB1k86QZ72ZKdK-wo5V0="
     }),
     User.create({
       username: "Alan",
@@ -52,6 +55,7 @@ async function seed() {
       phone: "9999391842",
       isAdmin: true,
       isOwner: true,
+      imageUrl: "https://media.istockphoto.com/id/1347703842/photo/gourmet-plated-fishcake-with-vegetables.jpg?b=1&s=170667a&w=0&k=20&c=zRH9vmxgyrJPNMHyZ_BkpycOxqg0QPqtXygRxOQY7yk="
     }),
     User.create({
       username: "min",
@@ -60,6 +64,7 @@ async function seed() {
       phone: "9929393842",
       isAdmin: true,
       isOwner: true,
+      imageUrl: "https://media.istockphoto.com/id/1308223808/photo/grilled-salmon-fillet-and-fresh-vegetable-salad-mediterranean-diet.jpg?b=1&s=170667a&w=0&k=20&c=3Hqmj_jGcF6m2Tj4Cb_Sek0GMSM2AuEUk6LcHNrf7kc="
     }),
     User.create({
       username: "bob",
@@ -70,6 +75,7 @@ async function seed() {
       isOwner: true,
       cuisine: "french",
       zipcode: "12100",
+      imageUrl: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8bWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
     }),
   ]);
 
@@ -78,12 +84,16 @@ async function seed() {
       restaurantId: "0CjK3esfpFcxIopebzjFxA",
       restaurantName: "Joe's Shanghai",
       timesVisited: 2,
+      imageUrl:
+        "https://s3-media4.fl.yelpcdn.com/bphoto/xM4eGRjk_EfSc1V8MdkRXw/o.jpg",
       userId: 1,
     }),
     History.create({
       restaurantId: "jjJc_CrkB2HodEinB6cWww",
       restaurantName: "LoveMama",
       timesVisited: 1,
+      imageUrl:
+        "https://s3-media1.fl.yelpcdn.com/bphoto/bLlFKTlVuLfmF-lIDGIjZA/o.jpg",
       userId: 1,
       favorite: true,
     }),
@@ -93,11 +103,15 @@ async function seed() {
     Wishlist.create({
       restaurantId: "hdiuRS9sVZSMReZm4oV5SA",
       restaurantName: "Da Andrea",
+      imageUrl:
+        "https://s3-media2.fl.yelpcdn.com/bphoto/ZbJxx7Rl8fUH7Pg4GU2p3g/o.jpg",
       userId: 1,
     }),
     Wishlist.create({
       restaurantId: "ysqgdbSrezXgVwER2kQWKA",
       restaurantName: "Juliana's",
+      imageUrl:
+        "https://s3-media2.fl.yelpcdn.com/bphoto/HB5-BoJaVwOP5wLMG57TlA/o.jpg",
       userId: 1,
     }),
   ]);

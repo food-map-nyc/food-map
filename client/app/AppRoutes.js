@@ -13,6 +13,9 @@ import FeaturedRestaurant from "../features/restaurant/FeaturedRestaurant";
 import UserProfile from "../features/user/userProfile";
 import RandomRestaurant from "../features/restaurant/RandomRestarant";
 import { fetchFeatured } from "../features/restaurant/restaurantSlice";
+import UserHistory from "../features/user/UserHistory";
+import UserWishlist from "../features/user/UserWishlist";
+import UserFavorites from "../features/user/UserFavorites";
 /**
  * COMPONENT
  */
@@ -36,6 +39,9 @@ const AppRoutes = () => {
           <Route path="/restaurants" element={<AllRestaurant />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/random" element={<RandomRestaurant />} />
+          <Route path="/history" element={<UserHistory />} />
+          <Route path="/wishlist" element={<UserWishlist />} />
+          <Route path="/favorites" element={<UserFavorites />} />
           <Route
             path={`/restaurants/:objectid`}
             element={<SingleRestaurant />}
