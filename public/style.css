@@ -3,26 +3,24 @@
   padding: 0;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
+  font-family: "Oswald", sans-serif;
 }
 
 html {
-    background-image: 
-    url(
-  "/websitebackground.png");
-    background-size:cover;
-    background-repeat: 'no-repeat';
-    background-attachment: fixed;
+  background-image: url("/websitebackground.png");
+  background-size: cover;
+  background-repeat: "no-repeat";
+  background-attachment: fixed;
 }
 
 body {
-  font-family:cursive; 
-align-items: center flex-end;
-outline-color: crimson;
-color: indigo;
-font-weight:2000;
-border-radius: 3px;
-border-color: black purple;
-font-size: large;
+  align-items: center flex-end;
+  outline-color: crimson;
+  color: indigo;
+  font-weight: 2000;
+  border-radius: 3px;
+  border-color: black purple;
+  font-size: large;
 }
 
 a {
@@ -54,9 +52,7 @@ img.image {
   margin-right: 10px;
   border-radius: 3px 0 0 3px;
   border: 2px solid gold;
-
 }
-
 
 .text_box {
   font-family: cursive;
@@ -91,20 +87,24 @@ img.image {
 }
 
 #my-map {
-  width:1270px;
+  width: 1270px;
   height: 500px;
   border-color: gold;
 }
 
 .navbar {
   height: 400px;
-  width:auto;
+  width: auto;
   text-align: center;
-  justify-content:center;
+  justify-content: center;
 }
 
 .logo {
-  border-image-slice:fill;
+  border-image-slice: fill;
   border-radius: 25% 50% / 50%;
   transition: background-color 2s ease-out 100ms;
+}
+
+.tabbed-list {
+  text-align: center;
 }

@@ -10,7 +10,7 @@ function UserFavorites() {
     (state) => state.user.currentUserHistory
   ).filter((restaurant) => restaurant.favorite === true);
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.me)
+  const user = useSelector((state) => state.auth.me);
   const userId = user.id;
 
   const toggleFavorite = (id) => {
@@ -24,7 +24,6 @@ function UserFavorites() {
 
   return (
     <div>
-      <h2>Favorites</h2>
       {favorites?.map((restaurant, idx) => (
         <Grid item xs={12} md={6} key={idx}>
           <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">

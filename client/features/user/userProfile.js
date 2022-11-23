@@ -141,7 +141,7 @@ export default function UserProfile() {
         </Box>
       </Card>
       {id && (
-        <>
+        <div className={"tabbed-list"}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={value}
@@ -162,7 +162,7 @@ export default function UserProfile() {
           <TabPanel value={value} index={2}>
             <UserWishlist id={id} />
           </TabPanel>
-        </>
+        </div>
       )}
     </>
   );
