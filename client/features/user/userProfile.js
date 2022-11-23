@@ -1,17 +1,26 @@
-import React, { useEffect, useState, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleUser } from "./userSlice";
 import EditUser from "./EditUser";
 import UserHistory from "./UserHistory";
 import UserWishlist from "./UserWishlist";
 import UserFavorites from "./UserFavorites";
-import { Card, CardHeader, CardMedia, Collapse, Avatar, Typography, Button, Box, Stack } from "@mui/material";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  Collapse,
+  Avatar,
+  Typography,
+  Button,
+  Box,
+  Stack,
+} from "@mui/material";
 import { red } from "@mui/material/colors";
 
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,7 +60,6 @@ export default function UserProfile() {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
 
   const [value, setValue] = useState(0);
 
@@ -103,7 +111,7 @@ export default function UserProfile() {
           }}
         >
           <Stack spacing={4}>
-          <Typography component="div" fontSize="30px">
+            <Typography component="div" fontSize="30px">
               <strong>Welcome to your user dashboard</strong>
             </Typography>
             <Typography component="div" fontSize="30px">
@@ -134,9 +142,26 @@ export default function UserProfile() {
       </Card>
       {id && (
         <>
-          <UserHistory />
-          <UserWishlist />
-          <UserFavorites />
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="basic tabs example"
+            >
+              <Tab label="History" />
+              <Tab label="Favorites" />
+              <Tab label="Wishlist" />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            <UserHistory id={id} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <UserFavorites id={id} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <UserWishlist id={id} />
+          </TabPanel>
         </>
       )}
     </>
