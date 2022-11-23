@@ -36,7 +36,7 @@ export const theme = createTheme({
       }
     },
     typography: {
-      fontFamily: "cursive",
+      fontFamily: "Oswald",
     },
     components: {
         MuiButton: {
