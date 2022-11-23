@@ -8,7 +8,8 @@ import { Star } from "@mui/icons-material";
 function UserWishlist(id) {
   const wishlist = useSelector((state) => state.user.currentUserWishlist);
   const dispatch = useDispatch();
-  const userId = id.id;
+  const user = useSelector((state) => state.auth.me)
+  const userId = user.id;
 
   const removeFromWishlist = (id) => {
     dispatch(deleteWishlistItem({ id: id, userId: userId }));

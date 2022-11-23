@@ -5,10 +5,11 @@ import { Favorite, FavoriteBorder } from "@mui/icons-material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import { Button, Grid, Card } from "@mui/material";
 
-function UserHistory(id) {
+function UserHistory() {
   const history = useSelector((state) => state.user.currentUserHistory);
+  const user = useSelector((state) => state.auth.me)
   const dispatch = useDispatch();
-  const userId = id.id;
+  const userId = user.id;
 
   const toggleFavorite = (id) => {
     dispatch(addOrRemoveFromFavorites({ id: id, userId: userId }));

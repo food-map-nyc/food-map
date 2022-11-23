@@ -119,49 +119,49 @@ const Navbar = () => {
               </Button>
             )}
           </Box>
-          {isLoggedIn && (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="Open settings">
-                <IconButton onClick={handleClick} sx={{ p: 0 }}>
-                  <Avatar src={user.imageUrl} />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem key="History">
-                  <Typography textAlign="center">HISTORY</Typography>
-                </MenuItem>
-                <MenuItem key="Favorites">
-                  <Typography textAlign="center">FAVORITES</Typography>
-                </MenuItem>
-                <MenuItem key="Wishlist">
-                  <Typography textAlign="center">WISHLIST</Typography>
-                </MenuItem>
-                <MenuItem key="Logout">
-                  <Typography
-                    textAlign="center"
-                    onClick={logoutAndRedirectHome}
-                  >
-                    LOGOUT
-                  </Typography>
-                </MenuItem>
-              </Menu>
-            </Box>
-          )}
+          {isLoggedIn &&
+          <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleClick} sx={{ p: 0 }}>
+                <Avatar src={user.imageUrl} />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: "45px" }}
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem key="History">
+                <Typography textAlign="center" onClick={()=>{
+                  navigate("/history")
+                  setAnchorEl(null)}}>HISTORY</Typography>
+              </MenuItem>
+              <MenuItem key="Favorites">
+                <Typography textAlign="center" onClick={()=>{
+                  navigate("/favorites")
+                  setAnchorEl(null)}}>FAVORITES</Typography>
+              </MenuItem>
+              <MenuItem key="Wishlist">
+                <Typography textAlign="center" onClick={()=>{
+                  navigate("/wishlist")
+                  setAnchorEl(null)}}>WISHLIST</Typography>
+              </MenuItem>
+              <MenuItem key="Logout">
+                <Typography textAlign="center" onClick={logoutAndRedirectHome}>LOGOUT</Typography>
+              </MenuItem>
+            </Menu>
+          </Box> }
         </Toolbar>
       </Container>
     </AppBar>

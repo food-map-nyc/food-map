@@ -5,11 +5,22 @@ import EditUser from "./EditUser";
 import UserHistory from "./UserHistory";
 import UserWishlist from "./UserWishlist";
 import UserFavorites from "./UserFavorites";
-import { Avatar, Typography, Card } from "@mui/material";
+import {
+  Card,
+  CardHeader,
+  CardMedia,
+  Collapse,
+  Avatar,
+  Typography,
+  Button,
+  Box,
+  Stack,
+} from "@mui/material";
+import { red } from "@mui/material/colors";
+
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -44,6 +55,12 @@ export default function UserProfile() {
   const { id, email, phone, createdAt, username, imageUrl, cuisine, zipcode } =
     currentUser;
 
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -55,29 +72,76 @@ export default function UserProfile() {
   }, []);
 
   return (
-    <div className="pb-96">
-      {!id ? (
-        <div>Loading User information ...</div>
-      ) : (
-        <>
-          <Card>
-            <Avatar
-              src={imageUrl}
-              margin-right="true"
-              background-color="yellow"
-              sx={{ width: 76, height: 76 }}
+    <>
+      <Card sx={{ display: "flex", pl: 1, pb: 1 }}>
+        <Card sx={{ maxHeight: 600 }}>
+          <CardHeader
+            avatar={
+              <Avatar sx={{ bgcolor: red[500] }} aria-label="username">
+                {username && username[0]}
+              </Avatar>
+            }
+            title={
+              <Typography fontSize="30px">Username: {username}</Typography>
+            }
+            subheader={
+              <Typography fontSize="24">
+                Active member since: {createdAt?.slice(0, 10)}
+              </Typography>
+            }
+          />
+          <Box
+            sx={{
+              width: 500,
+            }}
+          >
+            <CardMedia
+              component="img"
+              sx={{ width: 500, height: 500 }}
+              image={imageUrl}
             />
-            <Typography> Hi, {username}</Typography>
-
-            <h4>Welcome to your User Dashboard</h4>
-            <div> Email: {email}</div>
-            <div> Zipcode: {zipcode}</div>
-            <div> You can be reached at: {phone}</div>
-            <div>Membership Status: Active</div>
-            <div>Avid Foodie since {createdAt.slice(0, 10)}</div>
-            <div>Member's preferred cuisine is {cuisine}</div>
-          </Card>
-          <EditUser id={id} user={user} />
+          </Box>
+        </Card>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            maxWidth: 550,
+            margin: 4,
+          }}
+        >
+          <Stack spacing={4}>
+            <Typography component="div" fontSize="30px">
+              <strong>Welcome to your user dashboard</strong>
+            </Typography>
+            <Typography component="div" fontSize="30px">
+              Membership status: Active
+            </Typography>
+            <Typography component="div" fontSize="30px">
+              Email: {email}
+            </Typography>
+            <Typography component="div" fontSize="30px">
+              Phone: {phone}
+            </Typography>
+            <Typography component="div" fontSize="30px">
+              Favorite Cuisine: {cuisine}
+            </Typography>
+            <Typography component="div" fontSize="30px">
+              Zipcode: {zipcode}
+            </Typography>
+            <Button onClick={handleExpandClick}>
+              <Typography component="div" fontSize="30px" color="black">
+                Edit Profile
+              </Typography>
+            </Button>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <EditUser id={id} user={user} />
+            </Collapse>
+          </Stack>
+        </Box>
+      </Card>
+      {id && (
+        <>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={value}
@@ -98,9 +162,8 @@ export default function UserProfile() {
           <TabPanel value={value} index={2}>
             <UserWishlist id={id} />
           </TabPanel>
-          <div />
         </>
       )}
-    </div>
+    </>
   );
 }
