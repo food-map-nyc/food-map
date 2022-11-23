@@ -106,13 +106,16 @@ const Suggestion = () => {
 
   return loading ? (
     <Typography>
-      <img src="https://i.ibb.co/1s9jh58/Your-paragraph-text.gif"></img>
+      <img 
+      width='1700px'
+      height='1200px'
+      src="https://i.ibb.co/1s9jh58/Your-paragraph-text.gif"></img>
     </Typography>
   ) : (
     <div>
       <div>
-        <Typography>
-          These are the places we think you would like {username} {emoji.smiley}
+        <Typography variant = 'h3'>
+          These are the places we think you would like {username} {emoji.smiley} ...
         </Typography>
       </div>
       <MyMap
