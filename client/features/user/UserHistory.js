@@ -22,10 +22,11 @@ const style = {
   p: 4,
 };
 
-function UserHistory(id) {
+function UserHistory() {
   const history = useSelector((state) => state.user.currentUserHistory);
+  const user = useSelector((state) => state.auth.me)
   const dispatch = useDispatch();
-  const userId = id.id;
+  const userId = user.id;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);

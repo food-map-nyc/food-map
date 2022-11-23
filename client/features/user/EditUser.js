@@ -138,9 +138,9 @@ const EditUser = () => {
               }
             />
           </FormControl>
-          <FormControl variant="standard">
+          <FormControl sx={{ minWidth: 250 }} variant="standard">
             <InputLabel id="demo-select-small">
-              Updata Cuisine Choice
+              Update Cuisine Choice
             </InputLabel>
             <Select
               labelId="demo-select-small"
@@ -159,11 +159,9 @@ const EditUser = () => {
               ))}
             </Select>
           </FormControl>
-          <div>
             <Button type="submit" color="primary">
               Submit
             </Button>
-          </div>
         </Box>
       </form>
     </Card>

@@ -5,7 +5,8 @@ import { fetchUserWishlist } from "./userSlice";
 function UserWishlist(id) {
   const wishlist = useSelector((state) => state.user.currentUserWishlist);
   const dispatch = useDispatch();
-  const userId = id.id;
+  const user = useSelector((state) => state.auth.me)
+  const userId = user.id;
 
   useEffect(() => {
     dispatch(fetchUserWishlist(userId));
