@@ -172,14 +172,12 @@ const FeaturedRestaurant = () => {
                   </Typography>
                   {isLoggedIn && (
                     <Stack spacing={2} direction="row">
-                      <Button variant="outlined">
-                        <CheckCircleOutlineIcon />
-                        Check-In
-                      </Button>
-                      <Button variant="outlined">
-                        <StarOutlineIcon />
-                        Wish List
-                      </Button>
+                      <a href={`/restaurants/${restaurant.id}`}>
+                        <Button variant="outlined">
+                          <CheckCircleOutlineIcon />
+                          More Info
+                        </Button>
+                      </a>
                     </Stack>
                   )}
                 </CardContent>
