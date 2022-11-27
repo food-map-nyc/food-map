@@ -108,3 +108,8 @@ img.image {
 .tabbed-list {
   text-align: center;
 }
+
+small {
+  margin-left: 1em;
+  font-size: 1.25em;
+}

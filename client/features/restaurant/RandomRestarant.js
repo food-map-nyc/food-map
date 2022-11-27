@@ -12,6 +12,7 @@ import {
   createNewWishlistItem,
   deleteWishlistItem,
 } from "../user/userSlice";
+import { Box } from "@mui/material";
 import { fetchFeatured } from "./restaurantSlice";
 
 const RandomRestaurant = () => {
@@ -83,54 +84,62 @@ const RandomRestaurant = () => {
         <div className="single">
           <img src={image_url} />
         </div>
-        <div>
-          <a href={`/restaurants/${id}`}>
-            <h1>{name}</h1>
-          </a>
-          <p>
-            Rating: {rating}
-            {emoji.star} ({review_count} reviews)
-          </p>
-          <p>Price: {price}</p>
-          <p>
-            Address: {location?.display_address[0]},{" "}
-            {location?.display_address[1]}
-          </p>
-          <p>Phone Number: {display_phone}</p>
-          <p>
-            Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}
-          </p>
-          {isLoggedIn && (
-            <div>
-              <a href={`/restaurants/${id}`}>
-                <Button variant="outlined">
-                  <CheckCircleOutlineIcon />
-                  Check-In
-                </Button>
-              </a>
-              {isOnWishlist() ? (
-                <Button variant="outlined" onClick={removeFromWishlist}>
-                  <Star />
-                  Remove From Wishlist
-                </Button>
-              ) : (
-                <Button variant="outlined" onClick={addToWishlist}>
-                  <StarOutlineIcon />
-                  Add to Wishlist
-                </Button>
-              )}
-            </div>
-          )}
-          <Button
-            variant="outlined"
-            onClick={() => {
-              navigate("/random");
-            }}
-            startIcon={<ThumbDownAlt sx={{ fontSize: 40 }} />}
-          >
-            Don't Like What You See? Click Again!
-          </Button>
-        </div>
+        <Box
+          sx={{
+            backgroundColor: "white",
+            borderRadius: 3,
+            p: 10,
+          }}
+        >
+          <div>
+            <a href={`/restaurants/${id}`}>
+              <h1>{name}</h1>
+            </a>
+            <p>
+              Rating: {rating}
+              {emoji.star} ({review_count} reviews)
+            </p>
+            <p>Price: {price}</p>
+            <p>
+              Address: {location?.display_address[0]},{" "}
+              {location?.display_address[1]}
+            </p>
+            <p>Phone Number: {display_phone}</p>
+            <p>
+              Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}
+            </p>
+            {isLoggedIn && (
+              <div>
+                <a href={`/restaurants/${id}`}>
+                  <Button variant="outlined">
+                    <CheckCircleOutlineIcon />
+                    Check-In
+                  </Button>
+                </a>
+                {isOnWishlist() ? (
+                  <Button variant="outlined" onClick={removeFromWishlist}>
+                    <Star />
+                    Remove From Wishlist
+                  </Button>
+                ) : (
+                  <Button variant="outlined" onClick={addToWishlist}>
+                    <StarOutlineIcon />
+                    Add to Wishlist
+                  </Button>
+                )}
+              </div>
+            )}
+            <Button
+              variant="outlined"
+              onClick={() => {
+                navigate("/random");
+              }}
+              startIcon={<ThumbDownAlt sx={{ fontSize: 40 }} />}
+            >
+              Don't Like What You See? Click Again!
+            </Button>
+          </div>
+        </Box>
       </div>
     </div>
   );
