@@ -4,6 +4,7 @@
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   font-family: "Oswald", sans-serif;
+  display: flexbox;
 }
 
 html {
@@ -39,6 +40,9 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+  font-weight: bold;
+  font-size: medium;
+  text-align: center;
 }
 
 .single > img {
@@ -54,15 +58,13 @@ img.image {
   border: 2px solid gold;
 }
 
-.text_box {
-  font-family: cursive;
-  width: 50%;
-}
-
 .container {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  opacity: 0.9;
 }
 .featured_box {
   display: flex;
@@ -94,7 +96,7 @@ img.image {
 
 .navbar {
   height: 400px;
-  width: auto;
+  width: fit-content;
   text-align: center;
   justify-content: center;
 }

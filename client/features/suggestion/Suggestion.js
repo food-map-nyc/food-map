@@ -107,14 +107,14 @@ const Suggestion = () => {
   return loading ? (
     <Typography>
       <img 
-      width='1700px'
-      height='1200px'
+      width='1800px'
+      height='1100px'
       src="https://i.ibb.co/1s9jh58/Your-paragraph-text.gif"></img>
     </Typography>
   ) : (
     <div>
       <div>
-        <Typography variant = 'h3'>
+      <Typography  fontWeigth = 'bold' variant = 'h3' textAlign = 'center' fontSize="30px">
           These are the places we think you would like {username} {emoji.smiley} ...
         </Typography>
       </div>

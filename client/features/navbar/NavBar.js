@@ -59,25 +59,6 @@ const Navbar = () => {
             <>
               <Button
                 variant="outlined"
-                key="suggestion"
-                sx={{
-                  my: 2,
-                  display: "block",
-                  fontSize: 30,
-                  color: "gold",
-                  borderColor: "gold",
-                  borderWidth: "3px",
-                  m: 1,
-                  ml: 4,
-                }}
-                onClick={() => {
-                  navigate("/suggestion");
-                }}
-              >
-                Show Me Suggestions!
-              </Button>
-              <Button
-                variant="outlined"
                 key="Restaurants"
                 sx={{
                   my: 2,
@@ -95,6 +76,26 @@ const Navbar = () => {
                 RESTAURANTS
               </Button>
               {isLoggedIn && (
+                <>
+                    <Button
+                variant="outlined"
+                key="suggestion"
+                sx={{
+                  my: 2,
+                  display: "block",
+                  fontSize: 30,
+                  color: "gold",
+                  borderColor: "gold",
+                  borderWidth: "3px",
+                  m: 1,
+                  ml: 4,
+                }}
+                onClick={() => {
+                  navigate("/suggestion");
+                }}
+              >
+                Show Me Suggestions!
+              </Button>
                 <Button
                   variant="outlined"
                   key="Profile"
@@ -113,7 +114,8 @@ const Navbar = () => {
                 >
                   PROFILE
                 </Button>
-              )}{" "}
+             </> 
+             )}{" "}
             </>
             {!isLoggedIn && (
               <>
