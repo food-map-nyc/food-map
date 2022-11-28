@@ -3,11 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { authenticate } from "../../app/store";
 import { Box, Button, TextField } from "@mui/material";
 
-/**
-  The AuthForm component can be used for Login or Sign Up.
-  Props for Login: name="login", displayName="Login"
-  Props for Sign up: name="signup", displayName="Sign Up"
-**/
 
 const AuthForm = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
@@ -58,7 +53,7 @@ const AuthForm = ({ name, displayName }) => {
                 opacity: 0.83,
               }}
             >
-              <TextField name="password" type="text" variant="standard" />
+              <TextField name="password" type="password" variant="standard" />
             </Box>
           </div>
           <div>

@@ -62,7 +62,7 @@ const FeaturedRestaurant = () => {
           />
           <Box
             sx={{
-              width: 1200,
+              width: 750,
               height: 600,
             }}
           >
@@ -136,7 +136,7 @@ const FeaturedRestaurant = () => {
         </Box>
       </Card>
       <hr />
-      <Typography fontSize="30px">
+      <Typography  fontWeigth = 'bold' variant = 'h3' textAlign = 'center' fontSize="30px">
         RESTAURANTS WITH THE MOST REVIEWS IN ALL OF NEW YORK CITY!!!
       </Typography>
       <Grid container spacing={2}>
