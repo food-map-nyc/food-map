@@ -129,8 +129,8 @@ export default function UserProfile() {
             <Typography component="div" fontSize="30px">
               Zipcode: {zipcode}
             </Typography>
-            <Button onClick={handleExpandClick}>
-              <Typography component="div" fontSize="30px" color="black">
+            <Button onClick={handleExpandClick} variant="contained">
+              <Typography component="div" fontSize="30px" color="white">
                 Edit Profile
               </Typography>
             </Button>
@@ -142,7 +142,13 @@ export default function UserProfile() {
       </Card>
       {id && (
         <div className={"tabbed-list"}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <Box
+            sx={{
+              borderBottom: 1,
+              borderColor: "divider",
+              backgroundColor: "white",
+            }}
+          >
             <Tabs
               value={value}
               onChange={handleChange}

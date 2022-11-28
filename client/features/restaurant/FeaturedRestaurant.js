@@ -47,7 +47,7 @@ const FeaturedRestaurant = () => {
   return (
     <>
       <Card sx={{ display: "flex", alignItems: "center", pl: 1, pb: 1 }}>
-        <Card sx={{ maxHeight: 700 }} >
+        <Card sx={{ maxHeight: 700 }}>
           <CardHeader
             onClick={() => {
               navigate(`/restaurants/${restaurant.id}`);
@@ -60,10 +60,12 @@ const FeaturedRestaurant = () => {
               </Typography>
             }
           />
-          <Box  sx={{
-        width: 1200,
-        height: 600,
-      }}>
+          <Box
+            sx={{
+              width: 1200,
+              height: 600,
+            }}
+          >
             <CardMedia
               component="img"
               sx={{ width: 600, height: 600 }}
@@ -151,9 +153,9 @@ const FeaturedRestaurant = () => {
                 </Box>
                 <CardContent sx={{ flex: "1 0 auto" }}>
                   <Link to={`/restaurants/${restaurant.id}`}>
-                  <Typography component="div" fontSize="24px">
-                    <strong>{restaurant.name}</strong>
-                  </Typography>
+                    <Typography component="div" fontSize="24px">
+                      <strong>{restaurant.name}</strong>
+                    </Typography>
                   </Link>
                   <Typography component="div" fontSize="20px">
                     {restaurant.location.display_address[0]}
@@ -168,17 +170,16 @@ const FeaturedRestaurant = () => {
                       .map((cuisine) => cuisine.title)
                       .join(", ")}
                   </Typography>
-                  {isLoggedIn && 
-                  <Stack spacing={2} direction="row">
-                    <Button variant="outlined">
-                      <CheckCircleOutlineIcon />
-                      Check-In
-                    </Button>
-                    <Button variant="outlined">
-                      <StarOutlineIcon />
-                      Wish List
-                    </Button>
-                  </Stack> }
+                  {isLoggedIn && (
+                    <Stack spacing={2} direction="row">
+                      <a href={`/restaurants/${restaurant.id}`}>
+                        <Button variant="outlined">
+                          <CheckCircleOutlineIcon />
+                          More Info
+                        </Button>
+                      </a>
+                    </Stack>
+                  )}
                 </CardContent>
               </Card>
             </Grid>

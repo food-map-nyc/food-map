@@ -148,131 +148,145 @@ const SingleRestaurant = () => {
           <img src={image_url} />
         </div>
         <div>
-          <h1>{name}</h1>
-          <p>
-            Rating:{" "}
-            {rating ? (
-              <Rating
-                name="half-rating"
-                defaultValue={rating}
-                precision={0.5}
-              />
-            ) : null}{" "}
-            ({review_count} reviews)
-          </p>
-          <p>Price: {price}</p>
-          <p>
-            Address: {location?.display_address[0]},{" "}
-            {location?.display_address[1]}
-          </p>
-          <p>Phone Number: {display_phone}</p>
-          <p>
-            Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}
-          </p>
-          <div>
-            {isLoggedIn && findTimesVisited() && (
-              <div>
-                <Button variant="outlined" onClick={handleOpen}>
-                  <CheckCircleOutlineIcon />
-                  Add to Restaurant History
-                </Button>
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Just visited this restaurant?
-                    </Typography>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        incrementHistory();
-                        handleClose();
-                      }}
-                    >
-                      <CheckCircleOutlineIcon />
-                      Add to Restaurant History
-                    </Button>
-                  </Box>
-                </Modal>
-                {isLoggedIn && isFavorite() && (
-                  <Button variant="outlined" onClick={toggleFavorite}>
-                    <Favorite />
-                    Remove from Favorites
-                  </Button>
-                )}
-                {isLoggedIn && !isFavorite() && (
-                  <Button variant="outlined" onClick={toggleFavorite}>
-                    <FavoriteBorder />
-                    Add to Favorites
-                  </Button>
-                )}
-              </div>
-            )}
-
-            {isLoggedIn && !findTimesVisited() && (
-              <div>
-                <Button variant="outlined" onClick={handleOpen}>
-                  <CheckCircleOutlineIcon />
-                  Add to Restaurant History
-                </Button>
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Just visited this restaurant?
-                    </Typography>
-                    <Button
-                      variant="outlined"
-                      onClick={() => {
-                        addToHistory();
-                        handleClose();
-                      }}
-                    >
-                      <CheckCircleOutlineIcon />
-                      Add to Restaurant History
-                    </Button>
-                  </Box>
-                </Modal>
-              </div>
-            )}
-            {isLoggedIn && isOnWishlist() && (
-              <Button variant="outlined" onClick={removeFromWishlist}>
-                <Star />
-                Remove From Wishlist
-              </Button>
-            )}
-            {isLoggedIn && !isOnWishlist() && (
-              <Button variant="outlined" onClick={addToWishlist}>
-                <StarOutlineIcon />
-                Add to Wishlist
-              </Button>
-            )}
-          </div>
-          {userId && (
+          <Box
+            sx={{
+              backgroundColor: "white",
+              borderRadius: 3,
+              p: 10,
+            }}
+          >
+            <h1>{name}</h1>
+            <p>
+              Rating:{" "}
+              {rating ? (
+                <Rating
+                  name="half-rating"
+                  defaultValue={rating}
+                  precision={0.5}
+                />
+              ) : null}{" "}
+              ({review_count} reviews)
+            </p>
+            <p>Price: {price}</p>
+            <p>
+              Address: {location?.display_address[0]},{" "}
+              {location?.display_address[1]}
+            </p>
+            <p>Phone Number: {display_phone}</p>
+            <p>
+              Cuisine: {categories?.map((cuisine) => cuisine.title).join(", ")}
+            </p>
             <div>
-              <p>
-                {findTimesVisited()
-                  ? `You have been here ${findTimesVisited()} times`
-                  : "You have not been here yet!"}
-              </p>
+              <Box
+                sx={{
+                  mt: 2,
+                  mb: 2,
+                }}
+              >
+                {isLoggedIn && findTimesVisited() && (
+                  <div>
+                    <Button variant="outlined" onClick={handleOpen}>
+                      <CheckCircleOutlineIcon />
+                      Add to Restaurant History
+                    </Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Just visited this restaurant?
+                        </Typography>
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            incrementHistory();
+                            handleClose();
+                          }}
+                        >
+                          <CheckCircleOutlineIcon />
+                          Add to Restaurant History
+                        </Button>
+                      </Box>
+                    </Modal>
+                    {isLoggedIn && isFavorite() ? (
+                      <Button variant="outlined" onClick={toggleFavorite}>
+                        <Favorite />
+                        Remove from Favorites
+                      </Button>
+                    ) : isLoggedIn && !isFavorite() ? (
+                      <Button variant="outlined" onClick={toggleFavorite}>
+                        <FavoriteBorder />
+                        Add to Favorites
+                      </Button>
+                    ) : null}
+                  </div>
+                )}
+
+                {isLoggedIn && !findTimesVisited() && (
+                  <div>
+                    <Button variant="outlined" onClick={handleOpen}>
+                      <CheckCircleOutlineIcon />
+                      Add to Restaurant History
+                    </Button>
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Just visited this restaurant?
+                        </Typography>
+                        <Button
+                          variant="outlined"
+                          onClick={() => {
+                            addToHistory();
+                            handleClose();
+                          }}
+                        >
+                          <CheckCircleOutlineIcon />
+                          Add to Restaurant History
+                        </Button>
+                      </Box>
+                    </Modal>
+                  </div>
+                )}
+                {isLoggedIn && isOnWishlist() && (
+                  <Button variant="outlined" onClick={removeFromWishlist}>
+                    <Star />
+                    Remove From Wishlist
+                  </Button>
+                )}
+                {isLoggedIn && !isOnWishlist() && (
+                  <Button variant="outlined" onClick={addToWishlist}>
+                    <StarOutlineIcon />
+                    Add to Wishlist
+                  </Button>
+                )}
+              </Box>
             </div>
-          )}
+            {userId && (
+              <div>
+                <p>
+                  {findTimesVisited()
+                    ? `You have been here ${findTimesVisited()} times`
+                    : "You have not been here yet!"}
+                </p>
+              </div>
+            )}
+          </Box>
         </div>
       </div>
 

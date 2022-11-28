@@ -1,14 +1,13 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { authenticate } from '../../app/store'
-import { Button } from '@mui/material';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { authenticate } from "../../app/store";
+import { Box, Button, TextField } from "@mui/material";
 
 /**
   The AuthForm component can be used for Login or Sign Up.
   Props for Login: name="login", displayName="Login"
   Props for Sign up: name="signup", displayName="Sign Up"
 **/
-
 
 const AuthForm = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
@@ -25,21 +24,54 @@ const AuthForm = ({ name, displayName }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="username">
-            <small>Username</small>
-          </label>
-          <input name="username" type="text" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <Button type="submit" color = "secondary">{displayName} </Button>
-        </div>
+        <Box
+          sx={{
+            ml: 15,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            mt: 15,
+          }}
+        >
+          <div>
+            <label htmlFor="username">
+              <small>Username</small>
+            </label>
+            <Box
+              sx={{
+                backgroundColor: "#e8dcc8",
+                borderRadius: 3,
+                opacity: 0.83,
+              }}
+            >
+              <TextField name="username" type="text" variant="standard" />
+            </Box>
+          </div>
+          <div>
+            <label htmlFor="password">
+              <small>Password</small>
+            </label>
+            <Box
+              sx={{
+                backgroundColor: "#e8dcc8",
+                borderRadius: 3,
+                opacity: 0.83,
+              }}
+            >
+              <TextField name="password" type="text" variant="standard" />
+            </Box>
+          </div>
+          <div>
+            <Button
+              type="submit"
+              color="secondary"
+              variant="contained"
+              sx={{ color: "white", mt: 3 }}
+            >
+              {displayName}{" "}
+            </Button>
+          </div>
+        </Box>
         {error && <div> {error} </div>}
       </form>
     </div>

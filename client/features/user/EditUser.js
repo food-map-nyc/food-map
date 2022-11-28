@@ -159,9 +159,14 @@ const EditUser = () => {
               ))}
             </Select>
           </FormControl>
-            <Button type="submit" color="primary">
-              Submit
-            </Button>
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            sx={{ color: "white" }}
+          >
+            Submit
+          </Button>
         </Box>
       </form>
     </Card>
