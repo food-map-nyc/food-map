@@ -60,7 +60,7 @@ const AllRestaurant = () => {
 
   return (
     <div>
-      <div>
+      <div className="center">
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
           <InputLabel id="demo-select-small">Cuisine</InputLabel>
           <Select
@@ -114,7 +114,7 @@ const AllRestaurant = () => {
         {allRestaurants.businesses
           ? allRestaurants.businesses.map((restaurant, idx) => (
               <Grid item xs={12} md={6} key={idx}>
-                <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
+                <Card sx={{minWidth:620,maxWidth: 620, maxHeight: 200 }} className="row">
                   <div>
                     <img className="image" src={restaurant.image_url} />
                   </div>

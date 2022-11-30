@@ -141,7 +141,7 @@ export default function UserProfile() {
         </Box>
       </Card>
       {id && (
-        <div className={"tabbed-list"}>
+        <div className={"tabbed-list"} className = {"center"}>
           <Box
             sx={{
               borderBottom: 1,
@@ -153,6 +153,7 @@ export default function UserProfile() {
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
+
             >
               <Tab label="History" />
               <Tab label="Favorites" />

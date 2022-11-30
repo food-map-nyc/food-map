@@ -38,5 +38,26 @@ export const theme = createTheme({
         },
       },
     },
+      MuiGrid:{
+       styleOverrides: {
+        root: {
+          display: 'flex',
+            justifyContent: 'center',   
+              }
+            }
+          },
+          MuiCard:{
+            styleOverrides: {
+              root: {
+                boxShadow: '#ff7038',
+                "&:hover": {
+                  boxShadow: "0 2px 2px #FFD700",
+                },
+                "&:active": {
+                  boxShadow: "0 2px 2px #fff",
+                },
+              }   
+            }
+          }
   },
 });

@@ -139,16 +139,17 @@ const FeaturedRestaurant = () => {
       <Typography  fontWeigth = 'bold' variant = 'h3' textAlign = 'center' fontSize="30px">
         RESTAURANTS WITH THE MOST REVIEWS IN ALL OF NEW YORK CITY!!!
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} style= {{minHeight: '100vh'}}>
         {featuredRestaurants &&
           featuredRestaurants.map((restaurant, idx) => (
             <Grid item xs={12} md={6} key={idx}>
-              <Card sx={{ maxWidth: 650, maxHeight: 200 }} className="row">
+              <Card sx={{ minWidth:680, maxWidth:680, maxHeight: 200 }} className="row">
                 <Box>
                   <CardMedia
                     component="img"
                     sx={{ width: 200, height: 200 }}
                     image={restaurant.image_url}
+                    className="image"
                   />
                 </Box>
                 <CardContent sx={{ flex: "1 0 auto" }}>
