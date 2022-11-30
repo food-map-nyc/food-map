@@ -295,8 +295,18 @@ const SingleRestaurant = () => {
         <Grid container spacing={2}>
           {reviews
             ? reviews.map((review, idx) => (
-                <Grid item xs={12} md={6} key={idx}>
-                  <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  key={idx}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Card sx={{ width: 600, height: 200 }} className="row">
                     <div>
                       {photos ? (
                         <img className="image" src={photos[idx]} />

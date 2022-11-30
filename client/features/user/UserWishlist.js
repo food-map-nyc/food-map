@@ -24,11 +24,20 @@ function UserWishlist(id) {
     <div>
       <Grid container spacing={2}>
         {wishlist?.map((restaurant, idx) => (
-          <Grid item xs={6} key={idx}>
+          <Grid
+            item
+            xs={6}
+            key={idx}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <Card
               sx={{
-                maxWidth: 600,
-                maxHeight: 200,
+                width: 600,
+                height: 200,
                 mt: 1,
                 mb: 1,
                 ml: 2,

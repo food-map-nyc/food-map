@@ -10,6 +10,7 @@ import {
   FormControl,
   Select,
   Grid,
+  Box,
 } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -61,60 +62,79 @@ const AllRestaurant = () => {
   return (
     <div>
       <div>
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-          <InputLabel id="demo-select-small">Cuisine</InputLabel>
-          <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-            value={cuisine}
-            label="Cuisine"
-            onChange={(event) => {
-              setCuisine(event.target.value);
-            }}
-          >
-            <MenuItem value="">
-              <em>All</em>
-            </MenuItem>
-            {cuisineFilter?.sort().map((cuisine, idx) => (
-              <MenuItem value={cuisine} key={idx}>
-                {cuisine}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "white",
+          }}
+        >
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-select-small">Cuisine</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={cuisine}
+              label="Cuisine"
+              onChange={(event) => {
+                setCuisine(event.target.value);
+              }}
+            >
+              <MenuItem value="">
+                <em>All</em>
               </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-          <InputLabel id="demo-select-small">Borough</InputLabel>
-          <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-            value={borough}
-            label="Borough"
-            onChange={(event) => setBorough(event.target.value)}
-          >
-            <MenuItem value="">
-              <em>All</em>
-            </MenuItem>
-            <MenuItem value="Brooklyn">Brooklyn</MenuItem>
-            <MenuItem value="Bronx">Bronx</MenuItem>
-            <MenuItem value="New York">New York</MenuItem>
-            <MenuItem value="Queens">Queens</MenuItem>
-            <MenuItem value="Staten Island">Staten Island</MenuItem>
-          </Select>
-        </FormControl>
-        <Stack spacing={2}>
-          <Pagination
-            count={20}
-            page={page}
-            onChange={(event, value) => setPage(value)}
-          />
-        </Stack>
-        <hr />
+              {cuisineFilter?.sort().map((cuisine, idx) => (
+                <MenuItem value={cuisine} key={idx}>
+                  {cuisine}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-select-small">Borough</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={borough}
+              label="Borough"
+              onChange={(event) => setBorough(event.target.value)}
+            >
+              <MenuItem value="">
+                <em>All</em>
+              </MenuItem>
+              <MenuItem value="Brooklyn">Brooklyn</MenuItem>
+              <MenuItem value="Bronx">Bronx</MenuItem>
+              <MenuItem value="New York">New York</MenuItem>
+              <MenuItem value="Queens">Queens</MenuItem>
+              <MenuItem value="Staten Island">Staten Island</MenuItem>
+            </Select>
+          </FormControl>
+          <Stack spacing={2}>
+            <Pagination
+              count={20}
+              page={page}
+              onChange={(event, value) => setPage(value)}
+            />
+          </Stack>
+          <hr />
+        </Box>
       </div>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mt={3}>
         {allRestaurants.businesses
           ? allRestaurants.businesses.map((restaurant, idx) => (
-              <Grid item xs={12} md={6} key={idx}>
-                <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
+              <Grid
+                item
+                xs={12}
+                md={6}
+                key={idx}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Card sx={{ width: 600, height: 200 }} className="row">
                   <div>
                     <img className="image" src={restaurant.image_url} />
                   </div>

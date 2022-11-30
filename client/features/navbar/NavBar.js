@@ -77,45 +77,45 @@ const Navbar = () => {
               </Button>
               {isLoggedIn && (
                 <>
-                    <Button
-                variant="outlined"
-                key="suggestion"
-                sx={{
-                  my: 2,
-                  display: "block",
-                  fontSize: 30,
-                  color: "gold",
-                  borderColor: "gold",
-                  borderWidth: "3px",
-                  m: 1,
-                  ml: 4,
-                }}
-                onClick={() => {
-                  navigate("/suggestion");
-                }}
-              >
-                Show Me Suggestions!
-              </Button>
-                <Button
-                  variant="outlined"
-                  key="Profile"
-                  sx={{
-                    my: 2,
-                    display: "block",
-                    fontSize: 30,
-                    color: "#ff7038",
-                    borderColor: "#ff7038",
-                    borderWidth: "3px",
-                    m: 1,
-                  }}
-                  onClick={() => {
-                    navigate("/profile");
-                  }}
-                >
-                  PROFILE
-                </Button>
-             </> 
-             )}{" "}
+                  <Button
+                    variant="outlined"
+                    key="suggestion"
+                    sx={{
+                      my: 2,
+                      display: "block",
+                      fontSize: 30,
+                      color: "gold",
+                      borderColor: "gold",
+                      borderWidth: "3px",
+                      m: 1,
+                      ml: 4,
+                    }}
+                    onClick={() => {
+                      navigate("/suggestion");
+                    }}
+                  >
+                    Show Me Suggestions!
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    key="Profile"
+                    sx={{
+                      my: 2,
+                      display: "block",
+                      fontSize: 30,
+                      color: "#ff7038",
+                      borderColor: "#ff7038",
+                      borderWidth: "3px",
+                      m: 1,
+                    }}
+                    onClick={() => {
+                      navigate("/profile");
+                    }}
+                  >
+                    PROFILE
+                  </Button>
+                </>
+              )}{" "}
             </>
             {!isLoggedIn && (
               <>

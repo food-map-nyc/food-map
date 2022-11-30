@@ -136,14 +136,29 @@ const FeaturedRestaurant = () => {
         </Box>
       </Card>
       <hr />
-      <Typography  fontWeigth = 'bold' variant = 'h3' textAlign = 'center' fontSize="30px">
+      <Typography
+        fontWeigth="bold"
+        variant="h3"
+        textAlign="center"
+        fontSize="30px"
+      >
         RESTAURANTS WITH THE MOST REVIEWS IN ALL OF NEW YORK CITY!!!
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container rowSpacing={2} alignContent="center">
         {featuredRestaurants &&
           featuredRestaurants.map((restaurant, idx) => (
-            <Grid item xs={12} md={6} key={idx}>
-              <Card sx={{ maxWidth: 650, maxHeight: 200 }} className="row">
+            <Grid
+              item
+              xs={12}
+              md={6}
+              key={idx}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Card sx={{ width: 650, height: 200 }} className="row">
                 <Box>
                   <CardMedia
                     component="img"
@@ -185,6 +200,7 @@ const FeaturedRestaurant = () => {
             </Grid>
           ))}
       </Grid>
+      {/* </Box> */}
     </>
   );
 };
