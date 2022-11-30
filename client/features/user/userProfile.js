@@ -147,6 +147,9 @@ export default function UserProfile() {
               borderBottom: 1,
               borderColor: "divider",
               backgroundColor: "white",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Tabs

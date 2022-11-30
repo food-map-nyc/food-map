@@ -115,3 +115,8 @@ small {
   margin-left: 1em;
   font-size: 1.25em;
 }
+
+h2 {
+  text-align: center;
+  text-decoration: underline;
+}

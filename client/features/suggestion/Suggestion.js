@@ -106,16 +106,23 @@ const Suggestion = () => {
 
   return loading ? (
     <Typography>
-      <img 
-      width='1800px'
-      height='1100px'
-      src="https://i.ibb.co/1s9jh58/Your-paragraph-text.gif"></img>
+      <img
+        width="1800px"
+        height="1100px"
+        src="https://i.ibb.co/1s9jh58/Your-paragraph-text.gif"
+      ></img>
     </Typography>
   ) : (
     <div>
       <div>
-      <Typography  fontWeigth = 'bold' variant = 'h3' textAlign = 'center' fontSize="30px">
-          These are the places we think you would like {username} {emoji.smiley} ...
+        <Typography
+          fontWeigth="bold"
+          variant="h3"
+          textAlign="center"
+          fontSize="30px"
+        >
+          These are the places we think you would like {username} {emoji.smiley}{" "}
+          ...
         </Typography>
       </div>
       <MyMap
@@ -125,8 +132,18 @@ const Suggestion = () => {
       />
       <Grid container spacing={2}>
         {suggestions?.map((restaurant, idx) => (
-          <Grid item xs={12} md={6} key={idx}>
-            <Card sx={{ maxWidth: 600, maxHeight: 200 }} className="row">
+          <Grid
+            item
+            xs={12}
+            md={6}
+            key={idx}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Card sx={{ width: 600, height: 200 }} className="row">
               <div>
                 <img className="image" src={restaurant.image_url} />
               </div>
