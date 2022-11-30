@@ -141,7 +141,7 @@ export default function UserProfile() {
         </Box>
       </Card>
       {id && (
-        <div className={"tabbed-list"} className = {"center"}>
+        <div className = {"center"}>
           <Box
             sx={{
               borderBottom: 1,
